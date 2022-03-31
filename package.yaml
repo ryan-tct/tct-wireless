@@ -1,4 +1,4 @@
-name:    TCT
+name:    tct-wireless
 version: "0.0.0"
 
 dependencies:
@@ -43,6 +43,8 @@ dependencies:
 - case-insensitive
 - wai
 - foreign-store
+- yesod-auth-hashdb
+- flow
 
 # The library contains all of our application code. The executable
 # defined below is just a thin wrapper.
@@ -64,7 +66,7 @@ library:
 
 # Runnable executable for our application
 executables:
-  TCT:
+  tct-wireless:
     main: main.hs
     source-dirs: app
     ghc-options:
@@ -72,19 +74,19 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - TCT
+    - tct-wireless
     when:
     - condition: flag(library-only)
       buildable: false
 
 # Test suite
 tests:
-  TCT-test:
+  tct-wireless-test:
     main: Spec.hs
     source-dirs: test
     ghc-options: -Wall
     dependencies:
-    - TCT
+    - tct-wireless
     - hspec >=2.0.0
     - yesod-test
 

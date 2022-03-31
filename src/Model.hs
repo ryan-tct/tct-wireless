@@ -16,6 +16,7 @@ module Model where
 
 import ClassyPrelude.Yesod
 import Database.Persist.Quasi
+import Yesod.Auth.HashDB (HashDBUser(..))
 
 -- You can define all of your database entities in the entities file.
 -- You can find more information on persistent and how to declare entities
@@ -26,3 +27,7 @@ share [mkPersist sqlSettings, mkMigrate "migrateAll"]
 
 share [mkPersist sqlSettings]
   $(persistFileWith lowerCaseSettings "config/models.persistentmodels")
+
+instance HashDBUser Wuser where
+  userPasswordHash = wuserPassword
+  setPasswordHash h u = u { wuserPassword = Just h }

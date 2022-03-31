@@ -11,13 +11,15 @@
 module Foundation where
 
 import Import.NoFoundation
-import Database.Persist.Sql (ConnectionPool, runSqlPool)
+import Database.Persist.Sql (ConnectionPool, runSqlPool, fromSqlKey)
 import Text.Hamlet          (hamletFile)
 import Text.Jasmine         (minifym)
 import Control.Monad.Logger (LogSource)
 
 -- Used only when in "auth-dummy-login" setting is enabled.
 import Yesod.Auth.Dummy
+
+import Yesod.Auth.HashDB (authHashDB)
 
 import Yesod.Auth.OpenId    (authOpenId, IdentifierType (Claimed))
 import Yesod.Default.Util   (addStaticContentExternal)
@@ -26,6 +28,7 @@ import qualified Yesod.Core.Unsafe as Unsafe
 import qualified Data.CaseInsensitive as CI
 import qualified Data.Text.Encoding as TE
 import qualified Data.Text as T
+import Flow ((|>))
 
 -- | The foundation datatype for your application. This can be a good place to
 -- keep settings and values requiring initialization before your application
@@ -117,6 +120,11 @@ instance Yesod App where
                     , menuItemAccessCallback = True
                     }
                 , NavbarLeft $ MenuItem
+                    { menuItemLabel = "Access Point Types"
+                    , menuItemRoute = AccessPointTypesR
+                    , menuItemAccessCallback = True
+                    }
+                , NavbarLeft $ MenuItem
                     { menuItemLabel = "Profile"
                     , menuItemRoute = ProfileR
                     , menuItemAccessCallback = isJust muser
@@ -147,7 +155,9 @@ instance Yesod App where
 
         pc <- widgetToPageContent $ do
             addStylesheet $ StaticR css_bootstrap_css
-                                    -- ^ generated from @Settings/StaticFiles.hs@
+            addStylesheet $ StaticR css_bootstrap_table_min_css
+            addScript $ StaticR js_bootstrap_bundle_js
+            addScript $ StaticR js_bootstrap_table_min_js
             $(widgetFile "default-layout")
         withUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
 
@@ -168,16 +178,19 @@ instance Yesod App where
     isAuthorized FaviconR _ = return Authorized
     isAuthorized RobotsR _ = return Authorized
     isAuthorized (StaticR _) _ = return Authorized
+    isAuthorized AccessPointTypesR False = return Authorized
+    isAuthorized AccessPointTypesR True = isAuthenticated
+    isAuthorized (AccessPointTypeR _) False = return Authorized
+    isAuthorized (AccessPointTypeR _) True = isAuthenticated
+--    isAuthorized NewAccessPointTypeR False = return Authorized
+--    isAuthorized NewAccessPointTypeR True = isAuthenticated -- $ Unauthorized "You must be an admin to do this."
+--    isAuthorized (EditAccessPointTypeR _) _ = return Authorized
 
     -- the profile route requires that the user is authenticated, so we
     -- delegate to that function
     isAuthorized ProfileR _ = isAuthenticated
-    isAuthorized AccessPointTypesR _ = return Authorized
-    isAuthorized (AccessPointTypeR _) _ = return Authorized
-    isAuthorized NewAccessPointTypeR _ = return Authorized
-    isAuthorized (EditAccessPointTypeR _) _ = return Authorized
-    isAuthorized (DeleteAccessPointTypeR _) _ = return Authorized
-
+    isAuthorized _ _ = return Authorized
+    
     -- This function creates static content files in the static folder
     -- and names them based on a hash of their content. This allows
     -- expiration dates to be set far in the future without worry of
@@ -226,8 +239,9 @@ instance YesodBreadcrumbs App where
     breadcrumb (AuthR _) = return ("Login", Just HomeR)
     breadcrumb ProfileR = return ("Profile", Just HomeR)
     breadcrumb AccessPointTypesR = return ("Access Point Types", Just HomeR)
-    -- TODO: FIXME
-    breadcrumb (AccessPointTypeR aptId) = return (T.pack(show aptId), Just AccessPointTypesR)
+    -- TODO: Look at later
+--    breadcrumb (AccessPointTypeR aptId) = return ((T.pack . show . fromSqlKey) aptId, Just AccessPointTypesR)
+    breadcrumb (AccessPointTypeR aptId) = return (aptId |> fromSqlKey |> show |> T.pack, Just AccessPointTypesR)
     breadcrumb  _ = return ("home", Nothing)
 
 -- How to run database actions.
@@ -243,7 +257,7 @@ instance YesodPersistRunner App where
     getDBRunner = defaultGetDBRunner appConnPool
 
 instance YesodAuth App where
-    type AuthId App = TCTUserId
+    type AuthId App = WuserId
 
     -- Where to send a user after successful login
     loginDest :: App -> Route App
@@ -255,22 +269,24 @@ instance YesodAuth App where
     redirectToReferer :: App -> Bool
     redirectToReferer _ = True
 
+    -- TODO: Fix this.
     authenticate :: (MonadHandler m, HandlerSite m ~ App)
                  => Creds App -> m (AuthenticationResult App)
     authenticate creds = liftHandler $ runDB $ do
         x <- getBy $ UniqueUser $ credsIdent creds
         case x of
-            Just (Entity uid _) -> return $ Authenticated uid
-            Nothing -> Authenticated <$> insert TCTUser
-                { tCTUserIdent = credsIdent creds
-                , tCTUserPassword = Nothing
+            Just (Entity uid wuser) -> return $ Authenticated uid
+            Nothing -> Authenticated <$> insert Wuser
+                { wuserIdent = credsIdent creds
+                , wuserPassword = Nothing
                 }
 
+    authPlugins app = [authHashDB (Just . UniqueUser)]
     -- You can add other plugins like Google Email, email or OAuth here
-    authPlugins :: App -> [AuthPlugin App]
-    authPlugins app = [authOpenId Claimed []] ++ extraAuthPlugins
+--    authPlugins :: App -> [AuthPlugin App]
+--    authPlugins app = [authOpenId Claimed [], authHashDB (Just . UniqueUser)] ++ extraAuthPlugins
         -- Enable authDummy login if enabled.
-        where extraAuthPlugins = [authDummy | appAuthDummyLogin $ appSettings app]
+--        where extraAuthPlugins = [authDummy | appAuthDummyLogin $ appSettings app]
 
 -- | Access function to determine if a user is logged in.
 isAuthenticated :: Handler AuthResult

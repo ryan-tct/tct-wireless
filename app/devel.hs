@@ -1,5 +1,5 @@
 {-# LANGUAGE PackageImports #-}
-import "TCT" Application (develMain)
+import "tct-wireless" Application (develMain)
 import Prelude (IO)
 
 main :: IO ()
