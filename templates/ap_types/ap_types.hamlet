@@ -1,0 +1,10 @@
+<h1 class="display-1 text-center">Access Point Types
+<a href="" class="btn btn-outline-primary">New AP Type
+<table class="table table-striped table-responsive mb-3 mt-3">
+  <thead>
+    <tr>
+      <th>Name
+  <tbody>
+    $forall Entity aptId apt <- allAPTypes
+      <tr>
+        <td><a href=@{AccessPointTypeR aptId}>#{accessPointTypeName apt}
