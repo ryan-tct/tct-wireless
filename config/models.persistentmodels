@@ -5,3 +5,21 @@ AccessPointType sql=ap_types
     name Text
     deriving Eq
     deriving Show
+    deriving Typeable
+
+Tower sql=towers
+    name Text
+    shortName Text sql=short_name
+    latitude Double Maybe
+    longitude Double Maybe
+    address Text Maybe
+    height Int Maybe
+    baseDimensions Text Maybe sql=base_dimensions
+    type Text Maybe
+    buildingDimensions Text Maybe sql=building_dimensions
+    accessInfo Text Maybe sql=access_info
+    leaseInfo Text Maybe sql=lease_info
+    powerCompanyInfo Text Maybe sql=power_company_info
+    createdAt Day sql=created_at
+    updatedAt UTCTime sql=updated_at
+    deriving Eq Show Typeable

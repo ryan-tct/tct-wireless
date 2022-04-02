@@ -7,11 +7,11 @@
 module Handler.AccessPointTypes where
 
 import Import
-import Yesod.Form.Bootstrap4 --(BootstrapFormLayout (..), renderBootstrap4)
+import Yesod.Form.Bootstrap4 (BootstrapFormLayout (..), renderBootstrap4)
 
 getAccessPointTypesR :: Handler Html
 getAccessPointTypesR = do
-  allAPTypes <- runDB $ getAllAPTypes
+  allAPTypes <- runDB getAllAPTypes
   (widget, enctype) <- generateFormPost (accessPointTypeForm Nothing)
   defaultLayout $ do
     setTitle "AP Types"

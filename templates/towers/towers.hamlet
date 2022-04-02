@@ -1,0 +1,31 @@
+<h1 class="display-1 text-center">Towers
+<table class="table table-striped table-responsive mb-3 mt-3">
+  <thead>
+    <tr>
+      <th>Name
+      <th>Short
+      <th>Height
+      <th>Latitude
+      <th>Longitude
+      <th>Address
+  <tbody>
+    $forall Entity tId t <- allTowers
+      <tr>
+        <td><a href=@{TowerR tId}>#{towerName t}
+        <td>#{towerShortName t}
+        $maybe height <- towerHeight t
+          <td>#{height}
+        $nothing
+          <td>
+        $maybe latitude <- towerLatitude t
+          <td>#{latitude}
+        $nothing
+          <td>
+        $maybe longitude <- towerLongitude t
+          <td>#{longitude}
+        $nothing
+          <td>
+        $maybe address <- towerAddress t
+          <td>#{address}
+        $nothing
+          <td>

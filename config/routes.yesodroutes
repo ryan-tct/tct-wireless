@@ -17,8 +17,11 @@
 -- !/access-point-types/#AccessPointTypeId AccessPointTypeR GET
 -- !/access-point-types/new NewAccessPointTypeR GET POST
 -- /access-point-types/#AccessPointTypeId/edit EditAccessPointTypeR GET POST
-
 -- /apt APTsR GET POST
 -- /apt/#AccessPointTypeId APTR GET POST
+
+/towers TowersR GET
+/towers/#TowerId TowerR GET POST
+
 /access-point-types AccessPointTypesR GET POST
 /access-point-types/#AccessPointTypeId AccessPointTypeR GET POST
