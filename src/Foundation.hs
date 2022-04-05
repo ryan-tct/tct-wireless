@@ -17,11 +17,11 @@ import Text.Jasmine         (minifym)
 import Control.Monad.Logger (LogSource)
 
 -- Used only when in "auth-dummy-login" setting is enabled.
-import Yesod.Auth.Dummy
+--import Yesod.Auth.Dummy
 
 import Yesod.Auth.HashDB (authHashDB)
 
-import Yesod.Auth.OpenId    (authOpenId, IdentifierType (Claimed))
+--import Yesod.Auth.OpenId    (authOpenId, IdentifierType (Claimed))
 import Yesod.Default.Util   (addStaticContentExternal)
 import Yesod.Core.Types     (Logger)
 import qualified Yesod.Core.Unsafe as Unsafe
@@ -29,6 +29,9 @@ import qualified Data.CaseInsensitive as CI
 import qualified Data.Text.Encoding as TE
 import qualified Data.Text as T
 import Flow ((|>))
+
+data TowerTree = TowerTree
+  { towers :: Tower }
 
 -- | The foundation datatype for your application. This can be a good place to
 -- keep settings and values requiring initialization before your application
@@ -40,6 +43,7 @@ data App = App
     , appConnPool    :: ConnectionPool -- ^ Database connection pool.
     , appHttpManager :: Manager
     , appLogger      :: Logger
+--    , appTowerTree   :: TowerTree
     }
 
 data MenuItem = MenuItem
@@ -117,6 +121,16 @@ instance Yesod App where
                 [ NavbarLeft $ MenuItem
                     { menuItemLabel = "Home"
                     , menuItemRoute = HomeR
+                    , menuItemAccessCallback = True
+                    }
+                , NavbarLeft $ MenuItem
+                    { menuItemLabel = "Towers"
+                    , menuItemRoute = TowersR
+                    , menuItemAccessCallback = True
+                    }
+                , NavbarLeft $ MenuItem
+                    { menuItemLabel = "Access Points"
+                    , menuItemRoute = AccessPointsR
                     , menuItemAccessCallback = True
                     }
                 , NavbarLeft $ MenuItem
@@ -238,9 +252,10 @@ instance YesodBreadcrumbs App where
     breadcrumb HomeR = return ("Home", Nothing)
     breadcrumb (AuthR _) = return ("Login", Just HomeR)
     breadcrumb ProfileR = return ("Profile", Just HomeR)
+    breadcrumb TowersR = return ("Towers", Just HomeR)
+    breadcrumb (TowerR tId) = return (tId |> fromSqlKey |> show |> T.pack, Just TowersR)
+    breadcrumb AccessPointsR = return ("Access Points", Just HomeR)
     breadcrumb AccessPointTypesR = return ("Access Point Types", Just HomeR)
-    -- TODO: Look at later
---    breadcrumb (AccessPointTypeR aptId) = return ((T.pack . show . fromSqlKey) aptId, Just AccessPointTypesR)
     breadcrumb (AccessPointTypeR aptId) = return (aptId |> fromSqlKey |> show |> T.pack, Just AccessPointTypesR)
     breadcrumb  _ = return ("home", Nothing)
 

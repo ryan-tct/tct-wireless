@@ -1,4 +1,6 @@
 <h1 class="display-1 text-center">Towers
+<div class="btn-group mt-3 mb-3" role="group">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newTowerModal">New Tower
 <table class="table table-striped table-responsive mb-3 mt-3">
   <thead>
     <tr>
@@ -29,3 +31,16 @@
           <td>#{address}
         $nothing
           <td>
+<div class="modal fade" id="newTowerModal" tabindex="-1" aria-labelledby="newTowerTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newTowerTitle">New Tower</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="modal-body">
+        <form class="form mt-3 mb-3" method=POST action=@{TowersR} enctype=#{enctype}>
+          ^{widget}
+          <div class="form mt-3 mb-3">
+            <div class="btn-group" role="group">
+              <button class="btn btn-warning" type="button" data-bs-dismiss="modal">Close
+              <button class="btn btn-primary" type="submit" name="action" value="save">Save 

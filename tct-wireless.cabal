@@ -27,6 +27,7 @@ library
       Handler.Comment
       Handler.Common
       Handler.Home
+      Handler.NavigationTree
       Handler.Profile
       Handler.Towers
       Import
@@ -50,6 +51,7 @@ library
     , containers
     , data-default
     , directory >=1.1 && <1.4
+    , esqueleto >=3.5.4.0
     , fast-logger >=2.2 && <3.1
     , file-embed
     , flow
@@ -108,6 +110,7 @@ executable tct-wireless
     , containers
     , data-default
     , directory >=1.1 && <1.4
+    , esqueleto >=3.5.4.0
     , fast-logger >=2.2 && <3.1
     , file-embed
     , flow
@@ -169,6 +172,7 @@ test-suite tct-wireless-test
     , containers
     , data-default
     , directory >=1.1 && <1.4
+    , esqueleto >=3.5.4.0
     , fast-logger >=2.2 && <3.1
     , file-embed
     , flow

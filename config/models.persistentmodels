@@ -23,3 +23,23 @@ Tower sql=towers
     createdAt Day sql=created_at
     updatedAt UTCTime sql=updated_at
     deriving Eq Show Typeable
+
+AccessPoint sql=access_points
+    towerId TowerId sql=towerid
+    apTypeId AccessPointTypeId Maybe sql=aptypeid
+    name Text
+    height Int Maybe
+    azimuth Int Maybe
+    tilt Double Maybe
+    frequency Int Maybe
+    channelBandwidth Int Maybe sql=channel_bandwidth
+    colorCode Int Maybe sql=color_code
+    ssid Text Maybe
+    ip Text Maybe
+    softwareVersion Text Maybe sql=software_version
+    backupConfig Text Maybe sql=backup_config
+    installDate Day Maybe sql=install_date
+    updated_at UTCTime Maybe sql=updated_at
+    mac Text Maybe
+    msn Text Maybe
+    deriving Eq Show Typeable

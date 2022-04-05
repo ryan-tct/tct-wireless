@@ -20,8 +20,12 @@
 -- /apt APTsR GET POST
 -- /apt/#AccessPointTypeId APTR GET POST
 
-/towers TowersR GET
+/towers TowersR GET POST
 /towers/#TowerId TowerR GET POST
+
+/access-points AccessPointsR GET
 
 /access-point-types AccessPointTypesR GET POST
 /access-point-types/#AccessPointTypeId AccessPointTypeR GET POST
+
+/navigation-tree NavigationTreeR GET

@@ -20,7 +20,7 @@
 
 <div .container>
     $if not $ Just HomeR == mcurrentRoute
-        <nav aria-label="breadcrumb">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol .breadcrumb>
                 $forall bc <- parents
                     <li .breadcrumb-item>

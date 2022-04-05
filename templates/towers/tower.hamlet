@@ -1,4 +1,7 @@
 <h1 class="display-1 text-center">#{towerName t}
+<div class="mt-3 mb-3" role="group">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editTowerModal">Edit #{towerName t}
+  <button type="button" class="btn btn-primary">Add Access Point
 <table class="table table-responsive table-bordered table-striped mt-3 mb-3">
   <tbody>
     <tr>
@@ -73,10 +76,15 @@
     <tr>
       <th scope="row">Update At
       <td>#{show (towerUpdatedAt t)}
-<div class="btn-group mt-3 mb-3" role="group">
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editTowerModal">Edit #{towerName t}
+<h2 class="text-center">Access Points on #{towerName t}
+<table class="table table-responsive table-bordered table-striped mt-3 mb-3">
+  <tbody>
+    $forall (Value apId, Value apName) <- apNames
+      <tr>
+        <th scope="row">Access point
+        <td><a href="">#{apName}
 <div class="modal fade" id="editTowerModal" tabindex="-1" aria-labelledby="editTowerTitle" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="editTowerTitle">Edit #{towerName t}</h5>
@@ -85,7 +93,7 @@
         <form class="form mt-3 mb-3" method=POST action=@{TowerR tId} enctype=#{enctype}>
           ^{widget}
           <div class="form mt-3 mb-3">
-            <div class="btn-group" role="group">
+            <div role="group">
               <button class="btn btn-danger" type="submit" name="action" value="delete">Delete #{towerName t}
-              <button class="btn btn-warning" type="submit" name="action" value="discard-changes">Discard Changes
+              <button class="btn btn-warning" type="button" data-bs-dismiss="modal">Close
               <button class="btn btn-primary" type="submit" name="action" value="save">Save Changes

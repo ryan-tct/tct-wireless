@@ -34,6 +34,7 @@ dependencies:
 - monad-logger >=0.3 && <0.4
 - fast-logger >=2.2 && <3.1
 - wai-logger >=2.2 && <2.4
+- esqueleto >=3.5.4.0
 - file-embed
 - safe
 - unordered-containers
@@ -45,6 +46,7 @@ dependencies:
 - foreign-store
 - yesod-auth-hashdb
 - flow
+
 
 # The library contains all of our application code. The executable
 # defined below is just a thin wrapper.
