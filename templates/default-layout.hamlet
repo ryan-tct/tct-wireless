@@ -35,9 +35,10 @@
 $if (Just HomeR == mcurrentRoute)
     ^{widget}
 $else
-    <div .container>
+    <div .container-xxl>
         <div .row>
-            <div .col-md-12>
+            <div .col-3>
+            <div .col-9>
                 ^{widget}
 
 <!-- Footer -->

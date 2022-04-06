@@ -30,9 +30,6 @@ import qualified Data.Text.Encoding as TE
 import qualified Data.Text as T
 import Flow ((|>))
 
-data TowerTree = TowerTree
-  { towers :: Tower }
-
 -- | The foundation datatype for your application. This can be a good place to
 -- keep settings and values requiring initialization before your application
 -- starts running, such as database connections. Every handler will have
@@ -170,6 +167,7 @@ instance Yesod App where
         pc <- widgetToPageContent $ do
             addStylesheet $ StaticR css_bootstrap_css
             addStylesheet $ StaticR css_bootstrap_table_min_css
+            addStylesheet $ StaticR fonts_css_all_css
             addScript $ StaticR js_bootstrap_bundle_js
             addScript $ StaticR js_bootstrap_table_min_js
             $(widgetFile "default-layout")
