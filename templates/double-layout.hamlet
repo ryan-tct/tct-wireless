@@ -1,0 +1,41 @@
+<!-- Static navbar -->
+<nav .navbar .navbar-expand-lg .navbar-dark .bg-dark>
+  <div .container-fluid>
+    <a .navbar-brand href=@{HomeR}>TCT Wireless
+    <button .navbar-toggler type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-expanded="false" aria-controls="navbar">
+      <span .navbar-toggler-icon>
+
+    <div #navbar .collapse .navbar-collapse>
+      <ul .nav .navbar-nav .mr-auto .mb-2 .mb-lg-0>
+        $forall MenuItem label route _ <- navbarLeftFilteredMenuItems
+          <li .nav-item> 
+            <a .nav-link href="@{route}" :Just route == mcurrentRoute:.active aria-current="page">#{label}
+
+      <ul .nav.navbar-nav .ms-auto.mb-2.mb-lg-0>
+        $forall MenuItem label route _ <- navbarRightFilteredMenuItems
+          <li :Just route == mcurrentRoute:.active>
+            <a .nav-link href="@{route}">#{label}
+
+<div .container-fluid>  
+  <div .row>
+    <div .col-2.left-nav.vh-100>
+      ^{showTree}
+    <div .col-8>
+      <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol .breadcrumb>
+          $forall bc <- parents
+            <li .breadcrumb-item>
+              <a href="@{fst bc}">#{snd bc}
+
+          <li .breadcrumb-item .active>#{title}
+
+      $maybe msg <- mmsg
+        <div class="alert alert-info alert-dismissible fade show" role="alert" #message>#{msg}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+      ^{widget}
+
+<!-- Footer -->
+<footer .footer>
+  <div .container>
+    <p .text-muted>
+      #{appCopyright $ appSettings master}

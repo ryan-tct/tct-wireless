@@ -8,12 +8,13 @@ module Handler.AccessPointTypes where
 
 import Import
 import Yesod.Form.Bootstrap4 (BootstrapFormLayout (..), renderBootstrap4)
+import DoubleLayout
 
 getAccessPointTypesR :: Handler Html
 getAccessPointTypesR = do
   allAPTypes <- runDB getAllAPTypes
   (widget, enctype) <- generateFormPost (accessPointTypeForm Nothing)
-  defaultLayout $ do
+  doubleLayout $ do
     setTitle "AP Types"
 --    $(widgetFile "ap_types/ap_types")
     [whamlet|
@@ -52,13 +53,13 @@ postAccessPointTypesR = do
       setMessage "Access Point Type created."
       redirect AccessPointTypesR
 -- TODO: FIXME
-    _ -> defaultLayout [whamlet|Something went wrong!|]
+    _ -> doubleLayout [whamlet|Something went wrong!|]
 
 getAccessPointTypeR :: AccessPointTypeId -> Handler Html
 getAccessPointTypeR aptId = do
   apt <- runDB $ get404 aptId
   (widget, enctype) <- generateFormPost (accessPointTypeForm (Just apt))
-  defaultLayout $ do
+  doubleLayout $ do
     setTitle "Acess Point Type"
     [whamlet|
 <h1 class="display-1 text-center">#{accessPointTypeName apt}
@@ -101,7 +102,7 @@ postAccessPointTypeR aptId = do
       runDB $ delete aptId
       setMessage "Deleted access point type"
       redirect AccessPointTypesR
-    _ -> defaultLayout $ do
+    _ -> doubleLayout $ do
       setMessage "Error editing access point type."
       redirect $ AccessPointTypeR aptId
 

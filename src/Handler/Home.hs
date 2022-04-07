@@ -8,6 +8,7 @@ module Handler.Home where
 import Import
 import Yesod.Form.Bootstrap3 (BootstrapFormLayout (..), renderBootstrap3)
 import Text.Julius (RawJS (..))
+import DoubleLayout
 
 -- Define our data that will be used for creating the form.
 data FileForm = FileForm
@@ -29,7 +30,7 @@ getHomeR = do
         handlerName = "getHomeR" :: Text
     allComments <- runDB $ getAllComments
 
-    defaultLayout $ do
+    doubleLayout $ do
         let (commentFormId, commentTextareaId, commentListId) = commentIds
         aDomId <- newIdent
         setTitle "Welcome To Yesod!"
@@ -44,7 +45,7 @@ postHomeR = do
             _ -> Nothing
     allComments <- runDB $ getAllComments
 
-    defaultLayout $ do
+    doubleLayout $ do
         let (commentFormId, commentTextareaId, commentListId) = commentIds
         aDomId <- newIdent
         setTitle "Welcome To Yesod!"

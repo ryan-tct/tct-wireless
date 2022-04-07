@@ -11,24 +11,32 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE RankNTypes #-}
 module Handler.NavigationTree where
 
 import Import hiding (Value)
 import Database.Esqueleto.Experimental as E
-import Handler.Towers as T
-import Handler.AccessPoints as AP
 import qualified Data.Text as Text
 
 getNavigationTreeR :: Handler Html
 getNavigationTreeR = defaultLayout $ do
   setTitle "NavigationTree"
   [whamlet|^{showTree}|]
-  
+
+-- <button .navbar-toggler type="button" data-bs-toggle="collapse" data-bs-target="#left-navbar" aria-expanded="true" aria-controls="navbar">
+---   <i .fa-solid.fa-expand>
 showTree :: Widget
 showTree = do
-  [whamlet|^{showTowerLinks}|]
+  [whamlet|
+<div>
+  <i class="fa-solid fa-solid fa-globe">
+  <a href=@{TowersR}>Towers
+  ^{showTowerLinks}
+          |]
   toWidget
     [lucius|
+.nav-tower-list {
+}
 .btn-navtree-toggle {
   display: inline-flex;
   align-items: center;
@@ -51,11 +59,16 @@ showTree = do
 .btn-navtree-toggle-sub {
   padding-left: 2.0rem;
 }
+.left-nav {
+  overflow-y: scroll;
+  min-width: 250px;
+}
            |]
 
+      
 showTowerLinks :: Widget
 showTowerLinks = do
-  allTowers <- handlerToWidget $ runDB T.getTowerNames
+  allTowers <- handlerToWidget $ runDB getTowerNames
   [whamlet|
 <ul class="list-unstyled ps-0">
   $forall (Value tId, Value name) <- allTowers
@@ -69,7 +82,7 @@ showTowerLinks = do
 
 showAPLinks :: TowerId -> Widget
 showAPLinks towerId = do
-  allAPs <- handlerToWidget $ runDB $ AP.getAPNamesFor towerId
+  allAPs <- handlerToWidget $ runDB $ getAPNamesFor towerId
   [whamlet|
 <ul class="list-unstyled btn-navtree-toggle-sub">
   $forall (Value apId, Value name) <- allAPs
@@ -82,3 +95,21 @@ showAPLinks towerId = do
 
 webFormat :: Text -> Text
 webFormat t = Text.replace " " "-" t
+
+getTowerNames :: DB [(Value (Key Tower), Value Text)]
+getTowerNames = select $ do
+  towers <- from $ table @Tower
+  orderBy [asc (towers ^. TowerName)]
+  pure (towers ^. TowerId, towers ^. TowerName)
+
+getAccessPointNames :: DB [(Value AccessPointId, Value Text)]
+getAccessPointNames = select $ do
+  aps <- from $ table @AccessPoint
+  pure (aps ^. AccessPointId, aps ^. AccessPointName)
+
+getAPNamesFor :: TowerId -> DB [(Value AccessPointId, Value Text)]
+getAPNamesFor towerId = select $ do
+  aps <- from $ table @AccessPoint
+  where_ (aps ^. AccessPointTowerId E.==. (towerId |> fromSqlKey |> valkey))
+  orderBy [desc (aps ^. AccessPointName)]
+  pure (aps ^. AccessPointId, aps ^. AccessPointName)

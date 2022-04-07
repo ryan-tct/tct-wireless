@@ -1,0 +1,47 @@
+<h2 class="display-1 text-center">#{accessPointName ap}
+<div class="mt-3 mb-3" role="group">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editTowerModal">Edit #{accessPointName ap}
+<table class="table table-responsive table-bordered table-striped mt-3 mb-3">
+  <tbody>
+    <tr>
+      <th scope="row">Name
+      <td>
+    <tr>
+      <th scope="row">IP
+      <td>
+    <tr>
+      <th scope="row">Tower
+      <td>
+    <tr>
+      <th scopoe="row">Type
+      <td>
+    <tr>
+      <th scope="row">Height
+      <td>
+    <tr>
+      <th scope="row">Azimuth
+      <td>
+    <tr>
+      <th scope="row">Tilt
+      <td>
+    <tr>
+      <th scope="row">Frequency
+      <td>
+    <tr>
+      <th scope="row">Bandwidth
+      <td>
+    <tr>
+      <th scope="row">Color Code
+      <td>
+    <tr>
+      <th scope="row">SSID
+      <td>
+    <tr>
+      <th scope="row">Software Version
+      <td>
+    <tr>
+      <th scope="row">MAC
+      <td>
+    <tr>
+      <th scope="row">Serial Number
+      <td>

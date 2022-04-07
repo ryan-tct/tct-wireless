@@ -7,6 +7,7 @@
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE RankNTypes #-}
 {-# LANGUAGE InstanceSigs #-}
+{-# LANGUAGE FlexibleContexts #-}
 
 module Foundation where
 
@@ -15,11 +16,10 @@ import Database.Persist.Sql (ConnectionPool, runSqlPool, fromSqlKey)
 import Text.Hamlet          (hamletFile)
 import Text.Jasmine         (minifym)
 import Control.Monad.Logger (LogSource)
+import Yesod.Auth.HashDB (authHashDB)
 
 -- Used only when in "auth-dummy-login" setting is enabled.
 --import Yesod.Auth.Dummy
-
-import Yesod.Auth.HashDB (authHashDB)
 
 --import Yesod.Auth.OpenId    (authOpenId, IdentifierType (Claimed))
 import Yesod.Default.Util   (addStaticContentExternal)
@@ -244,6 +244,7 @@ instance YesodBreadcrumbs App where
     -- Takes the route that the user is currently on, and returns a tuple
     -- of the 'Text' that you want the label to display, and a previous
     -- breadcrumb route.
+  
     breadcrumb
         :: Route App  -- ^ The route the user is visiting currently.
         -> Handler (Text, Maybe (Route App))
@@ -251,11 +252,15 @@ instance YesodBreadcrumbs App where
     breadcrumb (AuthR _) = return ("Login", Just HomeR)
     breadcrumb ProfileR = return ("Profile", Just HomeR)
     breadcrumb TowersR = return ("Towers", Just HomeR)
-    breadcrumb (TowerR tId) = return (tId |> fromSqlKey |> show |> T.pack, Just TowersR)
+    breadcrumb (TowerR tId) = return (keyToText tId, Just TowersR)
     breadcrumb AccessPointsR = return ("Access Points", Just HomeR)
+    breadcrumb (AccessPointR apId) = return (keyToText apId, Just AccessPointsR)
     breadcrumb AccessPointTypesR = return ("Access Point Types", Just HomeR)
-    breadcrumb (AccessPointTypeR aptId) = return (aptId |> fromSqlKey |> show |> T.pack, Just AccessPointTypesR)
-    breadcrumb  _ = return ("home", Nothing)
+    breadcrumb (AccessPointTypeR aptId) = return (keyToText aptId, Just AccessPointTypesR)
+    breadcrumb  _ = return ("Home", Nothing)
+
+keyToText key = key |>fromSqlKey |> show |> T.pack
+
 
 -- How to run database actions.
 instance YesodPersist App where

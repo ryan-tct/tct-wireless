@@ -23,7 +23,8 @@
 /towers TowersR GET POST
 /towers/#TowerId TowerR GET POST
 
-/access-points AccessPointsR GET
+/access-points AccessPointsR GET POST
+/access-points/#AccessPointId AccessPointR GET POST
 
 /access-point-types AccessPointTypesR GET POST
 /access-point-types/#AccessPointTypeId AccessPointTypeR GET POST

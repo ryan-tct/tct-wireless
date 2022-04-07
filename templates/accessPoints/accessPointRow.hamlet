@@ -1,0 +1,14 @@
+<tr>
+  <td><a href=@{AccessPointR apId}>#{accessPointName ap}
+  $maybe ip <- accessPointIp ap
+    <td><a target="_blank" rel="noopener noreferrer" href=#{"http://" ++ ip}>#{ip}
+  $nothing
+    <td>
+  $maybe tower <- mtower
+    <td><a href=@{TowerR tId}>#{towerName tower}
+  $nothing
+    <td>
+  $maybe apType <- mapType
+    <td><a href=@{AccessPointTypeR aptId}>#{accessPointTypeName apType}
+  $nothing
+    <td>

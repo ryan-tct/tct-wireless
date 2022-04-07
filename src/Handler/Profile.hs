@@ -6,10 +6,11 @@
 module Handler.Profile where
 
 import Import
+import DoubleLayout
 
 getProfileR :: Handler Html
 getProfileR = do
     (_, user) <- requireAuthPair
-    defaultLayout $ do
+    doubleLayout $ do
         setTitle . toHtml $ wuserIdent user <> "'s User page"
         $(widgetFile "profile")

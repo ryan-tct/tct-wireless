@@ -26,7 +26,7 @@ Tower sql=towers
 
 AccessPoint sql=access_points
     towerId TowerId sql=towerid
-    apTypeId AccessPointTypeId Maybe sql=aptypeid
+    apTypeId AccessPointTypeId sql=aptypeid
     name Text
     height Int Maybe
     azimuth Int Maybe

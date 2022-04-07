@@ -15,26 +15,20 @@ module Handler.Towers where
 
 import Import hiding (Value)
 import Yesod.Form.Bootstrap4 (BootstrapFormLayout (..), renderBootstrap4)
-import Flow
-import Database.Esqueleto.Experimental as E hiding(delete) 
-import qualified Handler.AccessPoints as AP
+import Database.Esqueleto.Experimental as E hiding(delete, isNothing)
+import Handler.NavigationTree as NT
+import DoubleLayout
 
 import Text.Read (read)
 
 getAllTowers :: DB [Entity Tower]
 getAllTowers = selectList [] [Asc TowerName]
 
-getTowerNames :: DB [(Value (Key Tower), Value Text)]
-getTowerNames = select $ do
-  towers <- from $ table @Tower
-  orderBy [asc (towers ^. TowerName)]
-  pure (towers ^. TowerId, towers ^. TowerName)
-
 getTowersR :: Handler Html
 getTowersR = do
   allTowers <- runDB  getAllTowers
   (widget, enctype) <- generateFormPost (towerForm Nothing)
-  defaultLayout $ do
+  doubleLayout $ do
     setTitle "Towers"
     $(widgetFile "towers/towers")
 
@@ -47,14 +41,14 @@ postTowersR = do
       setMessage "Tower created."
       redirect TowersR
 -- TODO: FIXME
-    _ -> defaultLayout [whamlet|Someting went wrong!|]
+    _ -> doubleLayout [whamlet|Someting went wrong!|]
 
 getTowerR :: TowerId -> Handler Html
 getTowerR tId = do
   t <- runDB $ get404 tId
-  apNames <- runDB $ AP.getAPNamesFor tId
+  apNames <- runDB $ NT.getAPNamesFor tId -- TODO: This needs to change (refactor NT to another module)
   (widget, enctype) <- generateFormPost (towerForm (Just t))
-  defaultLayout $ do
+  doubleLayout $ do
     setTitle "Tower"
     $(widgetFile "towers/tower")
 
@@ -74,7 +68,7 @@ postTowerR tId = do
       runDB $ delete tId
       setMessage "Deleted tower."
       redirect TowersR
-    _ -> defaultLayout $ do
+    _ -> doubleLayout $ do
       setMessage "Error editing tower."
       redirect $ TowerR tId
 
