@@ -38,8 +38,8 @@ AccessPoint sql=access_points
     ip Text Maybe
     softwareVersion Text Maybe sql=software_version
     backupConfig Text Maybe sql=backup_config
-    installDate Day Maybe sql=install_date
-    updated_at UTCTime Maybe sql=updated_at
+    installDate Day sql=install_date
+    updatedAt UTCTime sql=updated_at
     mac Text Maybe
     msn Text Maybe
     deriving Eq Show Typeable
