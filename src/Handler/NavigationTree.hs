@@ -18,6 +18,8 @@ import Import hiding (Value)
 import Database.Esqueleto.Experimental as E
 import qualified Data.Text as Text
 
+import Model.Helper
+
 getNavigationTreeR :: Handler Html
 getNavigationTreeR = defaultLayout $ do
   setTitle "NavigationTree"
@@ -96,20 +98,3 @@ showAPLinks towerId = do
 webFormat :: Text -> Text
 webFormat t = Text.replace " " "-" t
 
-getTowerNames :: DB [(Value (Key Tower), Value Text)]
-getTowerNames = select $ do
-  towers <- from $ table @Tower
-  orderBy [asc (towers ^. TowerName)]
-  pure (towers ^. TowerId, towers ^. TowerName)
-
-getAccessPointNames :: DB [(Value AccessPointId, Value Text)]
-getAccessPointNames = select $ do
-  aps <- from $ table @AccessPoint
-  pure (aps ^. AccessPointId, aps ^. AccessPointName)
-
-getAPNamesFor :: TowerId -> DB [(Value AccessPointId, Value Text)]
-getAPNamesFor towerId = select $ do
-  aps <- from $ table @AccessPoint
-  where_ (aps ^. AccessPointTowerId E.==. (towerId |> fromSqlKey |> valkey))
-  orderBy [desc (aps ^. AccessPointName)]
-  pure (aps ^. AccessPointId, aps ^. AccessPointName)

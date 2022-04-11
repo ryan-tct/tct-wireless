@@ -34,6 +34,7 @@ library
       Import
       Import.NoFoundation
       Model
+      Model.Helper
       Settings
       Settings.StaticFiles
   other-modules:

@@ -1,0 +1,15 @@
+#+TITLE: Todos
+#+AUTHOR: Ryan Jensen
+
+* TODO Add dropdowns for APTypes and Towers to new/edit Access Points form
+* TODO Add formatting to new/edit AP form
+* TODO Refactor Navigation Tree
+  Put in a helper module
+* TODO Refactor/Add Database Helper Module
+* TODO Add Tower Types
+** TODO Add Page
+** TODO Add Dropdown select to new/edit Tower page
+** TODO Add Types dropdown to UI
+   Include Tower Types and Access Point Types
+
+

@@ -13,12 +13,10 @@
 {-# LANGUAGE TypeApplications #-}
 module Handler.Towers where
 
-import Import hiding (Value)
+import Import -- hiding (Value)
 import Yesod.Form.Bootstrap4 (BootstrapFormLayout (..), renderBootstrap4)
-import Database.Esqueleto.Experimental as E hiding(delete, isNothing)
-import Handler.NavigationTree as NT
+import Model.Helper
 import DoubleLayout
-
 import Text.Read (read)
 
 getAllTowers :: DB [Entity Tower]
@@ -46,7 +44,7 @@ postTowersR = do
 getTowerR :: TowerId -> Handler Html
 getTowerR tId = do
   t <- runDB $ get404 tId
-  apNames <- runDB $ NT.getAPNamesFor tId -- TODO: This needs to change (refactor NT to another module)
+  apNames <- runDB $ getAPNamesFor tId
   (widget, enctype) <- generateFormPost (towerForm (Just t))
   doubleLayout $ do
     setTitle "Tower"

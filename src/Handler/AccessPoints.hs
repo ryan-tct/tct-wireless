@@ -51,9 +51,6 @@ getAccessPointR apId = do
 postAccessPointR :: AccessPointId -> Handler Html
 postAccessPointR apId = undefined
 
--- apForm :: Maybe AccessPoint -> Form AccessPoint
--- apForm mAP = undefined
-
 apForm :: Maybe AccessPoint -> Form AccessPoint
 apForm mAP = renderBootstrap4 BootstrapBasicForm $ AccessPoint
   <$> pure (toSqlKey 1000) -- areq textField "towerid" (accessPointTowerId mAP)
