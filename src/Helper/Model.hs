@@ -1,9 +1,7 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE QuasiQuotes       #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE ConstraintKinds #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
@@ -12,17 +10,21 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE RankNTypes #-}
-module Model.Helper
+module Helper.Model
   ( module E
   , getTowerNames
   , getAccessPointNames
   , getAPNamesFor
+  , getAccessPointTypeNames
+  , unValueSwap
+--  , keyToText
   ) where
 
 import Import hiding (Value)
 import Database.Esqueleto.Experimental as E hiding(delete, isNothing)
+import qualified Data.Text as T
 
-getTowerNames :: DB [(Value (Key Tower), Value Text)]
+getTowerNames :: DB [(Value TowerId, Value Text)]
 getTowerNames = select $ do
   towers <- from $ table @Tower
   orderBy [asc (towers ^. TowerName)]
@@ -39,3 +41,12 @@ getAPNamesFor towerId = select $ do
   where_ (aps ^. AccessPointTowerId E.==. (towerId |> fromSqlKey |> valkey))
   orderBy [desc (aps ^. AccessPointName)]
   pure (aps ^. AccessPointId, aps ^. AccessPointName)
+
+getAccessPointTypeNames :: DB [(Value AccessPointTypeId, Value Text)]
+getAccessPointTypeNames = select $ do
+  apts <- from $ table @AccessPointType
+  pure (apts ^. AccessPointTypeId, apts ^. AccessPointTypeName)
+
+unValueSwap vs = map (\(Value key, Value text) -> (text, key)) vs
+
+--keyToText key = key |>fromSqlKey |> show |> T.pack

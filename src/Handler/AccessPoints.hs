@@ -9,9 +9,13 @@
 module Handler.AccessPoints where
 
 import Import hiding (Value)
-import Yesod.Form.Bootstrap4 (BootstrapFormLayout (..), renderBootstrap4)
-import Database.Esqueleto.Experimental as E
+import Yesod.Form.Bootstrap5 (BootstrapFormLayout (..)
+                             , renderBootstrap5
+                             , BootstrapGridOptions(..)
+                             )
 import DoubleLayout
+import Helper.Model
+import Helper.Html
 
 getAllAccessPoints :: DB [Entity AccessPoint]
 getAllAccessPoints = selectList [] [Asc AccessPointName]
@@ -33,7 +37,16 @@ getAPRow (Entity apId ap) = do
   $(widgetFile "accessPoints/accessPointRow")
 
 postAccessPointsR :: Handler Html
-postAccessPointsR = undefined
+postAccessPointsR = do
+  ((result, _), _) <- runFormPost (apForm Nothing)
+  case result of
+    FormSuccess ap -> do
+      _ <- runDB $ insert ap
+      setMessage "Access Point created."
+      redirect AccessPointsR
+    _ -> do
+      doubleLayout [whamlet|<p>Something went wrong!
+                           <p>#{show result}|]
 
 getAccessPointR :: AccessPointId -> Handler Html
 getAccessPointR apId = do
@@ -49,35 +62,201 @@ getAccessPointR apId = do
 
 
 postAccessPointR :: AccessPointId -> Handler Html
-postAccessPointR apId = undefined
-
+postAccessPointR apId = do
+  ((result, _), _) <- runFormPost (apForm Nothing)
+  action <- lookupPostParam "action"
+  case (result, action) of
+    (FormSuccess ap, Just "save") -> do
+      runDB $ replace apId ap
+      setMessage "Updated Access Point."
+      redirect $ AccessPointR apId
+    (FormSuccess _, Just "delete") -> do
+      runDB $ delete apId
+      setMessage "Deleted Accesss Point."
+      redirect AccessPointsR
+    _ -> doubleLayout $ do
+      setMessage "Error editing Access Point."
+      redirect $ AccessPointR apId
+    
 apForm :: Maybe AccessPoint -> Form AccessPoint
-apForm mAP = renderBootstrap4 BootstrapBasicForm $ AccessPoint
-  <$> pure (toSqlKey 1000) -- areq textField "towerid" (accessPointTowerId mAP)
-  <*> pure (toSqlKey 1000) -- areq textField "aptid" (accessPointApTypeId mAP)
-  <*> areq textField "name" (accessPointName <$> mAP)
-  <*> aopt intField "height" (accessPointHeight <$> mAP)
-  <*> aopt intField "azimuth" (accessPointAzimuth <$> mAP)
-  <*> aopt doubleField "tilt" (accessPointTilt <$> mAP)
-  <*> aopt intField "frequency" (accessPointFrequency <$> mAP)
-  <*> aopt intField "bandwidth" (accessPointChannelBandwidth <$> mAP)
-  <*> aopt intField "colorcode" (accessPointColorCode <$> mAP)
-  <*> aopt textField "ssid" (accessPointSsid <$> mAP)
-  <*> aopt textField "ip" (accessPointIp <$> mAP)
-  <*> aopt textAreaField "software" (accessPointSoftwareVersion <$> mAP)
-  <*> aopt textAreaField "backup" (accessPointBackupConfig <$> mAP)
-  <*> areq dayField "install" (accessPointInstallDate <$> mAP)
+apForm mAP = renderBootstrap5 bootstrapH $ AccessPoint
+  <$> areq (selectField towerNames) towerSettings (accessPointTowerId <$> mAP)
+  <*> areq (selectField aptNames) typeSettings (accessPointApTypeId <$> mAP)
+  <*> areq textField nameSettings (accessPointName <$> mAP)
+  <*> aopt intField heightSettings (accessPointHeight <$> mAP)
+  <*> aopt intField azimuthSettings (accessPointAzimuth <$> mAP)
+  <*> aopt doubleField tiltSettings (accessPointTilt <$> mAP)
+  <*> aopt intField frequencySettings (accessPointFrequency <$> mAP)
+  <*> aopt intField bandwidthSettings (accessPointChannelBandwidth <$> mAP)
+  <*> aopt intField colorCodeSettings (accessPointColorCode <$> mAP)
+  <*> aopt textField ssidSettings (accessPointSsid <$> mAP)
+  <*> aopt textField ipSettings (accessPointIp <$> mAP)
+  <*> aopt textField softwareSettings (accessPointSoftwareVersion <$> mAP)
+  <*> aopt textAreaField backupSettings (accessPointBackupConfig <$> mAP)
+  <*> areq dayField installSettings (accessPointInstallDate <$> mAP)
   <*> (getCurrentTime |> liftIO |> lift)
-  <*> aopt textField "mac" (accessPointMac <$> mAP)
-  <*> aopt textField "msn" (accessPointMsn <$> mAP)
+  <*> aopt textField macSettings (accessPointMac <$> mAP)
+  <*> aopt textField msnSettings (accessPointMsn <$> mAP)
   where
-    textAreaField :: Monad m => RenderMessage (HandlerSite m) FormMessage => Field m Text
-    textAreaField = Field
-      { fieldParse = parseHelper $ Right
-      , fieldView = \theId fname attrs val isReq ->
-          [whamlet|
-$newline never
-<textarea id="#{theId}" name="#{fname}" *{attrs} type="text" :isReq:required>#{either id id val}
-          |]
-      , fieldEnctype = UrlEncoded
+    -- Which way to do this?
+    towerNames = do
+      towerEntities <- runDB $ selectList [] [Asc TowerName]
+      optionsPairs $ map (\t -> (towerName $ entityVal t, entityKey t)) towerEntities
+    -- aptNames = do
+    --   aptEntities <- runDB $ getAccessPointTypeNames
+    --   optionsPairs $ map (\(Value key, Value text) -> (text, key)) aptEntities
+    aptNames = do
+      aptEntities <- runDB $ selectList [] [Asc AccessPointTypeName]
+      optionsPairs $ map (\apt -> (accessPointTypeName $ entityVal apt, entityKey apt)) aptEntities
+    towerSettings = FieldSettings
+      { fsLabel = "Tower"
+      , fsTooltip = Nothing
+      , fsId = Just "tower"
+      , fsName = Just "tower"
+      , fsAttrs =
+        [ ("class", "form-select") ]
+      }
+    typeSettings = FieldSettings
+      { fsLabel = "Type"
+      , fsTooltip = Nothing
+      , fsId = Just "type"
+      , fsName = Just "type"
+      , fsAttrs =
+        [ ("class", "form-select") ]
+      }
+    nameSettings = FieldSettings
+      { fsLabel = "Access Point Name"
+      , fsTooltip = Nothing
+      , fsId = Just "name"
+      , fsName = Just "name"
+      , fsAttrs =
+        [ ("class", "form-control")
+        , ("placeholder", "eg: bcn-3690-180")
+        ]
+      }
+    heightSettings = FieldSettings
+      { fsLabel = "Height"
+      , fsTooltip = Nothing
+      , fsId = Just "height"
+      , fsName = Just "height"
+      , fsAttrs =
+        [ ("class", "form-control")
+        , ("placeholder", "In whole number of feet, eg: 20")
+        ]
+      }
+    azimuthSettings = FieldSettings
+      { fsLabel = "Azimuth"
+      , fsTooltip = Nothing
+      , fsId = Just "azimuth"
+      , fsName = Just "azimuth"
+      , fsAttrs =
+        [ ("class", "form-control")
+        , ("placeholder", "In whole number of degrees, eg: 90")
+        ]
+      }
+    tiltSettings = FieldSettings
+      { fsLabel = "Tilt"
+      , fsTooltip = Nothing
+      , fsId = Just "tilt"
+      , fsName = Just "tilt"
+      , fsAttrs =
+        [ ("class", "form-control")
+        , ("placeholder", "In decimal number of degrees, eg: 1.25")
+        ]
+      }
+    frequencySettings = FieldSettings
+      { fsLabel = "Frequency"
+      , fsTooltip = Nothing
+      , fsId = Just "frequency"
+      , fsName = Just "frequency"
+      , fsAttrs =
+        [ ("class", "form-control")
+        , ("placeholder", "In whole number of megaherts, eg: 3590")
+        ]
+      }
+    bandwidthSettings = FieldSettings
+      { fsLabel = "Bandwidth"
+      , fsTooltip = Nothing
+      , fsId = Just "bandwidth"
+      , fsName = Just "bandwidth"
+      , fsAttrs =
+        [ ("class", "form-control")
+        , ("placeholder", "In whole number of megaherts, eg: 20")
+        ]
+      }
+    colorCodeSettings = FieldSettings
+      { fsLabel = "Color Code"
+      , fsTooltip = Nothing
+      , fsId = Just "colorCode"
+      , fsName = Just "colorCode"
+      , fsAttrs =
+        [ ("class", "form-control")
+        , ("placeholder", "An integer, eg: 5")
+        ]
+      }
+    ssidSettings = FieldSettings
+      { fsLabel = "SSID"
+      , fsTooltip = Nothing
+      , fsId = Just "ssid"
+      , fsName = Just "ssid"
+      , fsAttrs =
+        [ ("class", "form-control")
+        , ("placeholder", "SSID name, eg: bnc-south-ap")
+        ]
+      }
+    ipSettings = FieldSettings
+      { fsLabel = "IP"
+      , fsTooltip = Nothing
+      , fsId = Just "ip"
+      , fsName = Just "ip"
+      , fsAttrs =
+        [ ("class", "form-control")
+        , ("placeholder", "eg: 172.26.36.152")
+        ]
+      }
+    softwareSettings = FieldSettings
+      { fsLabel = "Software Version"
+      , fsTooltip = Nothing
+      , fsId = Just "software"
+      , fsName = Just "software"
+      , fsAttrs =
+        [ ("class", "form-control")
+        , ("placeholder", "eg: 20.3.1.1")
+        ]
+      }
+    backupSettings = FieldSettings
+      { fsLabel = "Backup File"
+      , fsTooltip = Nothing
+      , fsId = Just "backup"
+      , fsName = Just "backup"
+      , fsAttrs =
+        [ ("class", "form-control") ]
+      }
+    installSettings = FieldSettings
+      { fsLabel = "Install Date"
+      , fsTooltip = Nothing
+      , fsId = Just "install"
+      , fsName = Just "install"
+      , fsAttrs =
+        [ ("class", "form-control") ]
+      }
+    macSettings = FieldSettings
+      { fsLabel = "MAC"
+      , fsTooltip = Nothing
+      , fsId = Just "mac"
+      , fsName = Just "mac"
+      , fsAttrs =
+        [ ("class", "form-control")
+        , ("placeholder", "eg: 0a-00-3e-60-7d-be")
+        ]
+      }
+    msnSettings = FieldSettings
+      { fsLabel = "Serial Number"
+      , fsTooltip = Nothing
+      , fsId = Just "msn"
+      , fsName = Just "msn"
+      , fsAttrs =
+        [ ("class", "form-control")
+        , ("placeholder", "eg: M9WK00X4RCK2")
+        ]
       }

@@ -14,8 +14,13 @@
 module Handler.Towers where
 
 import Import -- hiding (Value)
-import Yesod.Form.Bootstrap4 (BootstrapFormLayout (..), renderBootstrap4)
-import Model.Helper
+--import Yesod.Form.Bootstrap4 (BootstrapFormLayout (..), renderBootstrap4)
+import Yesod.Form.Bootstrap5 (BootstrapFormLayout (..)
+                             , renderBootstrap5
+                             , BootstrapGridOptions(..)
+                             )
+import Helper.Model
+import Helper.Html
 import DoubleLayout
 import Text.Read (read)
 
@@ -71,7 +76,7 @@ postTowerR tId = do
       redirect $ TowerR tId
 
 towerForm :: Maybe Tower -> Form Tower
-towerForm mt = renderBootstrap4 BootstrapBasicForm $ Tower
+towerForm mt = renderBootstrap5 bootstrapH $ Tower
   <$> areq textField nameSettings (towerName <$> mt)
   <*> areq textField shortSettings (towerShortName <$> mt)
   <*> aopt doubleField latSettings (towerLatitude <$> mt)

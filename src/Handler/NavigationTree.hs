@@ -17,8 +17,7 @@ module Handler.NavigationTree where
 import Import hiding (Value)
 import Database.Esqueleto.Experimental as E
 import qualified Data.Text as Text
-
-import Model.Helper
+import Helper.Model
 
 getNavigationTreeR :: Handler Html
 getNavigationTreeR = defaultLayout $ do

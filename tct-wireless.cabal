@@ -31,12 +31,14 @@ library
       Handler.NavigationTree
       Handler.Profile
       Handler.Towers
+      Helper.Html
+      Helper.Model
       Import
       Import.NoFoundation
       Model
-      Model.Helper
       Settings
       Settings.StaticFiles
+      Yesod.Form.Bootstrap5
   other-modules:
       Paths_tct_wireless
   hs-source-dirs:
@@ -44,6 +46,7 @@ library
   build-depends:
       aeson ==1.4.*
     , base >=4.9.1.0 && <5
+    , blaze-html
     , bytestring ==0.10.*
     , case-insensitive
     , classy-prelude ==1.5.*
@@ -103,6 +106,7 @@ executable tct-wireless
   build-depends:
       aeson ==1.4.*
     , base >=4.9.1.0 && <5
+    , blaze-html
     , bytestring ==0.10.*
     , case-insensitive
     , classy-prelude ==1.5.*
@@ -165,6 +169,7 @@ test-suite tct-wireless-test
   build-depends:
       aeson ==1.4.*
     , base >=4.9.1.0 && <5
+    , blaze-html
     , bytestring ==0.10.*
     , case-insensitive
     , classy-prelude ==1.5.*

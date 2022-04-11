@@ -7,7 +7,11 @@
 module Handler.AccessPointTypes where
 
 import Import
-import Yesod.Form.Bootstrap4 (BootstrapFormLayout (..), renderBootstrap4)
+import Yesod.Form.Bootstrap5 (BootstrapFormLayout (..)
+                             , renderBootstrap5
+                             , BootstrapGridOptions(..)
+                             )
+import Helper.Html
 import DoubleLayout
 
 getAccessPointTypesR :: Handler Html
@@ -18,7 +22,9 @@ getAccessPointTypesR = do
     setTitle "AP Types"
 --    $(widgetFile "ap_types/ap_types")
     [whamlet|
-<h1 class="display-1 text-center">Access Point Types
+<h2 class="text-center">Access Point Types
+<div class="mt-3 mb-3">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">New AP Type
 <table class="table table-striped table-responsive mb-3 mt-3">
   <thead>
     <tr>
@@ -27,8 +33,6 @@ getAccessPointTypesR = do
     $forall Entity aptId apt <- allAPTypes
       <tr>
         <td><a href=@{AccessPointTypeR aptId}>#{accessPointTypeName apt}
-<div class="btn-group mt-3 mb-3" role="group">
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">New AP Type
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -39,9 +43,8 @@ getAccessPointTypesR = do
         <form class="form mt-3 mb-3" method=POST action=@{AccessPointTypesR} enctype=#{enctype}>
           ^{widget}
           <div class="form mt-3 mb-3">
-            <div class="btn-group" role="group">
-              <a href=@{AccessPointTypesR} class="btn btn-warning">Discard Changes
-              <button class="btn btn-primary" type="submit" name="action" value="save">Save AP Type
+            <button class="btn btn-warning" type="button" data-bs-dismiss="modal"">Close
+            <button class="btn btn-primary" type="submit" name="action" value="save">Save AP Type
     |]
     
 postAccessPointTypesR :: Handler Html
@@ -62,14 +65,14 @@ getAccessPointTypeR aptId = do
   doubleLayout $ do
     setTitle "Acess Point Type"
     [whamlet|
-<h1 class="display-1 text-center">#{accessPointTypeName apt}
+<h2 class="text-center">#{accessPointTypeName apt}
+<div class="mt-3 mb-3">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit
 <table class="table table-responsive table-bordered table-striped mt-3 mb-3">
   <tbody>
     <tr>
       <th scope="row">Name
       <td>#{accessPointTypeName apt}
-<div class="btn-group mt-3 mb-3" role="group">
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -80,9 +83,8 @@ getAccessPointTypeR aptId = do
         <form class="form mt-3 mb-3" method=POST action=@{AccessPointTypeR aptId} enctype=#{enctype}>
           ^{widget}
           <div class="form mt-3 mb-3">
-            <div class="btn-group" role="group">
               <button class="btn btn-danger" type="submit" name="action" value="delete">Delete #{accessPointTypeName apt}
-              <button class="btn btn-warning" type="submit" name="action" value="discard-changes">Discard Changes
+              <button class="btn btn-warning" type="button" data-bs-dismiss="modal"">Close
               <button class="btn btn-primary" type="submit" name="action" value="save">Save Changes
     |]
 
@@ -107,12 +109,19 @@ postAccessPointTypeR aptId = do
       redirect $ AccessPointTypeR aptId
 
 accessPointTypeForm :: Maybe AccessPointType -> Form AccessPointType
-accessPointTypeForm mapt = renderBootstrap4 BootstrapBasicForm $ AccessPointType
+accessPointTypeForm mapt = renderBootstrap5 bootstrapH $ AccessPointType
   <$> areq textField nameSettings (accessPointTypeName <$> mapt)
 --  <* bootstrapSubmit (BootstrapSubmit ("Delete" :: Text) "btn btn-danger" [("name", "action"), ("value", "delete")])
 --  <* bootstrapSubmit (BootstrapSubmit ("Discard Changes" :: Text) "btn btn-warning" [("name", "action"), ("value", "discard-changes")])
 --  <* bootstrapSubmit (BootstrapSubmit ("Save" :: Text) "btn btn-primary" [("name", "action"), ("value", "save")])
-  where nameSettings = FieldSettings
+  where
+    bootstrapH = BootstrapHorizontalForm
+      { bflLabelOffset = ColSm 0
+      , bflLabelSize = ColSm 4
+      , bflInputOffset = ColSm 0
+      , bflInputSize = ColSm 8
+      }
+    nameSettings = FieldSettings
           { fsLabel = "Access Point Type"
           , fsTooltip = Nothing
           , fsId = Just "name"

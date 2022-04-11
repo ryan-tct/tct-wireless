@@ -1,4 +1,4 @@
-<h2 class="display-1 text-center">#{accessPointName ap}
+<h2 class="text-center">#{accessPointName ap}
 <div class="mt-3 mb-3" role="group">
   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editAPModal">Edit #{accessPointName ap}
 <table class="table table-responsive table-bordered table-striped mt-3 mb-3">
@@ -88,12 +88,12 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editAPTitle">New Access Point</h5>
+        <h5 class="modal-title" id="editAPTitle">Edit Access Point</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       <div class="modal-body">
         <form class="form mt-3 mb-3" method=POST action=@{AccessPointR apId} enctype=#{enctype}>
           ^{widget}
           <div class="form mt-3 mb-3">
-            <div class="btn-group" role="group">
-              <button class="btn btn-warning" type="button" data-bs-dismiss="modal">Close
-              <button class="btn btn-primary" type="submit" name="action" value="save">Save
+            <button class="btn btn-danger" type="submit" name="action" value="delete">Delete
+            <button class="btn btn-warning" type="button" data-bs-dismiss="modal">Close
+            <button class="btn btn-primary" type="submit" name="action" value="save">Save

@@ -1,15 +1,42 @@
 #+TITLE: Todos
 #+AUTHOR: Ryan Jensen
 
-* TODO Add dropdowns for APTypes and Towers to new/edit Access Points form
-* TODO Add formatting to new/edit AP form
-* TODO Refactor Navigation Tree
+* DONE Add POST methods for Access Points
+* DONE Add dropdowns for APTypes and Towers to new/edit Access Points form
+** DONE Auto select tower/apt when appropriate
+* DONE Add formatting to new/edit AP form
+* DONE Refactor Navigation Tree
   Put in a helper module
-* TODO Refactor/Add Database Helper Module
+* DONE Refactor/Add Database Helper Module
+* TODO Add Access Point from Tower
 * TODO Add Tower Types
-** TODO Add Page
-** TODO Add Dropdown select to new/edit Tower page
-** TODO Add Types dropdown to UI
-   Include Tower Types and Access Point Types
-
-
+** TODO Add List Page
+** TODO Add new Modal
+** TODO Add View Page
+** TODO Add Edit Modal
+** TODO Add TO UI Navbar
+** TODO Add Breadcrumbs
+** TODO Change DB to use list
+** TODO Change Tower to use lists
+* TODO Adjustable NavigationTree Pane
+* TODO Fix errors on insert/update/delete
+* TODO Add Backup fields
+* TODO Add Comments fields
+* TODO Add documentation link fields
+* TODO Indentation on Files
+* TODO Add SM
+** TODO Add SM Types
+*** TODO Add List Page
+*** TODO Add New Modal
+*** TODO Add View Page
+*** TODO Add Edit Modal
+*** TODO Add to UI dropdown
+*** TODO Add Breadcrumbs
+** TODO Add List Page
+** TODO Add new Modal
+** TODO Add View Page
+** TODO Add Edit Modal
+** TODO Add TO UI Navbar
+** TODO Add Breadcrumbs
+* TODO Edit Permissions
+* TODO Move Access Point Types to widget files
