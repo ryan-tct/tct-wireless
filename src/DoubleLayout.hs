@@ -44,6 +44,11 @@ doubleLayout widget = do
           , menuItemAccessCallback = True
           }
         , NavbarLeft $ MenuItem
+          { menuItemLabel = "Tower Types"
+          , menuItemRoute = TowerTypesR
+          , menuItemAccessCallback = True
+          }
+        , NavbarLeft $ MenuItem
           { menuItemLabel = "Access Points"
           , menuItemRoute = AccessPointsR
           , menuItemAccessCallback = True

@@ -8,16 +8,18 @@
 * DONE Refactor Navigation Tree
   Put in a helper module
 * DONE Refactor/Add Database Helper Module
-* TODO Add Access Point from Tower
-* TODO Add Tower Types
-** TODO Add List Page
-** TODO Add new Modal
-** TODO Add View Page
-** TODO Add Edit Modal
-** TODO Add TO UI Navbar
-** TODO Add Breadcrumbs
-** TODO Change DB to use list
-** TODO Change Tower to use lists
+* DONE Add Access Point from Tower
+  Not really done, but a link to where to do it.
+* DONE Add Tower Types
+** DONE Setup Database
+** DONE Add List Page
+** DONE Add new Modal
+** DONE Add View Page
+** DONE Add Edit Modal
+** DONE Add TO UI Navbar
+** DONE Add Breadcrumbs
+** DONE Change DB to use list
+** DONE Change Tower to use lists
 * TODO Adjustable NavigationTree Pane
 * TODO Fix errors on insert/update/delete
 * TODO Add Backup fields
@@ -39,4 +41,9 @@
 ** TODO Add TO UI Navbar
 ** TODO Add Breadcrumbs
 * TODO Edit Permissions
+* TODO Look into dropdowns for navbar
+** TODO Also consider links from tower to tower type for example
 * TODO Move Access Point Types to widget files
+* TODO Set Homepage
+* TODO Put in license and copyright
+* TODO Tables to csv etc.

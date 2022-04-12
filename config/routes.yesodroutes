@@ -8,25 +8,20 @@
 /robots.txt RobotsR GET
 
 / HomeR GET POST
-
 /comments CommentR POST
-
 /profile ProfileR GET
-
--- /access-point-types AccessPointTypesR GET
--- !/access-point-types/#AccessPointTypeId AccessPointTypeR GET
--- !/access-point-types/new NewAccessPointTypeR GET POST
--- /access-point-types/#AccessPointTypeId/edit EditAccessPointTypeR GET POST
--- /apt APTsR GET POST
--- /apt/#AccessPointTypeId APTR GET POST
 
 /towers TowersR GET POST
 /towers/#TowerId TowerR GET POST
+/tower-types TowerTypesR GET POST
+/tower-types/#TowerTypeId TowerTypeR GET POST
 
 /access-points AccessPointsR GET POST
 /access-points/#AccessPointId AccessPointR GET POST
-
 /access-point-types AccessPointTypesR GET POST
 /access-point-types/#AccessPointTypeId AccessPointTypeR GET POST
+
+/access-points/#AccessPointId/backups APBackupsR GET POST
+/access-points/#AccessPointId/backups/#BackupId BackupR GET
 
 /navigation-tree NavigationTreeR GET

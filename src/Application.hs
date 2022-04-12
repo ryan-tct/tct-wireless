@@ -45,8 +45,10 @@ import Handler.Home
 import Handler.Comment
 import Handler.Profile
 import Handler.Towers
+import Handler.TowerTypes
 import Handler.AccessPoints
 import Handler.AccessPointTypes
+import Handler.Backups
 import Handler.NavigationTree
 
 -- This line actually creates our YesodDispatch instance. It is the second half

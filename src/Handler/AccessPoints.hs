@@ -46,7 +46,7 @@ postAccessPointsR = do
       redirect AccessPointsR
     _ -> do
       doubleLayout [whamlet|<p>Something went wrong!
-                           <p>#{show result}|]
+                            <p>#{show result}|]
 
 getAccessPointR :: AccessPointId -> Handler Html
 getAccessPointR apId = do
@@ -59,7 +59,6 @@ getAccessPointR apId = do
   doubleLayout $ do
     setTitle "Access Point"
     $(widgetFile "accessPoints/accessPoint")
-
 
 postAccessPointR :: AccessPointId -> Handler Html
 postAccessPointR apId = do
@@ -79,8 +78,11 @@ postAccessPointR apId = do
       redirect $ AccessPointR apId
     
 apForm :: Maybe AccessPoint -> Form AccessPoint
-apForm mAP = renderBootstrap5 bootstrapH $ AccessPoint
-  <$> areq (selectField towerNames) towerSettings (accessPointTowerId <$> mAP)
+apForm mAP = apTowerForm Nothing mAP
+
+apTowerForm :: Maybe TowerId -> Maybe AccessPoint -> Form AccessPoint
+apTowerForm mTID mAP = renderBootstrap5 bootstrapH $ AccessPoint
+  <$> areq (selectField towerNames) towerSettings (chooseTowerId mTID mAP)
   <*> areq (selectField aptNames) typeSettings (accessPointApTypeId <$> mAP)
   <*> areq textField nameSettings (accessPointName <$> mAP)
   <*> aopt intField heightSettings (accessPointHeight <$> mAP)
@@ -108,6 +110,11 @@ apForm mAP = renderBootstrap5 bootstrapH $ AccessPoint
     aptNames = do
       aptEntities <- runDB $ selectList [] [Asc AccessPointTypeName]
       optionsPairs $ map (\apt -> (accessPointTypeName $ entityVal apt, entityKey apt)) aptEntities
+    chooseTowerId :: Maybe TowerId -> Maybe AccessPoint -> Maybe TowerId
+    chooseTowerId Nothing Nothing = Nothing
+    chooseTowerId Nothing (Just ap) = Just (accessPointTowerId ap)
+    chooseTowerId (Just tid) Nothing = Just tid
+    chooseTowerId (Just tid) (Just ap) = Just (accessPointTowerId ap)
     towerSettings = FieldSettings
       { fsLabel = "Tower"
       , fsTooltip = Nothing

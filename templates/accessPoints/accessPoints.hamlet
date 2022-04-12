@@ -1,4 +1,4 @@
-<h2 class="display-1 text-center">Access Points
+<h2 class="text-center">Access Points
 <div class="btn-group mt-3 mb-3" role="group">
   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newAPModal">New AP
 <table class="table table-striped table-responsive mt-3 mb-3">

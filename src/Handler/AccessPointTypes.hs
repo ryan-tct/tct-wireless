@@ -37,7 +37,7 @@ getAccessPointTypesR = do
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">New AP Type</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       <div class="modal-body">
         <form class="form mt-3 mb-3" method=POST action=@{AccessPointTypesR} enctype=#{enctype}>

@@ -1,11 +1,9 @@
 -- By default this file is used by `persistFileWith` in Model.hs (which is imported by Foundation.hs)
 -- Syntax for this file here: https://github.com/yesodweb/persistent/blob/master/docs/Persistent-entity-syntax.md
 
-AccessPointType sql=ap_types
-    name Text
-    deriving Eq
-    deriving Show
-    deriving Typeable
+TowerType sql=tower_types
+  name Text
+  deriving Eq Show Typeable
 
 Tower sql=towers
     name Text
@@ -15,7 +13,7 @@ Tower sql=towers
     address Text Maybe
     height Int Maybe
     baseDimensions Text Maybe sql=base_dimensions
-    type Text Maybe
+    towerTypeId TowerTypeId Maybe sql=type
     buildingDimensions Text Maybe sql=building_dimensions
     accessInfo Text Maybe sql=access_info
     leaseInfo Text Maybe sql=lease_info
@@ -24,6 +22,10 @@ Tower sql=towers
     updatedAt UTCTime sql=updated_at
     deriving Eq Show Typeable
 
+AccessPointType sql=ap_types
+    name Text
+    deriving Eq Show Typeable
+    
 AccessPoint sql=access_points
     towerId TowerId sql=towerid
     apTypeId AccessPointTypeId sql=aptypeid
@@ -42,4 +44,10 @@ AccessPoint sql=access_points
     updatedAt UTCTime sql=updated_at
     mac Text Maybe
     msn Text Maybe
+    deriving Eq Show Typeable
+
+Backup sql=backups
+    filename Text
+    payload ByteString
+    updatedAt UTCTime sql=updated_at
     deriving Eq Show Typeable

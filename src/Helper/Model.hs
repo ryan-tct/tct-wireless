@@ -49,4 +49,8 @@ getAccessPointTypeNames = select $ do
 
 unValueSwap vs = map (\(Value key, Value text) -> (text, key)) vs
 
---keyToText key = key |>fromSqlKey |> show |> T.pack
+getAPBackups :: AccessPointId -> DB [( Value BackupId
+                                     , Value Text
+                                     , Value ByteString
+                                     , Value UTCTime)]
+getAPBackups apId = undefined

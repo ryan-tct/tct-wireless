@@ -126,6 +126,11 @@ instance Yesod App where
                     , menuItemAccessCallback = True
                     }
                 , NavbarLeft $ MenuItem
+                    { menuItemLabel = "Tower Types"
+                    , menuItemRoute = TowerTypesR
+                    , menuItemAccessCallback = True
+                    }
+                , NavbarLeft $ MenuItem
                     { menuItemLabel = "Access Points"
                     , menuItemRoute = AccessPointsR
                     , menuItemAccessCallback = True
@@ -253,6 +258,8 @@ instance YesodBreadcrumbs App where
     breadcrumb ProfileR = return ("Profile", Just HomeR)
     breadcrumb TowersR = return ("Towers", Just HomeR)
     breadcrumb (TowerR tId) = return (keyToText tId, Just TowersR)
+    breadcrumb TowerTypesR = return ("Tower Types", Just HomeR)
+    breadcrumb (TowerTypeR ttId) = return (keyToText ttId, Just TowerTypesR)
     breadcrumb AccessPointsR = return ("Access Points", Just HomeR)
     breadcrumb (AccessPointR apId) = return (keyToText apId, Just AccessPointsR)
     breadcrumb AccessPointTypesR = return ("Access Point Types", Just HomeR)
@@ -260,7 +267,6 @@ instance YesodBreadcrumbs App where
     breadcrumb  _ = return ("Home", Nothing)
 
 keyToText key = key |>fromSqlKey |> show |> T.pack
-
 
 -- How to run database actions.
 instance YesodPersist App where

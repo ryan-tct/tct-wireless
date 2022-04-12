@@ -25,12 +25,14 @@ library
       Foundation
       Handler.AccessPoints
       Handler.AccessPointTypes
+      Handler.Backups
       Handler.Comment
       Handler.Common
       Handler.Home
       Handler.NavigationTree
       Handler.Profile
       Handler.Towers
+      Handler.TowerTypes
       Helper.Html
       Helper.Model
       Import
@@ -53,6 +55,7 @@ library
     , classy-prelude-conduit ==1.5.*
     , classy-prelude-yesod ==1.5.*
     , conduit >=1.0 && <2.0
+    , conduit-extra
     , containers
     , data-default
     , directory >=1.1 && <1.4
@@ -113,6 +116,7 @@ executable tct-wireless
     , classy-prelude-conduit ==1.5.*
     , classy-prelude-yesod ==1.5.*
     , conduit >=1.0 && <2.0
+    , conduit-extra
     , containers
     , data-default
     , directory >=1.1 && <1.4
@@ -176,6 +180,7 @@ test-suite tct-wireless-test
     , classy-prelude-conduit ==1.5.*
     , classy-prelude-yesod ==1.5.*
     , conduit >=1.0 && <2.0
+    , conduit-extra
     , containers
     , data-default
     , directory >=1.1 && <1.4

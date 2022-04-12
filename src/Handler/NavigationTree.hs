@@ -61,8 +61,10 @@ showTree = do
   padding-left: 2.0rem;
 }
 .left-nav {
-  overflow-y: scroll;
-  min-width: 250px;
+  min-width: 100px;
+  max-width: 400px;
+  margin-right: 1rem;
+  outline: 1px solid gray;
 }
            |]
 
@@ -90,7 +92,7 @@ showAPLinks towerId = do
     <li>
       <button class="btn btn-toggle btn-navtree-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target=#{"#" ++ (webFormat name)}-collapse aria-expanded="false">
       <i class="fa-solid fa-wifi">
-      <a href="">#{name}
+      <a href=@{AccessPointR apId}>#{name}
       <div id=#{webFormat name}-collapse class="collapse" style="">
           |]
 

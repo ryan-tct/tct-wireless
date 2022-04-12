@@ -14,7 +14,6 @@
 module Handler.Towers where
 
 import Import -- hiding (Value)
---import Yesod.Form.Bootstrap4 (BootstrapFormLayout (..), renderBootstrap4)
 import Yesod.Form.Bootstrap5 (BootstrapFormLayout (..)
                              , renderBootstrap5
                              , BootstrapGridOptions(..)
@@ -55,6 +54,11 @@ getTowerR tId = do
     setTitle "Tower"
     $(widgetFile "towers/tower")
 
+getTowerType :: TowerTypeId -> Widget
+getTowerType ttId = do
+  tt <- handlerToWidget $ runDB $ get404 ttId
+  [whamlet|<a href=@{TowerTypeR ttId}>#{towerTypeName tt}|]
+
 postTowerR :: TowerId -> Handler Html
 postTowerR tId = do
   ((result, _), _) <- runFormPost (towerForm Nothing)
@@ -84,7 +88,8 @@ towerForm mt = renderBootstrap5 bootstrapH $ Tower
   <*> aopt textField addressSettings (towerAddress <$> mt)
   <*> aopt intField heightSettings (towerHeight <$> mt)
   <*> aopt textField baseDimSettings (towerBaseDimensions <$> mt)
-  <*> aopt textField typeSettings (towerType <$> mt)
+  <*> aopt (selectField towerTypes) typeSettings (towerTowerTypeId <$> mt)
+--  <*> aopt textField typeSettings (towerTowerTypeId <$> mt)
   <*> aopt textField buildingDimSettings (towerBuildingDimensions <$> mt)
   <*> aopt textAreaField accessInfoSettings (towerAccessInfo <$> mt)
   <*> aopt textAreaField leaseInfoSettings (towerLeaseInfo <$> mt)
@@ -92,6 +97,9 @@ towerForm mt = renderBootstrap5 bootstrapH $ Tower
   <*> areq dayField installDateSettings (towerCreatedAt <$> mt)
   <*> (getCurrentTime |> liftIO |> lift)
   where
+    towerTypes = do
+      towerTypeEntities <- runDB $ selectList [] [Asc TowerTypeName]
+      optionsPairs $ map (\tt -> (towerTypeName $ entityVal tt, entityKey tt)) towerTypeEntities
     nameSettings = FieldSettings
       { fsLabel = "Tower Name"
       , fsTooltip = Nothing
@@ -168,9 +176,7 @@ towerForm mt = renderBootstrap5 bootstrapH $ Tower
       , fsId = Just "tower-type"
       , fsName = Just "tower-type"
       , fsAttrs =
-        [ ("class", "form-control")
-        , ("placeholder", "Text, eg: Monopole")
-        ]
+        [ ("class", "form-select") ]
       }
     buildingDimSettings = FieldSettings
       { fsLabel = "Building Dimensions"
@@ -221,17 +227,6 @@ towerForm mt = renderBootstrap5 bootstrapH $ Tower
         [ ("class", "form-control")
         ]
       }
-    textAreaField :: Monad m => RenderMessage (HandlerSite m) FormMessage => Field m Text
-    textAreaField = Field
-      { fieldParse = parseHelper $ Right
-      , fieldView = \theId fname attrs val isReq ->
-          [whamlet|
-$newline never
-<textarea id="#{theId}" name="#{fname}" *{attrs} type="text" :isReq:required>#{either id id val}
-          |]
-      , fieldEnctype = UrlEncoded
-      }
 
-
-myTestTower :: Tower
-myTestTower = Tower {towerName = "Beacon", towerShortName = "bcn", towerLatitude = Just 44.522622, towerLongitude = Just (-109.008959), towerAddress = Just "104 Beacon Hill Rd, Cody, WY", towerHeight = Just 20, towerBaseDimensions = Just "18", towerType = Just "Mono Pole", towerBuildingDimensions = Just "No building on site.", towerAccessInfo = Nothing, towerLeaseInfo = Just "Tower owned by TCT. Site leased from Jim Nicholson: PO Box 3212, Cody, WY 82414.", towerPowerCompanyInfo = Nothing, towerCreatedAt = read "2021-07-28", towerUpdatedAt = read "2022-03-24 18:37:06.449384"}
+-- myTestTower :: Tower
+-- myTestTower = Tower {towerName = "Beacon", towerShortName = "bcn", towerLatitude = Just 44.522622, towerLongitude = Just (-109.008959), towerAddress = Just "104 Beacon Hill Rd, Cody, WY", towerHeight = Just 20, towerBaseDimensions = Just "18", towerTowerTypeId = Just "Mono Pole", towerBuildingDimensions = Just "No building on site.", towerAccessInfo = Nothing, towerLeaseInfo = Just "Tower owned by TCT. Site leased from Jim Nicholson: PO Box 3212, Cody, WY 82414.", towerPowerCompanyInfo = Nothing, towerCreatedAt = read "2021-07-28", towerUpdatedAt = read "2022-03-24 18:37:06.449384"}
