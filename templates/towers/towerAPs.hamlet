@@ -1,0 +1,9 @@
+<h2 class="text-center">Access Points on #{towerName t}
+<div class="mt-3 mb-3" role="group">
+  <a href=@{AccessPointsR} type="button" class="btn btn-primary">New Access Point
+<table class="table table-responsive table-bordered table-striped mt-3 mb-3">
+  <tbody>
+    $forall (Value apId, Value apName) <- apNames
+      <tr>
+        <th scope="row">Access Point
+        <td><a href=@{AccessPointR apId}>#{apName}

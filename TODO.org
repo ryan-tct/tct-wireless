@@ -22,7 +22,7 @@
 ** DONE Change Tower to use lists
 * TODO Adjustable NavigationTree Pane
 * TODO Fix errors on insert/update/delete
-* TODO Add Backup fields
+* DONE Add Backup fields
 * TODO Add Comments fields
 * TODO Add documentation link fields
 * TODO Indentation on Files

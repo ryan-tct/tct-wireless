@@ -258,12 +258,15 @@ instance YesodBreadcrumbs App where
     breadcrumb ProfileR = return ("Profile", Just HomeR)
     breadcrumb TowersR = return ("Towers", Just HomeR)
     breadcrumb (TowerR tId) = return (keyToText tId, Just TowersR)
+    breadcrumb (TowerAPsR tid) = return ("Access Points", Just (TowerR tid))
     breadcrumb TowerTypesR = return ("Tower Types", Just HomeR)
     breadcrumb (TowerTypeR ttId) = return (keyToText ttId, Just TowerTypesR)
     breadcrumb AccessPointsR = return ("Access Points", Just HomeR)
     breadcrumb (AccessPointR apId) = return (keyToText apId, Just AccessPointsR)
     breadcrumb AccessPointTypesR = return ("Access Point Types", Just HomeR)
     breadcrumb (AccessPointTypeR aptId) = return (keyToText aptId, Just AccessPointTypesR)
+    breadcrumb BackupsR = return ("Backups", Just HomeR)
+    breadcrumb (APBackupsR apId) = return ("Backups", Just (AccessPointR apId))
     breadcrumb  _ = return ("Home", Nothing)
 
 keyToText key = key |>fromSqlKey |> show |> T.pack

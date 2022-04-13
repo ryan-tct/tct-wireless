@@ -13,8 +13,10 @@
 
 /towers TowersR GET POST
 /towers/#TowerId TowerR GET POST
+/towers/#TowerId/access-points/ TowerAPsR GET
 /tower-types TowerTypesR GET POST
 /tower-types/#TowerTypeId TowerTypeR GET POST
+
 
 /access-points AccessPointsR GET POST
 /access-points/#AccessPointId AccessPointR GET POST
@@ -22,6 +24,8 @@
 /access-point-types/#AccessPointTypeId AccessPointTypeR GET POST
 
 /access-points/#AccessPointId/backups APBackupsR GET POST
-/access-points/#AccessPointId/backups/#BackupId BackupR GET
+
+/backups BackupsR GET POST
+/backups/#BackupId BackupR GET
 
 /navigation-tree NavigationTreeR GET

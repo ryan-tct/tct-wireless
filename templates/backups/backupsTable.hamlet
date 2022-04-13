@@ -1,0 +1,10 @@
+<table class="table table-striped table-responsive mb-3 mt-3">
+  <thead>
+    <tr>
+      <th>Name
+      <th>Created At
+  <tbody>
+    $forall (Single bId, Single createdAt, Single filename) <- allBackups
+      <tr>
+        <td><a href=@{BackupR bId}>#{filename}
+        <td>#{show $ createdAt}

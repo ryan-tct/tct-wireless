@@ -28,7 +28,7 @@ getAllTowers = selectList [] [Asc TowerName]
 
 getTowersR :: Handler Html
 getTowersR = do
-  allTowers <- runDB  getAllTowers
+  allTowers <- runDB getAllTowers
   (widget, enctype) <- generateFormPost (towerForm Nothing)
   doubleLayout $ do
     setTitle "Towers"
@@ -44,6 +44,14 @@ postTowersR = do
       redirect TowersR
 -- TODO: FIXME
     _ -> doubleLayout [whamlet|Someting went wrong!|]
+
+getTowerAPsR :: TowerId -> Handler Html
+getTowerAPsR tId = do
+  t <- runDB $ get404 tId
+  apNames <- runDB $ getAPNamesFor tId
+  doubleLayout $ do
+    setTitle $ "APs on " <> toHtml (towerName t)
+    $(widgetFile "towers/towerAPs")
 
 getTowerR :: TowerId -> Handler Html
 getTowerR tId = do

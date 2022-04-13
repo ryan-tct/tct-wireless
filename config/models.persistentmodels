@@ -48,6 +48,7 @@ AccessPoint sql=access_points
 
 Backup sql=backups
     filename Text
+    contentType Text sql=content_type
     payload ByteString
     updatedAt UTCTime sql=updated_at
     deriving Eq Show Typeable
