@@ -1,0 +1,7 @@
+<form class="form mt-3 mb-3" method=POST action=@{TowerR tId} enctype=#{enctype}>
+  ^{widget}
+  <div class="form mt-3 mb-3">
+    <div role="group">
+      <button class="btn btn-danger" type="submit" name="action" value="delete">Delete #{towerName t}
+      <button class="btn btn-warning" type="submit" name="action" value="discard-changes">Discard Changes
+      <button class="btn btn-primary" type="submit" name="action" value="save">Save Changes

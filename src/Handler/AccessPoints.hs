@@ -6,6 +6,7 @@
 {-# LANGUAGE QuasiQuotes       #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE RankNTypes #-}
 module Handler.AccessPoints where
 
 import Import hiding (Value)
@@ -16,6 +17,11 @@ import Yesod.Form.Bootstrap5 (BootstrapFormLayout (..)
 import DoubleLayout
 import Helper.Model
 import Helper.Html
+
+import Database.Esqueleto.Experimental as E hiding(delete, isNothing)
+import Data.Conduit.Binary
+import qualified Data.Text as T
+import qualified Data.Text.Encoding as T
 
 getAllAccessPoints :: DB [Entity AccessPoint]
 getAllAccessPoints = selectList [] [Asc AccessPointName]
@@ -51,14 +57,21 @@ postAccessPointsR = do
 getAccessPointR :: AccessPointId -> Handler Html
 getAccessPointR apId = do
   ap <- runDB $ get404 apId
-  let tId = accessPointTowerId ap
-  let aptId = accessPointApTypeId ap
-  tower <-  runDB $ get404 tId
-  apType <- runDB $ get404 aptId
-  (widget, enctype) <- generateFormPost (apForm (Just ap))
   doubleLayout $ do
     setTitle "Access Point"
     $(widgetFile "accessPoints/accessPoint")
+  where
+    apTableWidget ap = do
+      let tId = accessPointTowerId ap
+      let aptId = accessPointApTypeId ap
+      tower <-  handlerToWidget $ runDB $ get404 tId
+      apType <- handlerToWidget $ runDB $ get404 aptId
+      (widget, enctype) <- handlerToWidget $ generateFormPost (apForm (Just ap))
+      $(widgetFile "accessPoints/accessPointTable")
+    apBackupsWidget = do
+      allBackups <- handlerToWidget $ runDB $ getAllAPBackups apId
+      (backupWidget, backupEnctype) <- handlerToWidget $ generateFormPost apBackupForm
+      $(widgetFile "accessPoints/apBackupTable")      
 
 postAccessPointR :: AccessPointId -> Handler Html
 postAccessPointR apId = do
@@ -267,3 +280,34 @@ apTowerForm mTID mAP = renderBootstrap5 bootstrapH $ AccessPoint
         , ("placeholder", "eg: M9WK00X4RCK2")
         ]
       }
+
+getAllAPBackups :: AccessPointId -> DB [(Single BackupId,Single UTCTime,Single Text)]
+getAllAPBackups apId = rawSql "SELECT backupid,updated_at,filename FROM aps_backups WHERE apid=? ORDER BY updated_at DESC" [PersistText (keyToText apId)]
+
+postAPBackupsR :: AccessPointId -> Handler Html
+postAPBackupsR apId = do
+  ((result, _), _) <- runFormPost apBackupForm
+  case result of
+    FormSuccess b -> do
+      --TODO: Clean this up
+      bytes <- connect (b |> fileInfo |> fileSource) sinkLbs
+      let
+        myFN = fileName $ fileInfo b
+        myUpdatedAt = createdAt b
+        myContentType = fileContentType $ fileInfo b
+      bId <- runDB $ insert $ Backup myFN myContentType (bytes |> toStrict) myUpdatedAt
+      _ <- runDB $ rawExecute "insert into accesspoint_backup (accesspointid, backupid) values (?,?)" [PersistText (keyToText apId), PersistText (keyToText bId)]
+      setMessage "Backup saved."
+      redirect $ AccessPointR apId
+    _ -> doubleLayout [whamlet|Someting went wrong!|]
+
+data BackupForm = BackupForm
+  { fileInfo :: FileInfo
+  , createdAt :: UTCTime
+  }
+  
+apBackupForm :: Form BackupForm
+apBackupForm = renderBootstrap5 bootstrapH $ BackupForm
+  <$> fileAFormReq "Choose a file"
+  <*> (getCurrentTime |> liftIO |> lift)
+  

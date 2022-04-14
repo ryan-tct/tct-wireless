@@ -47,3 +47,7 @@
 * TODO Set Homepage
 * TODO Put in license and copyright
 * TODO Tables to csv etc.
+* TODO Add more info on APs in Tower view?
+* TODO Move buttons to bottom on all views
+* TODO Move tower_types to towers in pill navigation?
+* TODO Change classes to use .syntax

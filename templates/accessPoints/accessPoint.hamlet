@@ -1,101 +1,19 @@
 <h2 class="text-center">#{accessPointName ap}
-<div class="mt-3 mb-3">
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editAPModal">Edit #{accessPointName ap}
-<table class="table table-responsive table-bordered table-striped mt-3 mb-3">
-  <tbody>
-    <tr>
-      <th scope="row">Name
-      <td>#{accessPointName ap}
-    <tr>
-      <th scope="row">IP
-      $maybe ip <- accessPointIp ap
-        <td><a target="_blank" rel="noopener noreferrer" href=#{"http://" ++ ip}>#{ip}
-      $nothing
-        <td>
-    <tr>
-      <th scope="row">Tower
-      <td><a href=@{TowerR tId}>#{towerName tower}
-    <tr>
-      <th scopoe="row">Type
-      <td><a href=@{AccessPointTypeR aptId}>#{accessPointTypeName apType}
-    <tr>
-      <th scope="row">Height
-      $maybe height <- accessPointHeight ap
-        <td>#{height}
-      $nothing
-        <td>
-    <tr>
-      <th scope="row">Azimuth
-      $maybe azimuth <- accessPointAzimuth ap
-        <td>#{azimuth}
-      $nothing
-        <td>
-    <tr>
-      <th scope="row">Tilt
-      $maybe tilt <- accessPointTilt ap
-        <td>#{tilt}
-      $nothing
-        <td>
-    <tr>
-      <th scope="row">Frequency
-      $maybe freq <- accessPointFrequency ap
-        <td>#{freq}
-      $nothing
-        <td>
-    <tr>
-      <th scope="row">Bandwidth
-      $maybe bandwidth <- accessPointChannelBandwidth ap
-        <td>#{bandwidth}
-      $nothing
-        <td>
-    <tr>
-      <th scope="row">Color Code
-      $maybe colorCode <- accessPointColorCode ap
-        <td>#{colorCode}
-      $nothing
-        <td>
-    <tr>
-      <th scope="row">SSID
-      $maybe ssid <- accessPointSsid ap
-        <td>#{ssid}
-      $nothing
-        <td>
-    <tr>
-      <th scope="row">Software Version
-      $maybe softVer <- accessPointSoftwareVersion ap
-        <td>#{softVer}
-      $nothing
-        <td>
-    <tr>
-      <th scope="row">MAC
-      $maybe mac <- accessPointMac ap
-        <td>#{mac}
-      $nothing
-        <td>
-    <tr>
-      <th scope="row">Serial Number
-      $maybe msn <- accessPointMsn ap
-        <td>#{msn}
-      $nothing
-        <td>
-   <tr>
-     <th scope="row">Install Date
-       <td>#{show $ accessPointInstallDate ap}
-   <tr>
-     <th scope="row">Updated At
-       <td>#{show $ accessPointUpdatedAt ap}
-<div class="mt-3 mb-3">
-  <a href=@{APBackupsR apId}>Backups
-<div class="modal fade" id="editAPModal" tabindex="-1" aria-labelledby="editAPTitle" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editAPTitle">Edit Access Point</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      <div class="modal-body">
-        <form class="form mt-3 mb-3" method=POST action=@{AccessPointR apId} enctype=#{enctype}>
-          ^{widget}
-          <div class="form mt-3 mb-3">
-            <button class="btn btn-danger" type="submit" name="action" value="delete">Delete
-            <button class="btn btn-warning" type="button" data-bs-dismiss="modal">Close
-            <button class="btn btn-primary" type="submit" name="action" value="save">Save
+<ul class="nav nav-tabs" id="apTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="ap-tab" data-bs-toggle="tab" data-bs-target="#ap" type="button" role="tab" aria-controls="ap" aria-selected="true">Access Point
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="backups-tab" data-bs-toggle="tab" data-bs-target="#backups" type="button" role="tab" aria-controls="backups" aria-selected="false">Backups
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="subscriber-modules-tab" data-bs-toggle="tab" data-bs-target="#subscriber-modules" type="button" role="tab" aria-controls="subscriber-modules" aria-selected="false">Subscriber Modules
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab" aria-controls="comments" aria-selected="false">Comments
+<div class="tab-content" id="towerTabContent">
+  <div class="tab-pane fade show active" id="ap" role="tabpanel" aria-labelledby="ap-tab">
+    ^{apTableWidget ap}
+  <div class="tab-pane fade" id="backups" role="tabpanel" aria-labelledby="backups-tab">
+    ^{apBackupsWidget}
+  <div class="tab-pane fade" id="subscriber-modules" role="tabpanel" aria-labelledby="subscriber-modules-tab">
+    <h2>Subscriber Modules
+  <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">
+    <h2>Comments

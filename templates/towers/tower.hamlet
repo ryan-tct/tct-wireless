@@ -1,100 +1,27 @@
 <h2 class="text-center">#{towerName t}
-<div class="mt-3 mb-3" role="group">
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editTowerModal">Edit #{towerName t}
-<table class="table table-responsive table-bordered table-striped mt-3 mb-3">
-  <tbody>
-    <tr>
-      <th scope="row">Name
-      <td>#{towerName t}
-    <tr>
-      <th scope="row">Short
-      <td>#{towerShortName t}
-    <tr>
-      <th scope="row">Latitude
-      $maybe latitude <- towerLatitude t
-        <td>#{latitude}
-      $nothing
-        <td>
-    <tr>
-      <th scope="row">Longtitude
-      $maybe longitude <- towerLongitude t
-        <td>#{longitude}
-      $nothing
-        <td>
-    <tr>
-      <th scope="row">Address
-      $maybe address <- towerAddress t
-        <td>#{address}
-      $nothing
-        <td>
-    <tr>
-      <th scope="row">Height
-      $maybe height <- towerHeight t
-        <td>#{height}
-      $nothing
-        <td>
-    <tr>
-      <th scope="row">Base Dimensions
-      $maybe baseDimensions <- towerBaseDimensions t
-        <td>#{baseDimensions}
-      $nothing
-        <td>
-    <tr>
-      <th scope="row">Type
-      $maybe ttId <- towerTowerTypeId t
-        <td>^{getTowerType ttId}
-      $nothing
-        <td>
-    <tr>
-      <th scope="row">Building Dimensions
-      $maybe buildingDimensions <- towerBuildingDimensions t
-        <td>#{buildingDimensions}
-      $nothing
-        <td>
-    <tr>
-      <th scope="row">Access Info
-      $maybe accessInfo <- towerAccessInfo t
-        <td>#{accessInfo}
-      $nothing
-        <td>
-    <tr>
-      <th scope="row">Lease Info
-      $maybe leaseInfo <- towerLeaseInfo t
-        <td>#{leaseInfo}
-      $nothing
-        <td>
-    <tr>
-      <th scope="row">Power Company Info
-      $maybe powerCompanyInfo <- towerPowerCompanyInfo t
-        <td>#{powerCompanyInfo}
-      $nothing
-        <td>
-    <tr>
-      <th scope="row">Created At
-      <td>#{show (towerCreatedAt t)}
-    <tr>
-      <th scope="row">Update At
-      <td>#{show (towerUpdatedAt t)}
-<h2 class="text-center">Access Points on #{towerName t}
-<div class="mt-3 mb-3" role="group">
-  <a href=@{AccessPointsR} type="button" class="btn btn-primary">Add Access Point
-<table class="table table-responsive table-bordered table-striped mt-3 mb-3">
-  <tbody>
-    $forall (Value apId, Value apName) <- apNames
-      <tr>
-        <th scope="row">Access Point
-        <td><a href=@{AccessPointR apId}>#{apName}
-<div class="modal fade" id="editTowerModal" tabindex="-1" aria-labelledby="editTowerTitle" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editTowerTitle">Edit #{towerName t}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      <div class="modal-body">
-        <form class="form mt-3 mb-3" method=POST action=@{TowerR tId} enctype=#{enctype}>
-          ^{widget}
-          <div class="form mt-3 mb-3">
-            <div role="group">
-              <button class="btn btn-danger" type="submit" name="action" value="delete">Delete #{towerName t}
-              <button class="btn btn-warning" type="button" data-bs-dismiss="modal">Close
-              <button class="btn btn-primary" type="submit" name="action" value="save">Save Changes
+<ul class="nav nav-tabs" id="towerTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="tower-tab" data-bs-toggle="tab" data-bs-target="#tower" type="button" role="tab" aria-controls="tower" aria-selected="true">Tower
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="access-points-tab" data-bs-toggle="tab" data-bs-target="#access-points" type="button" role="tab" aria-controls="access-points" aria-selected="false">Access Points
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="equipment-tab" data-bs-toggle="tab" data-bs-target="#equipment" type="button" role="tab" aria-controls="equipment" aria-selected="false">Equipment
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="subscriber-modules-tab" data-bs-toggle="tab" data-bs-target="#subscriber-modules" type="button" role="tab" aria-controls="subscriber-modules" aria-selected="false">Subscriber Modules
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab" aria-controls="comments" aria-selected="false">Comments
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#edit" type="button" role="tab" aria-controls="comments" aria-selected="false">Edit
+<div class="tab-content" id="towerTabContent">
+  <div class="tab-pane fade show active" id="tower" role="tabpanel" aria-labelledby="tower-tab">
+    ^{towerWidget t}
+  <div class="tab-pane fade" id="access-points" role="tabpanel" aria-labelledby="access-points-tab">
+    ^{apWidget}
+  <div class="tab-pane fade" id="equipment" role="tabpanel" aria-labelledby="equipment-tab">
+    <h2>Equipment
+  <div class="tab-pane fade" id="subscriber-modules" role="tabpanel" aria-labelledby="subscriber-modules-tab">
+    <h2>Subscriber Modules
+  <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">
+    <h2>Comments
+  <div class="tab-pane fade" id="edit" role="tabpanel" aria-labelledby="edit-tab">
+    ^{editTowerWidget t}

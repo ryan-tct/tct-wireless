@@ -23,7 +23,7 @@
 /access-point-types AccessPointTypesR GET POST
 /access-point-types/#AccessPointTypeId AccessPointTypeR GET POST
 
-/access-points/#AccessPointId/backups APBackupsR GET POST
+/access-points/#AccessPointId/backups APBackupsR POST
 
 /backups BackupsR GET POST
 /backups/#BackupId BackupR GET

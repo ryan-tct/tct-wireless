@@ -1,0 +1,98 @@
+<table class="table table-responsive table-bordered table-striped mt-3 mb-3">
+  <tbody>
+    <tr>
+      <th scope="row">Name
+      <td>#{accessPointName ap}
+    <tr>
+      <th scope="row">IP
+      $maybe ip <- accessPointIp ap
+        <td><a target="_blank" rel="noopener noreferrer" href=#{"http://" ++ ip}>#{ip}
+      $nothing
+        <td>
+    <tr>
+      <th scope="row">Tower
+      <td><a href=@{TowerR tId}>#{towerName tower}
+    <tr>
+      <th scopoe="row">Type
+      <td><a href=@{AccessPointTypeR aptId}>#{accessPointTypeName apType}
+    <tr>
+      <th scope="row">Height
+      $maybe height <- accessPointHeight ap
+        <td>#{height}
+      $nothing
+        <td>
+    <tr>
+      <th scope="row">Azimuth
+      $maybe azimuth <- accessPointAzimuth ap
+        <td>#{azimuth}
+      $nothing
+        <td>
+    <tr>
+      <th scope="row">Tilt
+      $maybe tilt <- accessPointTilt ap
+        <td>#{tilt}
+      $nothing
+        <td>
+    <tr>
+      <th scope="row">Frequency
+      $maybe freq <- accessPointFrequency ap
+        <td>#{freq}
+      $nothing
+        <td>
+    <tr>
+      <th scope="row">Bandwidth
+      $maybe bandwidth <- accessPointChannelBandwidth ap
+        <td>#{bandwidth}
+      $nothing
+        <td>
+    <tr>
+      <th scope="row">Color Code
+      $maybe colorCode <- accessPointColorCode ap
+        <td>#{colorCode}
+      $nothing
+        <td>
+    <tr>
+      <th scope="row">SSID
+      $maybe ssid <- accessPointSsid ap
+        <td>#{ssid}
+      $nothing
+        <td>
+    <tr>
+      <th scope="row">Software Version
+      $maybe softVer <- accessPointSoftwareVersion ap
+        <td>#{softVer}
+      $nothing
+        <td>
+    <tr>
+      <th scope="row">MAC
+      $maybe mac <- accessPointMac ap
+        <td>#{mac}
+      $nothing
+        <td>
+    <tr>
+      <th scope="row">Serial Number
+      $maybe msn <- accessPointMsn ap
+        <td>#{msn}
+      $nothing
+        <td>
+   <tr>
+     <th scope="row">Install Date
+       <td>#{show $ accessPointInstallDate ap}
+   <tr>
+     <th scope="row">Updated At
+       <td>#{show $ accessPointUpdatedAt ap}
+<div class="mt-3 mb-3">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editAPModal">Edit #{accessPointName ap}
+<div class="modal fade" id="editAPModal" tabindex="-1" aria-labelledby="editAPTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editAPTitle">Edit Access Point</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="modal-body">
+        <form class="form mt-3 mb-3" method=POST action=@{AccessPointR apId} enctype=#{enctype}>
+          ^{widget}
+          <div class="form mt-3 mb-3">
+            <button class="btn btn-danger" type="submit" name="action" value="delete">Delete
+            <button class="btn btn-warning" type="button" data-bs-dismiss="modal">Close
+            <button class="btn btn-primary" type="submit" name="action" value="save">Save

@@ -13,7 +13,7 @@
 {-# LANGUAGE TypeApplications #-}
 module Handler.Towers where
 
-import Import -- hiding (Value)
+import Import hiding (Value)
 import Yesod.Form.Bootstrap5 (BootstrapFormLayout (..)
                              , renderBootstrap5
                              , BootstrapGridOptions(..)
@@ -56,11 +56,19 @@ getTowerAPsR tId = do
 getTowerR :: TowerId -> Handler Html
 getTowerR tId = do
   t <- runDB $ get404 tId
-  apNames <- runDB $ getAPNamesFor tId
-  (widget, enctype) <- generateFormPost (towerForm (Just t))
   doubleLayout $ do
     setTitle "Tower"
     $(widgetFile "towers/tower")
+  where
+    towerWidget t = do
+--      (widget, enctype) <- handlerToWidget $ generateFormPost (towerForm (Just t))
+      $(widgetFile "towers/towerTable")
+    apWidget = do
+      apNames <- handlerToWidget $ runDB $ getAPNamesFor tId
+      $(widgetFile "towers/apTable")
+    editTowerWidget t = do
+      (widget, enctype) <- handlerToWidget $ generateFormPost (towerForm (Just t))
+      $(widgetFile "towers/towerEdit")
 
 getTowerType :: TowerTypeId -> Widget
 getTowerType ttId = do

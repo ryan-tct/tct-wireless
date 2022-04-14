@@ -1,0 +1,84 @@
+<table class="table table-responsive table-bordered table-striped mt-3 mb-3">
+  <tbody>
+    <tr>
+      <th scope="row">Name
+      <td>#{towerName t}
+    <tr>
+      <th scope="row">Short
+      <td>#{towerShortName t}
+    <tr>
+      <th scope="row">Latitude
+      $maybe latitude <- towerLatitude t
+        <td>#{latitude}
+      $nothing
+        <td>
+    <tr>
+      <th scope="row">Longtitude
+      $maybe longitude <- towerLongitude t
+        <td>#{longitude}
+      $nothing
+        <td>
+    <tr>
+      <th scope="row">Address
+      $maybe address <- towerAddress t
+        <td>#{address}
+      $nothing
+        <td>
+    <tr>
+      <th scope="row">Height
+      $maybe height <- towerHeight t
+        <td>#{height}
+      $nothing
+        <td>
+    <tr>
+      <th scope="row">Base Dimensions
+      $maybe baseDimensions <- towerBaseDimensions t
+        <td>#{baseDimensions}
+      $nothing
+        <td>
+    <tr>
+      <th scope="row">Type
+      $maybe ttId <- towerTowerTypeId t
+        <td>^{getTowerType ttId}
+      $nothing
+        <td>
+    <tr>
+      <th scope="row">Building Dimensions
+      $maybe buildingDimensions <- towerBuildingDimensions t
+        <td>#{buildingDimensions}
+      $nothing
+        <td>
+    <tr>
+      <th scope="row">Access Info
+      $maybe accessInfo <- towerAccessInfo t
+        <td>#{accessInfo}
+      $nothing
+        <td>
+    <tr>
+      <th scope="row">Lease Info
+      $maybe leaseInfo <- towerLeaseInfo t
+        <td>#{leaseInfo}
+      $nothing
+        <td>
+    <tr>
+      <th scope="row">Power Company Info
+      $maybe powerCompanyInfo <- towerPowerCompanyInfo t
+        <td>#{powerCompanyInfo}
+      $nothing
+        <td>
+    <tr>
+      <th scope="row">Created At
+      <td>#{show (towerCreatedAt t)}
+    <tr>
+      <th scope="row">Update At
+      <td>#{show (towerUpdatedAt t)}
+<div .mt-3.mb-3>
+  <button type="button" .btn.btn-primary data-bs-toggle="modal" data-bs-target="#editTowerModal">Edit #{towerName t}
+<div class="modal fade" id="editTowerModal" tabindex="-1" aria-labelledby="editTowerTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editTowerTitle">Edit #{towerName t}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="modal-body">
+        ^{editTowerWidget t}
