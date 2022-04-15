@@ -22,14 +22,13 @@ import Database.Esqueleto.Experimental as E hiding(delete, isNothing)
 import Data.Conduit.Binary
 import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
+import Handler.AccessPoints.AccessPointTypes
 
 getAllAccessPoints :: DB [Entity AccessPoint]
 getAllAccessPoints = selectList [] [Asc AccessPointName]
 
 getAccessPointsR :: Handler Html
 getAccessPointsR = do
-  allAPs <- runDB getAllAccessPoints
-  (widget, enctype) <- generateFormPost (apForm Nothing)
   doubleLayout $ do
     setTitle "Access Points"
     $(widgetFile "accessPoints/accessPoints")
@@ -41,6 +40,20 @@ getAPRow (Entity apId ap) = do
   mtower <- handlerToWidget $ runDB $ get tId
   mapType <- handlerToWidget $ runDB $ get aptId
   $(widgetFile "accessPoints/accessPointRow")
+
+apsTableWidget :: Widget
+apsTableWidget = do
+  allAPs <- handlerToWidget $ runDB getAllAccessPoints
+  (widget, enctype) <- handlerToWidget $ generateFormPost (apForm Nothing)
+  $(widgetFile "accessPoints/accessPointsTable")
+
+editAPWidget :: Maybe (AccessPointId, AccessPoint) -> Widget
+editAPWidget mp = do
+  let (actionR, mAP) = case mp of
+        Nothing -> (AccessPointsR, Nothing)
+        Just (apId, ap) -> (AccessPointR apId, Just ap)
+  (widget, enctype) <- handlerToWidget $ generateFormPost (apForm mAP)
+  $(widgetFile "accessPoints/accessPointEdit")
 
 postAccessPointsR :: Handler Html
 postAccessPointsR = do
@@ -62,8 +75,9 @@ getAccessPointR apId = do
     $(widgetFile "accessPoints/accessPoint")
   where
     apTableWidget ap = do
-      let tId = accessPointTowerId ap
-      let aptId = accessPointApTypeId ap
+      let
+        tId = accessPointTowerId ap
+        aptId = accessPointApTypeId ap
       tower <-  handlerToWidget $ runDB $ get404 tId
       apType <- handlerToWidget $ runDB $ get404 aptId
       (widget, enctype) <- handlerToWidget $ generateFormPost (apForm (Just ap))

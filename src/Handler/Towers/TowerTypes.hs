@@ -4,7 +4,7 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE QuasiQuotes       #-}
-module Handler.TowerTypes where
+module Handler.Towers.TowerTypes where
 
 import Import
 import Yesod.Form.Bootstrap5 (BootstrapFormLayout (..)
@@ -16,8 +16,6 @@ import DoubleLayout
 
 getTowerTypesR :: Handler Html
 getTowerTypesR = do
-  allTowerTypes <- runDB getAllTowerTypes
-  (widget, enctype) <- generateFormPost (towerTypeForm Nothing)
   doubleLayout $ do
     setTitle "Tower Types"
     $(widgetFile "towers/towerTypes")
@@ -85,3 +83,17 @@ towerTypeForm mt = renderBootstrap5 bootstrapH $ TowerType
 getAllTowerTypes :: DB [Entity TowerType]
 getAllTowerTypes = selectList [] [Asc TowerTypeName]
 
+towerTypesTableWidget :: Widget
+towerTypesTableWidget = do
+  allTowerTypes <- handlerToWidget $ runDB getAllTowerTypes
+  (widget, enctype) <- handlerToWidget $ generateFormPost (towerTypeForm Nothing)
+  $(widgetFile "towers/towerTypesTable")
+
+editTowerTypeWidget :: Maybe (TowerTypeId, TowerType) -> Widget
+editTowerTypeWidget mp = do
+  let (actionR, mtt) = case mp of
+        Nothing -> (TowerTypesR, Nothing)
+        Just (ttId, tt) -> (TowerTypeR ttId, Just tt)
+  (widget, enctype) <- handlerToWidget $ generateFormPost (towerTypeForm mtt)
+  $(widgetFile "towers/towerTypeEdit")
+  

@@ -81,4 +81,4 @@
         <h5 class="modal-title" id="editTowerTitle">Edit #{towerName t}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       <div class="modal-body">
-        ^{editTowerWidget t}
+        ^{editTowerWidget (Just (tId, t))}

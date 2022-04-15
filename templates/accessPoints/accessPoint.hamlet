@@ -1,19 +1,23 @@
-<h2 class="text-center">#{accessPointName ap}
-<ul class="nav nav-tabs" id="apTab" role="tablist">
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="ap-tab" data-bs-toggle="tab" data-bs-target="#ap" type="button" role="tab" aria-controls="ap" aria-selected="true">Access Point
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="backups-tab" data-bs-toggle="tab" data-bs-target="#backups" type="button" role="tab" aria-controls="backups" aria-selected="false">Backups
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="subscriber-modules-tab" data-bs-toggle="tab" data-bs-target="#subscriber-modules" type="button" role="tab" aria-controls="subscriber-modules" aria-selected="false">Subscriber Modules
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab" aria-controls="comments" aria-selected="false">Comments
-<div class="tab-content" id="towerTabContent">
-  <div class="tab-pane fade show active" id="ap" role="tabpanel" aria-labelledby="ap-tab">
+<h2 .text-center>#{accessPointName ap}
+<ul .nav.nav-tabs id="apTab" role="tablist">
+  <li .nav-item role="presentation">
+    <button .nav-link.active id="ap-tab" data-bs-toggle="tab" data-bs-target="#ap" type="button" role="tab" aria-controls="ap" aria-selected="true">Access Point
+  <li .nav-item role="presentation">
+    <button .nav-link id="backups-tab" data-bs-toggle="tab" data-bs-target="#backups" type="button" role="tab" aria-controls="backups" aria-selected="false">Backups
+  <li .nav-item role="presentation">
+    <button .nav-link id="subscriber-modules-tab" data-bs-toggle="tab" data-bs-target="#subscriber-modules" type="button" role="tab" aria-controls="subscriber-modules" aria-selected="false">Subscriber Modules
+  <li .nav-item role="presentation">
+    <button .nav-link id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab" aria-controls="comments" aria-selected="false">Comments
+  <li .nav-item role="presentation">
+    <button .nav-link id="comments-tab" data-bs-toggle="tab" data-bs-target="#edit" type="button" role="tab" aria-controls="comments" aria-selected="false">Edit
+<div .tab-content id="towerTabContent">
+  <div .tab-pane.fade.show.active id="ap" role="tabpanel" aria-labelledby="ap-tab">
     ^{apTableWidget ap}
-  <div class="tab-pane fade" id="backups" role="tabpanel" aria-labelledby="backups-tab">
+  <div .tab-pane.fade id="backups" role="tabpanel" aria-labelledby="backups-tab">
     ^{apBackupsWidget}
-  <div class="tab-pane fade" id="subscriber-modules" role="tabpanel" aria-labelledby="subscriber-modules-tab">
+  <div .tab-pane.fade id="subscriber-modules" role="tabpanel" aria-labelledby="subscriber-modules-tab">
     <h2>Subscriber Modules
-  <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">
+  <div .tab-pane.fade id="comments" role="tabpanel" aria-labelledby="comments-tab">
     <h2>Comments
+  <div .tab-pane.fade id="edit" role="tabpanel" aria-labelledby="edit-tab">
+    ^{editAPWidget (Just (apId, ap))}

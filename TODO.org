@@ -8,7 +8,7 @@
 * DONE Refactor Navigation Tree
   Put in a helper module
 * DONE Refactor/Add Database Helper Module
-* DONE Add Access Point from Tower
+* TODO Add Access Point from Tower
   Not really done, but a link to where to do it.
 * DONE Add Tower Types
 ** DONE Setup Database
@@ -24,7 +24,9 @@
 * TODO Fix errors on insert/update/delete
 * DONE Add Backup fields
 * TODO Add Comments fields
-* TODO Add documentation link fields
+* TODO Add documentation link fields on AP Types/SM Types
+  This should be done similar to backups, by uploading files.
+  For the equipment, make this in the equipment vs equipment type.
 * TODO Indentation on Files
 * TODO Add SM
 ** TODO Add SM Types
@@ -43,11 +45,16 @@
 * TODO Edit Permissions
 * TODO Look into dropdowns for navbar
 ** TODO Also consider links from tower to tower type for example
-* TODO Move Access Point Types to widget files
+* DONE Move Access Point Types to widget files
 * TODO Set Homepage
 * TODO Put in license and copyright
 * TODO Tables to csv etc.
 * TODO Add more info on APs in Tower view?
-* TODO Move buttons to bottom on all views
-* TODO Move tower_types to towers in pill navigation?
+* TODO APTypes and TowerTypes to new format
+* DONE Move tower_types to towers in pill navigation?
 * TODO Change classes to use .syntax
+* TODO Remove deleting of towertypes and ap types.
+  This will cause major problems if we remove one which is still in use.
+
+
+* Refactor Backups -> Files

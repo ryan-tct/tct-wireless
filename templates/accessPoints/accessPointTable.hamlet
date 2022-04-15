@@ -90,9 +90,4 @@
         <h5 class="modal-title" id="editAPTitle">Edit Access Point</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       <div class="modal-body">
-        <form class="form mt-3 mb-3" method=POST action=@{AccessPointR apId} enctype=#{enctype}>
-          ^{widget}
-          <div class="form mt-3 mb-3">
-            <button class="btn btn-danger" type="submit" name="action" value="delete">Delete
-            <button class="btn btn-warning" type="button" data-bs-dismiss="modal">Close
-            <button class="btn btn-primary" type="submit" name="action" value="save">Save
+        ^{editAPWidget $ Just (apId, ap)}

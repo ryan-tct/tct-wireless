@@ -24,4 +24,4 @@
   <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">
     <h2>Comments
   <div class="tab-pane fade" id="edit" role="tabpanel" aria-labelledby="edit-tab">
-    ^{editTowerWidget t}
+    ^{editTowerWidget (Just (tId, t))}

@@ -4,14 +4,14 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE QuasiQuotes       #-}
-module Handler.AccessPointTypes where
+module Handler.AccessPoints.AccessPointTypes where
 
 import Import
 import Yesod.Form.Bootstrap5 (BootstrapFormLayout (..)
                              , renderBootstrap5
                              , BootstrapGridOptions(..)
                              )
-import Helper.Html
+--import Helper.Html
 import DoubleLayout
 
 getAccessPointTypesR :: Handler Html
@@ -20,7 +20,6 @@ getAccessPointTypesR = do
   (widget, enctype) <- generateFormPost (accessPointTypeForm Nothing)
   doubleLayout $ do
     setTitle "AP Types"
---    $(widgetFile "ap_types/ap_types")
     [whamlet|
 <h2 class="text-center">Access Point Types
 <div class="mt-3 mb-3">
@@ -108,12 +107,14 @@ postAccessPointTypeR aptId = do
       setMessage "Error editing access point type."
       redirect $ AccessPointTypeR aptId
 
+data PreAPType = PreAPType
+  { name :: Text
+  , payload :: FileInfo
+  }
+
 accessPointTypeForm :: Maybe AccessPointType -> Form AccessPointType
 accessPointTypeForm mapt = renderBootstrap5 bootstrapH $ AccessPointType
   <$> areq textField nameSettings (accessPointTypeName <$> mapt)
---  <* bootstrapSubmit (BootstrapSubmit ("Delete" :: Text) "btn btn-danger" [("name", "action"), ("value", "delete")])
---  <* bootstrapSubmit (BootstrapSubmit ("Discard Changes" :: Text) "btn btn-warning" [("name", "action"), ("value", "discard-changes")])
---  <* bootstrapSubmit (BootstrapSubmit ("Save" :: Text) "btn btn-primary" [("name", "action"), ("value", "save")])
   where
     bootstrapH = BootstrapHorizontalForm
       { bflLabelOffset = ColSm 0
@@ -135,3 +136,8 @@ accessPointTypeForm mapt = renderBootstrap5 bootstrapH $ AccessPointType
 getAllAPTypes :: DB [Entity AccessPointType]
 getAllAPTypes = selectList [] [Asc AccessPointTypeName]
 
+apTypesTableWidget :: Widget
+apTypesTableWidget = do
+  allAPTypes <- handlerToWidget $ runDB getAllAPTypes
+  (widget, enctype) <- handlerToWidget $ generateFormPost (accessPointTypeForm Nothing)
+  $(widgetFile "accessPoints/accessPointTypesTable")

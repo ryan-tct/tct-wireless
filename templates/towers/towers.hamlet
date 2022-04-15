@@ -1,46 +1,15 @@
 <h2 class="text-center">Towers
-<div class="btn-group mt-3 mb-3" role="group">
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newTowerModal">New Tower
-<table class="table table-striped table-responsive mb-3 mt-3">
-  <thead>
-    <tr>
-      <th>Name
-      <th>Short
-      <th>Height
-      <th>Latitude
-      <th>Longitude
-      <th>Address
-  <tbody>
-    $forall Entity tId t <- allTowers
-      <tr>
-        <td><a href=@{TowerR tId}>#{towerName t}
-        <td>#{towerShortName t}
-        $maybe height <- towerHeight t
-          <td>#{height}
-        $nothing
-          <td>
-        $maybe latitude <- towerLatitude t
-          <td>#{latitude}
-        $nothing
-          <td>
-        $maybe longitude <- towerLongitude t
-          <td>#{longitude}
-        $nothing
-          <td>
-        $maybe address <- towerAddress t
-          <td>#{address}
-        $nothing
-          <td>
-<div class="modal fade" id="newTowerModal" tabindex="-1" aria-labelledby="newTowerTitle" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="newTowerTitle">New Tower</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      <div class="modal-body">
-        <form class="form mt-3 mb-3" method=POST action=@{TowersR} enctype=#{enctype}>
-          ^{widget}
-          <div class="form mt-3 mb-3">
-            <div class="btn-group" role="group">
-              <button class="btn btn-warning" type="button" data-bs-dismiss="modal">Close
-              <button class="btn btn-primary" type="submit" name="action" value="save">Save 
+<ul class="nav nav-tabs" id="towersTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="towers-tab" data-bs-toggle="tab" data-bs-target="#towers" type="button" role="tab" aria-controls="towers" aria-selected="true">Towers
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="tower-types-tab" data-bs-toggle="tab" data-bs-target="#tower-types" type="button" role="tab" aria-controls="tower-types" aria-selected="false">Tower Types
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="new-tab" data-bs-toggle="tab" data-bs-target="#new" type="button" role="tab" aria-controls="new" aria-selected="false">New Tower
+<div class="tab-content" id="towersTabContent">
+  <div class="tab-pane fade show active" id="towers" role="tabpanel" aria-labelledby="towers-tab">
+    ^{towersTableWidget}
+  <div class="tab-pane fade" id="tower-types" role="tabpanel" aria-labelledby="tower-types-tab">
+    ^{towerTypesTableWidget}
+  <div class="tab-pane fade" id="new" role="tabpanel" aria-labelledby="new-tab">
+    ^{editTowerWidget Nothing}

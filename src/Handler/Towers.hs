@@ -22,14 +22,13 @@ import Helper.Model
 import Helper.Html
 import DoubleLayout
 import Text.Read (read)
+import Handler.Towers.TowerTypes
 
 getAllTowers :: DB [Entity Tower]
 getAllTowers = selectList [] [Asc TowerName]
 
 getTowersR :: Handler Html
 getTowersR = do
-  allTowers <- runDB getAllTowers
-  (widget, enctype) <- generateFormPost (towerForm Nothing)
   doubleLayout $ do
     setTitle "Towers"
     $(widgetFile "towers/towers")
@@ -59,16 +58,26 @@ getTowerR tId = do
   doubleLayout $ do
     setTitle "Tower"
     $(widgetFile "towers/tower")
-  where
+  where --TODO: Make these global?
     towerWidget t = do
---      (widget, enctype) <- handlerToWidget $ generateFormPost (towerForm (Just t))
       $(widgetFile "towers/towerTable")
     apWidget = do
       apNames <- handlerToWidget $ runDB $ getAPNamesFor tId
       $(widgetFile "towers/apTable")
-    editTowerWidget t = do
-      (widget, enctype) <- handlerToWidget $ generateFormPost (towerForm (Just t))
-      $(widgetFile "towers/towerEdit")
+
+editTowerWidget :: Maybe (TowerId, Tower) -> Widget
+editTowerWidget mp = do
+  let (actionR, mt) = case mp of
+        Nothing -> (TowersR, Nothing)
+        Just (tId, t) -> (TowerR tId, Just t)
+  (widget, enctype) <- handlerToWidget $ generateFormPost (towerForm mt)
+  $(widgetFile "towers/towerEdit")
+
+towersTableWidget :: Widget
+towersTableWidget = do
+  allTowers <- handlerToWidget $ runDB getAllTowers
+  (widget, enctype) <- handlerToWidget $ generateFormPost (towerForm Nothing)
+  $(widgetFile "towers/towersTable")
 
 getTowerType :: TowerTypeId -> Widget
 getTowerType ttId = do
@@ -243,6 +252,3 @@ towerForm mt = renderBootstrap5 bootstrapH $ Tower
         [ ("class", "form-control")
         ]
       }
-
--- myTestTower :: Tower
--- myTestTower = Tower {towerName = "Beacon", towerShortName = "bcn", towerLatitude = Just 44.522622, towerLongitude = Just (-109.008959), towerAddress = Just "104 Beacon Hill Rd, Cody, WY", towerHeight = Just 20, towerBaseDimensions = Just "18", towerTowerTypeId = Just "Mono Pole", towerBuildingDimensions = Just "No building on site.", towerAccessInfo = Nothing, towerLeaseInfo = Just "Tower owned by TCT. Site leased from Jim Nicholson: PO Box 3212, Cody, WY 82414.", towerPowerCompanyInfo = Nothing, towerCreatedAt = read "2021-07-28", towerUpdatedAt = read "2022-03-24 18:37:06.449384"}
