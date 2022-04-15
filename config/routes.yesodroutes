@@ -26,6 +26,6 @@
 /access-points/#AccessPointId/backups APBackupsR POST
 
 /backups BackupsR GET POST
-/backups/#BackupId BackupR GET
+/backups/#FileStoreId BackupR GET
 
 /navigation-tree NavigationTreeR GET

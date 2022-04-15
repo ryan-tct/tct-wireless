@@ -49,8 +49,8 @@ getAccessPointTypeNames = select $ do
 
 unValueSwap vs = map (\(Value key, Value text) -> (text, key)) vs
 
-getAPBackups :: AccessPointId -> DB [( Value BackupId
-                                     , Value Text
-                                     , Value ByteString
-                                     , Value UTCTime)]
-getAPBackups apId = undefined
+-- getAPBackups :: AccessPointId -> DB [( Value BackupId
+--                                      , Value Text
+--                                      , Value ByteString
+--                                      , Value UTCTime)]
+-- getAPBackups apId = undefined

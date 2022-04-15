@@ -46,7 +46,7 @@ AccessPoint sql=access_points
     msn Text Maybe
     deriving Eq Show Typeable
 
-Backup sql=backups
+FileStore sql=file_stores
     filename Text
     contentType Text sql=content_type
     payload ByteString

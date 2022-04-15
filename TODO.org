@@ -57,4 +57,11 @@
   This will cause major problems if we remove one which is still in use.
 
 
-* Refactor Backups -> Files
+* Refactor Backups -> FileStores
+  1. Rename backups -> file_stores in DBeaver
+  2. Rename Backup -> FileStore in models.persistentmodels
+  3. Rename BackupId -> FileStoreId in routes.yesodroutes
+  4. BackupId -> FileStoreId in Backup.hs
+  5. backupContentType → fileStoreContentType in Backup.hs
+  6. backupFilename -> fileStoreFilename
+  7. 

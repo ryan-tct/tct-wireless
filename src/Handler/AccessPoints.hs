@@ -295,7 +295,7 @@ apTowerForm mTID mAP = renderBootstrap5 bootstrapH $ AccessPoint
         ]
       }
 
-getAllAPBackups :: AccessPointId -> DB [(Single BackupId,Single UTCTime,Single Text)]
+getAllAPBackups :: AccessPointId -> DB [(Single FileStoreId,Single UTCTime,Single Text)]
 getAllAPBackups apId = rawSql "SELECT backupid,updated_at,filename FROM aps_backups WHERE apid=? ORDER BY updated_at DESC" [PersistText (keyToText apId)]
 
 postAPBackupsR :: AccessPointId -> Handler Html
@@ -309,7 +309,7 @@ postAPBackupsR apId = do
         myFN = fileName $ fileInfo b
         myUpdatedAt = createdAt b
         myContentType = fileContentType $ fileInfo b
-      bId <- runDB $ insert $ Backup myFN myContentType (bytes |> toStrict) myUpdatedAt
+      bId <- runDB $ insert $ FileStore myFN myContentType (bytes |> toStrict) myUpdatedAt
       _ <- runDB $ rawExecute "insert into accesspoint_backup (accesspointid, backupid) values (?,?)" [PersistText (keyToText apId), PersistText (keyToText bId)]
       setMessage "Backup saved."
       redirect $ AccessPointR apId
