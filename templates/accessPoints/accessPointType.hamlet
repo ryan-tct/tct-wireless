@@ -1,0 +1,15 @@
+<h2 class="text-center">#{accessPointTypeName apt}
+<ul .nav.nav-tabs id="aptTab" role="tablist">
+  <li .nav-item role="presentation">
+    <button .nav-link.active id="apt-tab" data-bs-toggle="tab" data-bs-target="#apt" type="button" role="tab" aria-controls="apt" aria-selected="true">Access Point Type
+  <li .nav-item role="presentation">
+    <button .nav-link id="doc-tab" data-bs-toggle="tab" data-bs-target="#doc" type="button" role="tab" aria-controls="doc" aria-selected="false">Documentation
+  <li .nav-item role="presentation">
+    <button .nav-link id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit" type="button" role="tab" aria-controls="edit" aria-selected="false">Edit
+<div .tab-content id="towerTabContent">
+  <div .tab-pane.fade.show.active id="apt" role="tabpanel" aria-labelledby="apt-tab">
+    ^{aptTableWidget apt}
+  <div .tab-pane.fade id="doc" role="tabpanel" aria-labelledby="doc-tab">
+    ^{aptDocWidget aptId}
+  <div .tab-pane.fade id="edit" role="tabpanel" aria-labelledby="edit-tab">
+    ^{editAPTWidget $ Just (aptId, apt)}

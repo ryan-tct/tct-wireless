@@ -31,6 +31,13 @@ getBackupR bId = do
    [ "attachment; filename=\"", (fileStoreFilename b), "\""]
  sendResponse (T.encodeUtf8 (fileStoreContentType b), toContent (fileStorePayload b))
 
+getFileStoreR :: FileStoreId -> Handler TypedContent
+getFileStoreR fsId = do
+ fs <- runDB $ get404 fsId
+ addHeader "Content-Disposition" $ T.concat
+   [ "attachment; filename=\"", (fileStoreFilename fs), "\""]
+ sendResponse (T.encodeUtf8 (fileStoreContentType fs), toContent (fileStorePayload fs))
+
 getBackupsR :: Handler Html
 getBackupsR = do
   allBackups <- runDB getAllBackups

@@ -22,7 +22,7 @@ import Database.Esqueleto.Experimental as E hiding(delete, isNothing)
 import Data.Conduit.Binary
 import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
-import Handler.AccessPoints.AccessPointTypes
+import Handler.AccessPoints.AccessPointTypes hiding(fileInfo)
 
 getAllAccessPoints :: DB [Entity AccessPoint]
 getAllAccessPoints = selectList [] [Asc AccessPointName]

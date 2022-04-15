@@ -52,3 +52,12 @@ FileStore sql=file_stores
     payload ByteString
     updatedAt UTCTime sql=updated_at
     deriving Eq Show Typeable
+
+AccessPointTypeDoc sql=apt_doc
+    aptypeId AccessPointTypeId sql=aptypeid
+    filestoreId FileStoreId sql=filestoreid
+    filename Text sql=filename
+    contentType Text sql=content_type
+    payload ByteString slq=payload
+    updatedAt UTCTime sql=updated_at
+    deriving Eq Show Typeable

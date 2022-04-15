@@ -1,16 +1,12 @@
 <h2 class="text-center">#{towerTypeName t}
-<table class="table table-responsive table-bordered table-striped mt-3 mb-3">
-  <tbody>
-    <tr>
-      <th scope="row">Name
-      <td>#{towerTypeName t}
-<div class="mt-3 mb-3">
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Edit #{towerTypeName t}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      <div class="modal-body">
-        ^{editTowerTypeWidget (Just (tId, t))}
+<ul .nav.nav-tabs id="aptTab" role="tablist">
+  <li .nav-item role="presentation">
+    <button .nav-link.active id="towertype-tab" data-bs-toggle="tab" data-bs-target="#towertype" type="button" role="tab" aria-controls="towertype" aria-selected="true">Tower Type
+  <li .nav-item role="presentation">
+    <button .nav-link id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit" type="button" role="tab" aria-controls="edit" aria-selected="false">Edit
+<div .tab-content id="towerTypeTabContent">
+  <div .tab-pane.fade.show.active id="towertype" role="tabpanel" aria-labelledby="towertype-tab">
+    ^{towerTypeTableWidget t}
+  <div .tab-pane.fade id="edit" role="tabpanel" aria-labelledby="edit-tab">
+    <h2>Edit
+    ^{editTowerTypeWidget $ Just (tId, t)}

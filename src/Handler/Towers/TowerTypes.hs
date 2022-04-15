@@ -28,7 +28,6 @@ postTowerTypesR = do
       _ <- runDB $ insert t
       setMessage "Tower Type created."
       redirect TowerTypesR
--- TODO: FIXME
     _ -> doubleLayout [whamlet|Something went wrong!|]
 
 getTowerTypeR :: TowerTypeId -> Handler Html
@@ -38,7 +37,11 @@ getTowerTypeR tId = do
   doubleLayout $ do
     setTitle "Tower Type"
     $(widgetFile "towers/towerType")
-
+  where
+    towerTypeTableWidget t = do
+      (widget, enctype) <- handlerToWidget $ generateFormPost (towerTypeForm (Just t))
+      $(widgetFile "towers/towerTypeTable")
+      
 postTowerTypeR :: TowerTypeId -> Handler Html
 postTowerTypeR tId = do
   ((result, _), _) <- runFormPost (towerTypeForm Nothing)

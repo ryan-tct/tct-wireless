@@ -1,0 +1,13 @@
+<h2 class="text-center">Access Point Types
+<ul .nav.nav-tabs id="apTab" role="tablist">
+  <li .nav-item role="presentation">
+    <button .nav-link.active id="apt-tab" data-bs-toggle="tab" data-bs-target="#apt" type="button" role="tab" aria-controls="apt" aria-selected="true">Access Point Type
+  <li .nav-item role="presentation">
+    <button .nav-link id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit" type="button" role="tab" aria-controls="comments" aria-selected="false">New
+<div .tab-content id="towerTabContent">
+  <div .tab-pane.fade.show.active id="apt" role="tabpanel" aria-labelledby="apt-tab">
+    ^{apTypesTableWidget}
+  <div .tab-pane.fade id="edit" role="tabpanel" aria-labelledby="edit-tab">
+    ^{editAPTWidget Nothing}
+
+

@@ -4,6 +4,7 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE QuasiQuotes       #-}
+{-# LANGUAGE RankNTypes #-}
 module Handler.AccessPoints.AccessPointTypes where
 
 import Import
@@ -11,40 +12,18 @@ import Yesod.Form.Bootstrap5 (BootstrapFormLayout (..)
                              , renderBootstrap5
                              , BootstrapGridOptions(..)
                              )
---import Helper.Html
+import Helper.Html
 import DoubleLayout
+import Data.Conduit.Binary
+import qualified Data.Text as T
+import qualified Data.Text.Encoding as T
+import Helper.Model hiding((==.))
 
 getAccessPointTypesR :: Handler Html
 getAccessPointTypesR = do
-  allAPTypes <- runDB getAllAPTypes
-  (widget, enctype) <- generateFormPost (accessPointTypeForm Nothing)
   doubleLayout $ do
     setTitle "AP Types"
-    [whamlet|
-<h2 class="text-center">Access Point Types
-<div class="mt-3 mb-3">
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">New AP Type
-<table class="table table-striped table-responsive mb-3 mt-3">
-  <thead>
-    <tr>
-      <th>Name
-  <tbody>
-    $forall Entity aptId apt <- allAPTypes
-      <tr>
-        <td><a href=@{AccessPointTypeR aptId}>#{accessPointTypeName apt}
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">New AP Type</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      <div class="modal-body">
-        <form class="form mt-3 mb-3" method=POST action=@{AccessPointTypesR} enctype=#{enctype}>
-          ^{widget}
-          <div class="form mt-3 mb-3">
-            <button class="btn btn-warning" type="button" data-bs-dismiss="modal"">Close
-            <button class="btn btn-primary" type="submit" name="action" value="save">Save AP Type
-    |]
+    $(widgetFile "accessPoints/accessPointTypes")
     
 postAccessPointTypesR :: Handler Html
 postAccessPointTypesR = do
@@ -54,38 +33,18 @@ postAccessPointTypesR = do
       _ <- runDB $ insert apt
       setMessage "Access Point Type created."
       redirect AccessPointTypesR
--- TODO: FIXME
     _ -> doubleLayout [whamlet|Something went wrong!|]
 
 getAccessPointTypeR :: AccessPointTypeId -> Handler Html
 getAccessPointTypeR aptId = do
   apt <- runDB $ get404 aptId
-  (widget, enctype) <- generateFormPost (accessPointTypeForm (Just apt))
   doubleLayout $ do
     setTitle "Acess Point Type"
-    [whamlet|
-<h2 class="text-center">#{accessPointTypeName apt}
-<div class="mt-3 mb-3">
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit
-<table class="table table-responsive table-bordered table-striped mt-3 mb-3">
-  <tbody>
-    <tr>
-      <th scope="row">Name
-      <td>#{accessPointTypeName apt}
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit #{accessPointTypeName apt}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      <div class="modal-body">
-        <form class="form mt-3 mb-3" method=POST action=@{AccessPointTypeR aptId} enctype=#{enctype}>
-          ^{widget}
-          <div class="form mt-3 mb-3">
-              <button class="btn btn-danger" type="submit" name="action" value="delete">Delete #{accessPointTypeName apt}
-              <button class="btn btn-warning" type="button" data-bs-dismiss="modal"">Close
-              <button class="btn btn-primary" type="submit" name="action" value="save">Save Changes
-    |]
+    $(widgetFile "accessPoints/accessPointType")
+  where
+    aptTableWidget apt = do
+      (widget, enctype) <- handlerToWidget $ generateFormPost (accessPointTypeForm (Just apt))
+      $(widgetFile "accessPoints/accessPointTypeTable")
 
 postAccessPointTypeR :: AccessPointTypeId -> Handler Html
 postAccessPointTypeR aptId = do
@@ -106,11 +65,6 @@ postAccessPointTypeR aptId = do
     _ -> doubleLayout $ do
       setMessage "Error editing access point type."
       redirect $ AccessPointTypeR aptId
-
-data PreAPType = PreAPType
-  { name :: Text
-  , payload :: FileInfo
-  }
 
 accessPointTypeForm :: Maybe AccessPointType -> Form AccessPointType
 accessPointTypeForm mapt = renderBootstrap5 bootstrapH $ AccessPointType
@@ -136,8 +90,51 @@ accessPointTypeForm mapt = renderBootstrap5 bootstrapH $ AccessPointType
 getAllAPTypes :: DB [Entity AccessPointType]
 getAllAPTypes = selectList [] [Asc AccessPointTypeName]
 
+getAllDocsFor :: AccessPointTypeId -> DB [Entity AccessPointTypeDoc]
+getAllDocsFor aptId = selectList [AccessPointTypeDocAptypeId ==. aptId] [Desc AccessPointTypeDocUpdatedAt]
+
 apTypesTableWidget :: Widget
 apTypesTableWidget = do
   allAPTypes <- handlerToWidget $ runDB getAllAPTypes
   (widget, enctype) <- handlerToWidget $ generateFormPost (accessPointTypeForm Nothing)
   $(widgetFile "accessPoints/accessPointTypesTable")
+
+editAPTWidget :: Maybe (AccessPointTypeId, AccessPointType) -> Widget
+editAPTWidget mp = do
+  let (actionR, mAPT) = case mp of
+        Nothing -> (AccessPointTypesR, Nothing)
+        Just (aptId, apt) -> (AccessPointTypeR aptId, Just apt)
+  (widget, enctype) <- handlerToWidget $ generateFormPost (accessPointTypeForm mAPT)
+  $(widgetFile "accessPoints/accessPointTypeEdit")
+
+aptDocWidget :: AccessPointTypeId -> Widget
+aptDocWidget aptId = do
+  allDocs <- handlerToWidget $ runDB $ getAllDocsFor aptId
+  (docWidget, docEnctype) <- handlerToWidget $ generateFormPost docForm 
+  $(widgetFile "accessPoints/accessPointTypeDocTable")
+
+data DocForm = DocForm
+  { fileInfo :: FileInfo
+  , updatedAt :: UTCTime
+  }
+
+docForm :: Form DocForm
+docForm = renderBootstrap5 bootstrapH $ DocForm
+  <$> fileAFormReq "Choose a file"
+  <*> (getCurrentTime |> liftIO |> lift)
+
+postAPTDocR :: AccessPointTypeId -> Handler Html
+postAPTDocR aptId = do
+  ((result, _), _) <- runFormPost docForm
+  case result of
+    FormSuccess f -> do
+      bytes <- connect (f |> fileInfo |> fileSource) sinkLbs
+      let
+        fn = fileName $ fileInfo f
+        ua = updatedAt f
+        contType = fileContentType $ fileInfo f
+      docId <- runDB $ insert $ FileStore fn contType (bytes |> toStrict) ua
+      _ <- runDB $ rawExecute "INSERT INTO accesspointtype_documentation (accesspointtypeid, documentationid) values (?,?)" [PersistText (keyToText aptId), PersistText (keyToText docId)]
+      setMessage "Documentation Saved"
+      redirect $ AccessPointTypeR aptId
+    _ -> doubleLayout [whamlet|Something went wrong!|]
