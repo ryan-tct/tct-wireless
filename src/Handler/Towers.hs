@@ -11,6 +11,7 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE RankNTypes #-}
 module Handler.Towers where
 
 import Import hiding (Value)
@@ -18,11 +19,12 @@ import Yesod.Form.Bootstrap5 (BootstrapFormLayout (..)
                              , renderBootstrap5
                              , BootstrapGridOptions(..)
                              )
-import Helper.Model
+import Helper.Model hiding ((==.))
 import Helper.Html
 import DoubleLayout
 import Text.Read (read)
 import Handler.Towers.TowerTypes
+import Handler.Comment (commentModalWidget, postCommentR)
 
 getAllTowers :: DB [Entity Tower]
 getAllTowers = selectList [] [Asc TowerName]
@@ -252,3 +254,41 @@ towerForm mt = renderBootstrap5 bootstrapH $ Tower
         [ ("class", "form-control")
         ]
       }
+
+getAllTowerComments :: TowerId -> DB [Entity TowerComment]
+getAllTowerComments tId = selectList [TowerCommentTowerId ==. tId] [Desc TowerCommentUpdatedAt]
+
+commentsList :: TowerId -> Widget
+commentsList tId = do
+  allTowerComments <- handlerToWidget $ runDB $ getAllTowerComments tId
+  let allComments = map fromTowerComment allTowerComments
+  (formWidget, formEncType) <- handlerToWidget $ generateFormPost $ towerCommentForm tId
+  $(widgetFile "comments/commentsList")
+  where
+    fromTowerComment :: Entity TowerComment -> Comment
+    fromTowerComment (Entity key tc) = Comment
+      { commentMessage = towerCommentMessage tc
+      , commentUpdatedAt = towerCommentUpdatedAt tc
+      }
+
+data PreTowerComment = PreTowerComment
+  { towerId :: TowerId
+  , message :: Text
+  , updatedAt :: UTCTime
+  }
+
+towerCommentForm :: TowerId -> Form PreTowerComment
+towerCommentForm tId = renderBootstrap5 bootstrapH $ PreTowerComment
+  <$> pure tId
+  <*> areq textField messageSettings Nothing
+  <*> (getCurrentTime |> liftIO |> lift)
+  where messageSettings = FieldSettings
+          { fsLabel = "Message"
+          , fsTooltip = Nothing
+          , fsId = Just "message"
+          , fsName = Just "message"
+          , fsAttrs =
+            [ ("class", "form-control")
+            ]
+          }
+

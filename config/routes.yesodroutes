@@ -26,6 +26,8 @@
 
 /access-point-types/#AccessPointTypeId/documentation APTDocR POST
 
+/comments CommentR POST
+
 /files/#FileStoreId FileStoreR GET
 /backups BackupsR GET POST
 /backups/#FileStoreId BackupR GET

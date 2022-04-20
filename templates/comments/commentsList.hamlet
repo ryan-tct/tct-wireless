@@ -1,0 +1,5 @@
+^{commentModalWidget (formWidget, formEncType)}
+<ol>
+  $forall comment <- allComments
+    <li>Posted: #{show $ commentUpdatedAt comment}
+      <p>#{commentMessage comment}

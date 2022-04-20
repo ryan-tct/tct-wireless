@@ -61,3 +61,27 @@ AccessPointTypeDoc sql=apt_doc
     payload ByteString slq=payload
     updatedAt UTCTime sql=updated_at
     deriving Eq Show Typeable
+
+Wuser
+    ident Text
+    password Text Maybe
+    UniqueUser ident
+    deriving Typeable
+    
+Email
+    email Text
+    userId WuserId Maybe
+    verkey Text Maybe
+    UniqueEmail email
+
+Comment sql=comment
+    message Text
+    updatedAt UTCTime sql=updated_at
+    deriving Eq Show Typeable
+
+TowerComment sql=tower_comment_view
+    towerId TowerId sql=towerid
+    commentId CommentId sql=commentid
+    message Text
+    updatedAt UTCTime sql=updated_at
+    deriving Eq Show Typeable
