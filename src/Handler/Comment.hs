@@ -15,23 +15,90 @@
 module Handler.Comment where
 
 import Import
+import DoubleLayout
+import Helper.Html
+import Yesod.Form.Bootstrap5 (BootstrapFormLayout (..)
+                             , renderBootstrap5
+                             , BootstrapGridOptions(..)
+                             )
+import CMark
+import Text.Blaze.Html
+import Text.HTML.SanitizeXSS
 
---commentModalWidget :: Widget -> Widget
-commentModalWidget (formWidget, formEncType) = do
-  $(widgetFile "comments/commentModal")
+htmlEscape t = t |> sanitize |> commonmarkToHtml [] |> preEscapedToHtml
 
-postCommentR :: Handler Html
-postCommentR = Import.undefined
+getCommentR :: CommentId -> Handler Html
+getCommentR cId = do
+  c <- runDB $ get404 cId
+  doubleLayout $ do
+    setTitle "Comment"
+    --commentFormWidget (Just c) (CommentR cId) HomeR
+    commentViewWidget (Just c) (CommentR cId) (CommentR cId)
 
--- postCommentR :: Handler Value
--- postCommentR = do
---     -- requireCheckJsonBody will parse the request body into the appropriate type, or return a 400 status code if the request JSON is invalid.
---     -- (The ToJSON and FromJSON instances are derived in the config/models file).
---     comment <- (requireCheckJsonBody :: Handler Comment)
+commentViewWidget mc postR discR = do
+  $(widgetFile "comments/commentView")
 
---     -- The YesodAuth instance in Foundation.hs defines the UserId to be the type used for authentication.
---     maybeCurrentUserId <- maybeAuthId
---     let comment' = comment { commentUserId = maybeCurrentUserId }
+postCommentR :: CommentId -> Handler Html
+postCommentR cId = do
+  ((result, _), _) <- runFormPost $ commentForm Nothing
+  action <- lookupPostParam "action"
+  case (result, action) of
+    (FormSuccess c, Just "save") -> do
+      runDB $ replace cId c
+      setMessage "Updated comment"
+      redirect HomeR
+    (FormSuccess _, Just "delete") -> do
+      runDB $ delete cId
+      setMessage "Deleted comment."
+      redirect HomeR
+    _ -> doubleLayout $ do
+      setMessage "Error editing comment"
+      redirect HomeR
 
---     insertedComment <- runDB $ insertEntity comment'
---     returnJson insertedComment
+getCommentsR :: Handler Html
+getCommentsR = do
+  allComments <- runDB $ getAllComments
+  doubleLayout $ do
+    setTitle "Comments"
+    commentModalWidget Nothing CommentsR CommentsR
+    commentsListWidget allComments
+
+postCommentsR :: Handler Html
+postCommentsR = do
+  ((result, _), _) <- runFormPost $ commentForm Nothing
+  case result of
+    FormSuccess c -> do
+      runDB $ insert c
+      setMessage "Inserted comment, but this is probably not what you wanted to do as the comment is not associated with any object."
+      redirect HomeR
+    _ -> do
+      setMessage "Error adding comment."
+      redirect HomeR
+
+getAllComments :: DB [Entity Comment]
+getAllComments = selectList [] [Desc CommentUpdatedAt]
+
+commentsListWidget :: Foldable t => t (Entity Comment) -> Widget
+commentsListWidget allComments = $(widgetFile "comments/commentsList")
+
+commentModalWidget :: Maybe Comment -> Route App -> Route App -> Widget
+commentModalWidget mc postR discR = $(widgetFile "comments/commentModal")
+
+commentFormWidget :: Maybe Comment -> Route App -> Route App -> Widget
+commentFormWidget mc postR discR = do
+  (formWidget, formEncType) <- handlerToWidget $ generateFormPost $ commentForm mc
+  $(widgetFile "comments/commentForm")
+
+commentForm :: Maybe Comment -> Form Comment
+commentForm mc = renderBootstrap5 bootstrapH $ Comment
+  <$> areq textAreaField messageSettings (commentMessage <$> mc)
+  <*> (getCurrentTime |> liftIO |> lift)
+  where messageSettings = FieldSettings
+          { fsLabel = "Message"
+          , fsTooltip = Nothing
+          , fsId = Just "message"
+          , fsName = Just "message"
+          , fsAttrs =
+            [ ("class", "form-control")
+            ]
+          }

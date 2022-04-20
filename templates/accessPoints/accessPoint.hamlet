@@ -23,5 +23,6 @@
     <h2>Subscriber Modules
   <div .tab-pane.fade id="comments" role="tabpanel" aria-labelledby="comments-tab">
     <h2>Comments
+    ^{commentsList apId}
   <div .tab-pane.fade id="edit" role="tabpanel" aria-labelledby="edit-tab">
     ^{editAPWidget (Just (apId, ap))}

@@ -39,7 +39,7 @@ getAPNamesFor :: TowerId -> DB [(Value AccessPointId, Value Text)]
 getAPNamesFor towerId = select $ do
   aps <- from $ table @AccessPoint
   where_ (aps ^. AccessPointTowerId E.==. (towerId |> fromSqlKey |> valkey))
-  orderBy [desc (aps ^. AccessPointName)]
+  orderBy [asc (aps ^. AccessPointName)]
   pure (aps ^. AccessPointId, aps ^. AccessPointName)
 
 getAccessPointTypeNames :: DB [(Value AccessPointTypeId, Value Text)]

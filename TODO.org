@@ -23,12 +23,13 @@
 * TODO Adjustable NavigationTree Pane
 * TODO Fix errors on insert/update/delete
 * DONE Add Backup fields
-* TODO Add Comments fields
-** TODO Towers
-** TODO Access Points
+* DONE Add Comments fields
+** DONE Towers
+** DONE Access Points
 * DONE Add documentation link fields on AP Types/SM Types
   This should be done similar to backups, by uploading files.
   For the equipment, make this in the equipment vs equipment type.
+* TODO Add Equipment
 * TODO Indentation on Files
 * TODO Add SM
 ** TODO Add SM Types

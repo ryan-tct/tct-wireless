@@ -1,5 +1,6 @@
-^{commentModalWidget (formWidget, formEncType)}
 <ol>
-  $forall comment <- allComments
-    <li>Posted: #{show $ commentUpdatedAt comment}
-      <p>#{commentMessage comment}
+  $forall Entity cId c <- allComments
+    <li>
+      <b>
+        <a href=@{CommentR cId}>Posted: #{show $ commentUpdatedAt c}
+      <p>#{htmlEscape $ commentMessage c}

@@ -7,9 +7,4 @@
         <h5 class="modal-title" id="editCommentTitle">Comment</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       <div class="modal-body">
-        <form class="form mt-3 mb-3" method=POST action=@{CommentR} enctype=#{formEncType}>
-          ^{formWidget}
-          <div class="form mt-3 mb-3">
-            <div role="group">
-              <a .btn.btn-warning role="button" href="">Discard Changes
-              <button class="btn btn-primary" type="submit" name="action" value="save">Save Changes
+        ^{commentFormWidget mc postR discR}

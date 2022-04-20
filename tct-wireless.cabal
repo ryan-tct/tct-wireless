@@ -25,13 +25,16 @@ library
       Foundation
       Handler.AccessPoints
       Handler.AccessPoints.AccessPointTypes
+      Handler.AccessPoints.Comments
       Handler.Backups
       Handler.Comment
       Handler.Common
+      Handler.Equipment
       Handler.Home
       Handler.NavigationTree
       Handler.Profile
       Handler.Towers
+      Handler.Towers.Comments
       Handler.Towers.TowerTypes
       Helper.Html
       Helper.Model
@@ -54,6 +57,7 @@ library
     , classy-prelude ==1.5.*
     , classy-prelude-conduit ==1.5.*
     , classy-prelude-yesod ==1.5.*
+    , cmark
     , conduit >=1.0 && <2.0
     , conduit-extra
     , containers
@@ -83,6 +87,7 @@ library
     , wai-extra ==3.0.*
     , wai-logger >=2.2 && <2.4
     , warp >=3.0 && <3.4
+    , xss-sanitize
     , yaml ==0.11.*
     , yesod ==1.6.*
     , yesod-auth ==1.6.*
@@ -115,6 +120,7 @@ executable tct-wireless
     , classy-prelude ==1.5.*
     , classy-prelude-conduit ==1.5.*
     , classy-prelude-yesod ==1.5.*
+    , cmark
     , conduit >=1.0 && <2.0
     , conduit-extra
     , containers
@@ -145,6 +151,7 @@ executable tct-wireless
     , wai-extra ==3.0.*
     , wai-logger >=2.2 && <2.4
     , warp >=3.0 && <3.4
+    , xss-sanitize
     , yaml ==0.11.*
     , yesod ==1.6.*
     , yesod-auth ==1.6.*
@@ -179,6 +186,7 @@ test-suite tct-wireless-test
     , classy-prelude ==1.5.*
     , classy-prelude-conduit ==1.5.*
     , classy-prelude-yesod ==1.5.*
+    , cmark
     , conduit >=1.0 && <2.0
     , conduit-extra
     , containers
@@ -210,6 +218,7 @@ test-suite tct-wireless-test
     , wai-extra ==3.0.*
     , wai-logger >=2.2 && <2.4
     , warp >=3.0 && <3.4
+    , xss-sanitize
     , yaml ==0.11.*
     , yesod ==1.6.*
     , yesod-auth ==1.6.*

@@ -1,0 +1,13 @@
+<h2 .text-center>Comment
+<ul class="nav nav-tabs" id="commentTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="comment-tab" data-bs-toggle="tab" data-bs-target="#comment" type="button" role="tab" aria-controls="comment" aria-selected="true">Comment
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#edit" type="button" role="tab" aria-controls="comments" aria-selected="false">Edit
+<div class="tab-content" id="commentTabContent">
+  <div class="tab-pane fade show active" id="comment" role="tabpanel" aria-labelledby="comment-tab">
+    $maybe c <- mc
+      #{htmlEscape $ commentMessage c}
+    $nothing
+  <div class="tab-pane fade" id="edit" role="tabpanel" aria-labelledby="edit-tab">
+    ^{commentFormWidget mc postR discR}

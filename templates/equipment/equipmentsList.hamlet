@@ -1,0 +1,3 @@
+<ol>
+  $forall Entity eId e <- allEquipment
+    <li>#{show e}

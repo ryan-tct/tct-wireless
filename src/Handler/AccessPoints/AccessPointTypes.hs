@@ -135,6 +135,6 @@ postAPTDocR aptId = do
         contType = fileContentType $ fileInfo f
       docId <- runDB $ insert $ FileStore fn contType (bytes |> toStrict) ua
       _ <- runDB $ rawExecute "INSERT INTO accesspointtype_documentation (accesspointtypeid, documentationid) values (?,?)" [PersistText (keyToText aptId), PersistText (keyToText docId)]
-      setMessage "Documentation Saved"
+      setMessage "Documentation saved."
       redirect $ AccessPointTypeR aptId
     _ -> doubleLayout [whamlet|Something went wrong!|]

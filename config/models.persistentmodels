@@ -85,3 +85,21 @@ TowerComment sql=tower_comment_view
     message Text
     updatedAt UTCTime sql=updated_at
     deriving Eq Show Typeable
+
+AccessPointComment sql=ap_comment_view
+    accessPointId AccessPointId sql=apid
+    commentId CommentId sql=commentid
+    message Text
+    updatedAt UTCTime sql=updated_at
+    deriving Eq Show Typeable
+
+Equipment sql=equipment
+    towerId TowerId sql=towerid
+    name Text sql=name
+    type Text Maybe sql=type
+    ip Text Maybe sql=ip
+    mac Text Maybe sql=mac
+    msn Text Maybe sql=msn
+    createdAt Day sql=created_at
+    updatedAt UTCTime sql=updated_at
+    deriving Eq Show Typeable

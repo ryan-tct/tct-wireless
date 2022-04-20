@@ -23,6 +23,7 @@ import Data.Conduit.Binary
 import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
 import Handler.AccessPoints.AccessPointTypes hiding(fileInfo)
+import Handler.AccessPoints.Comments
 
 getAllAccessPoints :: DB [Entity AccessPoint]
 getAllAccessPoints = selectList [] [Asc AccessPointName]
