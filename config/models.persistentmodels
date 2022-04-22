@@ -93,10 +93,23 @@ AccessPointComment sql=ap_comment_view
     updatedAt UTCTime sql=updated_at
     deriving Eq Show Typeable
 
+EquipmentType sql=equipment_type
+    name Text sql=name
+    deriving Eq Show Typeable
+
+EquipmentTypeDoc sql=eqtype_doc
+    equipmentTypeId EquipmentTypeId sql=equipmenttypeid
+    filestoreId FileStoreId sql=filestoreid
+    filename Text sql=filename
+    contentType Text sql=content_type
+    payload ByteString slq=payload
+    updatedAt UTCTime sql=updated_at
+    deriving Eq Show Typeable
+
 Equipment sql=equipment
     towerId TowerId sql=towerid
     name Text sql=name
-    type Text Maybe sql=type
+    equipmentTypeId EquipmentTypeId sql=equipmenttypeid
     ip Text Maybe sql=ip
     mac Text Maybe sql=mac
     msn Text Maybe sql=msn

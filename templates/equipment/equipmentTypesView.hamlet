@@ -1,0 +1,11 @@
+<h2 class="text-center">Equipment Types
+<ul .nav.nav-tabs id="equipmentTab" role="tablist">
+  <li .nav-item role="presentation">
+    <button .nav-link.active id="equipmenttype-tab" data-bs-toggle="tab" data-bs-target="#equipmenttype" type="button" role="tab" aria-controls="equipmenttype" aria-selected="true">Equipment Type
+  <li .nav-item role="presentation">
+    <button .nav-link id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit" type="button" role="tab" aria-controls="comments" aria-selected="false">New
+<div .tab-content id="equipmentTabContent">
+  <div .tab-pane.fade.show.active id="equipmenttype" role="tabpanel" aria-labelledby="equipmenttype-tab">
+    ^{equipmentTypesTableWidget eets}
+  <div .tab-pane.fade id="edit" role="tabpanel" aria-labelledby="edit-tab">
+    ^{equipmentTypesFormWidget Nothing postR discardR}

@@ -20,6 +20,10 @@
 ** DONE Add Breadcrumbs
 ** DONE Change DB to use list
 ** DONE Change Tower to use lists
+* TODO Remove Models where it makes sense
+** TODO Move edit next to view
+* TODO We can probably get away with a single form.
+  Similar to equipmentTypesForm.hamlet, with me (maybe entity).
 * TODO Adjustable NavigationTree Pane
 * TODO Fix errors on insert/update/delete
 * DONE Add Backup fields
@@ -30,6 +34,9 @@
   This should be done similar to backups, by uploading files.
   For the equipment, make this in the equipment vs equipment type.
 * TODO Add Equipment
+** DONE Add EquipmentTypes/Docs
+** TODO Add Equipment
+   Test out creating a EquipmentPage datatype with all info.
 * TODO Indentation on Files
 * TODO Add SM
 ** TODO Add SM Types

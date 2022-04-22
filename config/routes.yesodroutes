@@ -37,5 +37,8 @@
 /comments/#CommentId CommentR GET POST
 
 /equipment EquipmentsR GET POST
+/equipment-types EquipmentTypesR GET POST
+/equipment-types/#EquipmentTypeId EquipmentTypeR GET POST
+/equipment-types/#EquipmentTypeId/documentation ETDocR POST
 
 /navigation-tree NavigationTreeR GET

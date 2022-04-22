@@ -1,0 +1,16 @@
+<h2 class="text-center">#{equipmentTypeName et}
+<ul .nav.nav-tabs id="aptTab" role="tablist">
+  <li .nav-item role="presentation">
+    <button .nav-link.active id="et-tab" data-bs-toggle="tab" data-bs-target="#et" type="button" role="tab" aria-controls="et" aria-selected="true">Equipment Type
+  <li .nav-item role="presentation">
+    <button .nav-link id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit" type="button" role="tab" aria-controls="edit" aria-selected="false">Edit
+  <li .nav-item role="presentation">
+    <button .nav-link id="doc-tab" data-bs-toggle="tab" data-bs-target="#doc" type="button" role="tab" aria-controls="doc" aria-selected="false">Documentation
+<div .tab-content id="towerTabContent">
+  <div .tab-pane.fade.show.active id="et" role="tabpanel" aria-labelledby="et-tab">
+    ^{equipmentTypeTableWidget et}
+  <div .tab-pane.fade id="edit" role="tabpanel" aria-labelledby="edit-tab">
+    ^{equipmentTypesFormWidget (Just et) postR discardR}
+  <div .tab-pane.fade id="doc" role="tabpanel" aria-labelledby="doc-tab">
+    ^{eqTypeDocTableWidget allDocs}
+    ^{eqTypeDocModalWidget etId}

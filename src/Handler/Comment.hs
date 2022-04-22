@@ -32,7 +32,6 @@ getCommentR cId = do
   c <- runDB $ get404 cId
   doubleLayout $ do
     setTitle "Comment"
-    --commentFormWidget (Just c) (CommentR cId) HomeR
     commentViewWidget (Just c) (CommentR cId) (CommentR cId)
 
 commentViewWidget mc postR discR = do

@@ -1,0 +1,5 @@
+<table class="table table-responsive table-bordered table-striped mt-3 mb-3">
+  <tbody>
+    <tr>
+      <th scope="row">Name
+      <td>#{equipmentTypeName et}

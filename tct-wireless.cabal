@@ -29,7 +29,9 @@ library
       Handler.Backups
       Handler.Comment
       Handler.Common
+      Handler.Documentation
       Handler.Equipment
+      Handler.Equipment.Types
       Handler.Home
       Handler.NavigationTree
       Handler.Profile
