@@ -21,8 +21,8 @@ import Data.Conduit.Binary
 import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
 
-getAllBackups :: DB [(Single FileStoreId,Single UTCTime,Single Text)]
-getAllBackups = rawSql "SELECT backupid,updated_at,filename FROM aps_backups ORDER BY updated_at DESC" []
+getAllAPBackups :: DB [(Single FileStoreId,Single UTCTime,Single Text)]
+getAllAPBackups = rawSql "SELECT backupid,updated_at,filename FROM aps_backups ORDER BY updated_at DESC" []
 
 getBackupR :: FileStoreId -> Handler TypedContent
 getBackupR bId = do
@@ -40,11 +40,25 @@ getFileStoreR fsId = do
 
 getBackupsR :: Handler Html
 getBackupsR = do
-  allBackups <- runDB getAllBackups
+  allBackups <- runDB getAllAPBackups
   doubleLayout $ do
     setTitle "Backups"
-    $(widgetFile "backups/backupsTable")
+    $(widgetFile "backups/backupsAPTable")
 
 postBackupsR :: Handler Html
 postBackupsR = undefined
 
+data BackupForm = BackupForm
+  { fileInfo :: FileInfo
+  , createdAt :: UTCTime
+  }
+  
+backupForm :: Form BackupForm
+backupForm = renderBootstrap5 bootstrapH $ BackupForm
+  <$> fileAFormReq "Choose a file"
+  <*> (getCurrentTime |> liftIO |> lift)
+
+backupFormWidget :: Widget
+backupFormWidget = $(widgetFile "backups/backupForm")
+
+backupsTableWidget allBackups = $(widgetFile "backups/backupsTable")

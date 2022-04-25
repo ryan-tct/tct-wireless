@@ -58,7 +58,7 @@ editAPWidget mp = do
 
 postAccessPointsR :: Handler Html
 postAccessPointsR = do
-  ((result, _), _) <- runFormPost (apForm Nothing)
+  ((result, _), _) <- runFormPost $ apForm Nothing
   case result of
     FormSuccess ap -> do
       _ <- runDB $ insert ap
@@ -90,7 +90,7 @@ getAccessPointR apId = do
 
 postAccessPointR :: AccessPointId -> Handler Html
 postAccessPointR apId = do
-  ((result, _), _) <- runFormPost (apForm Nothing)
+  ((result, _), _) <- runFormPost $ apForm Nothing
   action <- lookupPostParam "action"
   case (result, action) of
     (FormSuccess ap, Just "save") -> do

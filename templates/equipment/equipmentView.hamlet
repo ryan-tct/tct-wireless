@@ -1,27 +1,25 @@
-<h2 .text-center>#{accessPointName ap}
+<h2 .text-center>#{equipmentName e}
 <ul .nav.nav-tabs id="apTab" role="tablist">
   <li .nav-item role="presentation">
-    <button .nav-link.active id="ap-tab" data-bs-toggle="tab" data-bs-target="#ap" type="button" role="tab" aria-controls="ap" aria-selected="true">Access Point
+    <button .nav-link.active id="equipment-tab" data-bs-toggle="tab" data-bs-target="#equipment" type="button" role="tab" aria-controls="equipment" aria-selected="true">Equipment
+  <li .nav-item role="presentation">
+    <button .nav-link id="comments-tab" data-bs-toggle="tab" data-bs-target="#edit" type="button" role="tab" aria-controls="comments" aria-selected="false">Edit
   <li .nav-item role="presentation">
     <button .nav-link id="backups-tab" data-bs-toggle="tab" data-bs-target="#backups" type="button" role="tab" aria-controls="backups" aria-selected="false">Backups
   <li .nav-item role="presentation">
     <button .nav-link id="doc-tab" data-bs-toggle="tab" data-bs-target="#doc" type="button" role="tab" aria-controls="doc" aria-selected="false">Documentation
   <li .nav-item role="presentation">
-    <button .nav-link id="subscriber-modules-tab" data-bs-toggle="tab" data-bs-target="#subscriber-modules" type="button" role="tab" aria-controls="subscriber-modules" aria-selected="false">Subscriber Modules
-  <li .nav-item role="presentation">
     <button .nav-link id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab" aria-controls="comments" aria-selected="false">Comments
-  <li .nav-item role="presentation">
-    <button .nav-link id="comments-tab" data-bs-toggle="tab" data-bs-target="#edit" type="button" role="tab" aria-controls="comments" aria-selected="false">Edit
 <div .tab-content id="towerTabContent">
-  <div .tab-pane.fade.show.active id="ap" role="tabpanel" aria-labelledby="ap-tab">
-    ^{apTableWidget ap}
+  <div .tab-pane.fade.show.active id="equipment" role="tabpanel" aria-labelledby="equipment-tab">
+    ^{equipmentTableWidget eId e etId et tId t}
   <div .tab-pane.fade id="backups" role="tabpanel" aria-labelledby="backups-tab">
-    ^{apBackupsWidget}
+    <h2>Backup Table
+    ^{fileStoreWidget filestores}
   <div .tab-pane.fade id="doc" role="tabpanel" aria-labelledby="doc-tab">
-    ^{aptDocWidget $ accessPointApTypeId ap}
-  <div .tab-pane.fade id="subscriber-modules" role="tabpanel" aria-labelledby="subscriber-modules-tab">
-    <h2>Subscriber Modules
+    ^{eqTypeDocTableWidget etDocs}
   <div .tab-pane.fade id="comments" role="tabpanel" aria-labelledby="comments-tab">
-    ^{commentsList apId}
+    <h2>Comments List
   <div .tab-pane.fade id="edit" role="tabpanel" aria-labelledby="edit-tab">
-    ^{editAPWidget (Just (apId, ap))}
+    <h2>Edit Widget
+    ^{equipmentFormWidget me postR discardR}

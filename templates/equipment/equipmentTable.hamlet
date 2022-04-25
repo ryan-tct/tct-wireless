@@ -1,0 +1,41 @@
+<table .table.table-responsive.table-bordered.table-striped.mt-3.mb-3>
+  <tbody>
+    <tr>
+      <th scope="row">Name
+      <td>#{equipmentName e}
+    <tr>
+      <th scope="row">IP
+      $maybe ip <- equipmentIp e
+        <td><a target="_blank" rel="noopener noreferrer" href=#{"http://" ++ ip}>#{ip}
+      $nothing
+        <td>
+    <tr>
+      <th scope="row">Tower
+      <td><a href=@{TowerR tId}>#{towerName t}
+    <tr>
+      <th scopoe="row">Type
+      <td><a href=@{EquipmentTypeR etId}>#{equipmentTypeName et}
+    <tr>
+      <th scope="row">Software Version
+      $maybe softVer <- equipmentSoftwareVersion e
+        <td>#{softVer}
+      $nothing
+        <td>
+    <tr>
+      <th scope="row">MAC
+      $maybe mac <- equipmentMac e
+        <td>#{mac}
+      $nothing
+        <td>
+    <tr>
+      <th scope="row">Serial Number
+      $maybe msn <- equipmentMsn e
+        <td>#{msn}
+      $nothing
+        <td>
+   <tr>
+     <th scope="row">Install Date
+       <td>#{show $ equipmentCreatedAt e}
+   <tr>
+     <th scope="row">Updated At
+       <td>#{show $ equipmentUpdatedAt e}

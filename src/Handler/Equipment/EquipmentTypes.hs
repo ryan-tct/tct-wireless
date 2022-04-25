@@ -5,7 +5,7 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE QuasiQuotes       #-}
 {-# LANGUAGE RankNTypes #-}
-module Handler.Equipment.Types where
+module Handler.Equipment.EquipmentTypes where
 
 import Import
 import Yesod.Form.Bootstrap5 (BootstrapFormLayout (..)
@@ -23,9 +23,12 @@ import Handler.Documentation
 getEquipmentTypesR :: Handler Html
 getEquipmentTypesR = do
   allEquipmentTypes <- runDB getAllEquipmentTypes
+  let
+    postR = EquipmentTypesR
+    discardR = EquipmentTypesR
   doubleLayout $ do
     setTitle "Equipment Types"
-    equipmentTypesViewWidget allEquipmentTypes EquipmentTypesR EquipmentTypesR
+    $(widgetFile "equipment/equipmentTypesView")
 
 postEquipmentTypesR :: Handler Html
 postEquipmentTypesR = do
@@ -88,13 +91,6 @@ getEqTypeDocsFor etId = selectList [EquipmentTypeDocEquipmentTypeId ==. etId]
 --equipmentTypeViewWidget :: EquipmentType -> Route App -> Route App -> Widget
 equipmentTypeViewWidget et etId allDocs postR discardR = $(widgetFile "equipment/equipmentTypeView")
 
-equipmentTypesViewWidget :: Foldable t =>
-                         t (Entity EquipmentType)
-                         -> Route App
-                         -> Route App
-                         -> Widget
-equipmentTypesViewWidget eets postR discardR = $(widgetFile "equipment/equipmentTypesView")
-
 equipmentTypesTableWidget :: Foldable t => t (Entity EquipmentType) -> Widget
 equipmentTypesTableWidget eets = $(widgetFile "equipment/equipmentTypesTable")
 
@@ -110,7 +106,6 @@ equipmentTypesModalWidget :: Maybe EquipmentType -> Route App -> Route App -> Wi
 equipmentTypesModalWidget met postR discardR = $(widgetFile "equipment/equipmentTypesModal")
 
 eqTypeDocTableWidget :: Foldable t => t (Entity EquipmentTypeDoc) -> Widget
---eqTypeDocTableWidget  -> Widget
 eqTypeDocTableWidget eeqTypeDocs = do
   [whamlet|
 <table class="table table-striped table-responsive mb-3 mt-3">

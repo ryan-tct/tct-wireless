@@ -1,0 +1,14 @@
+<tr>
+  <td><a href=@{EquipmentR eId}>#{equipmentName e}
+  $maybe ip <- equipmentIp e
+    <td><a target="_blank" rel="noopener noreferrer" href=#{"http://" ++ ip}>#{ip}
+  $nothing
+    <td>
+  $maybe tower <- mtower
+    <td><a href=@{TowerR tId}>#{towerName tower}
+  $nothing
+    <td>Something went wrong.
+  $maybe equipmentType <- mequipmentType
+    <td><a href=@{EquipmentTypeR etId}>#{equipmentTypeName equipmentType}
+  $nothing
+    <td>

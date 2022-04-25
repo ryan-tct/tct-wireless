@@ -53,7 +53,7 @@ import Handler.AccessPoints.Comments
 import Handler.Backups
 import Handler.NavigationTree
 import Handler.Equipment
-import Handler.Equipment.Types
+import Handler.Equipment.EquipmentTypes
 import Handler.Documentation
 
 -- This line actually creates our YesodDispatch instance. It is the second half

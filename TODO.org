@@ -38,6 +38,7 @@
 ** TODO Add Equipment
    Test out creating a EquipmentPage datatype with all info.
 * TODO Indentation on Files
+* TODO Instead of Backups/Docs separated, do filestore
 * TODO Add SM
 ** TODO Add SM Types
 *** TODO Add List Page

@@ -1,3 +1,10 @@
-<ol>
-  $forall Entity eId e <- allEquipment
-    <li>#{show e}
+<table .table.table-striped.table-responsive.mt-3.mb-3>
+  <thead>
+    <tr>
+      <th>Name
+      <th>IP
+      <th>Tower
+      <th>Type
+  <tbody>
+    $forall equipmentEntity <- allEquipment
+      ^{getEquipmentRow equipmentEntity}

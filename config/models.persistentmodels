@@ -97,12 +97,12 @@ EquipmentType sql=equipment_type
     name Text sql=name
     deriving Eq Show Typeable
 
-EquipmentTypeDoc sql=eqtype_doc
+EquipmentTypeDoc sql=eqtype_doc_view
     equipmentTypeId EquipmentTypeId sql=equipmenttypeid
     filestoreId FileStoreId sql=filestoreid
     filename Text sql=filename
     contentType Text sql=content_type
-    payload ByteString slq=payload
+    payload ByteString sql=payload
     updatedAt UTCTime sql=updated_at
     deriving Eq Show Typeable
 
@@ -113,6 +113,16 @@ Equipment sql=equipment
     ip Text Maybe sql=ip
     mac Text Maybe sql=mac
     msn Text Maybe sql=msn
+    softwareVersion Text Maybe sql=software_version
     createdAt Day sql=created_at
+    updatedAt UTCTime sql=updated_at
+    deriving Eq Show Typeable
+
+EquipmentBackup sql=equipment_backup_view
+    equipmentId EquipmentId sql=equipmentid
+    filestoreId FileStoreId sql=filestoreid
+    filename Text sql=filename
+    contentType Text sql=content_type
+    payload ByteString sql=payload
     updatedAt UTCTime sql=updated_at
     deriving Eq Show Typeable

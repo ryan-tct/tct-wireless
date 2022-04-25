@@ -1,0 +1,10 @@
+<table .table.table-striped.table-responsive.mb-3.mt-3>
+  <thead>
+    <tr>
+      <th>Name
+      <th>Created At
+  <tbody>
+    $forall Entity fsId fs <- filestores
+      <tr>
+        <td><a href=@{BackupR fsId}>#{fileStoreFilename fs}
+        <td>#{show $ fileStoreUpdatedAt fs}

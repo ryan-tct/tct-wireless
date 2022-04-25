@@ -6,6 +6,6 @@
     <button .nav-link id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit" type="button" role="tab" aria-controls="comments" aria-selected="false">New
 <div .tab-content id="equipmentTabContent">
   <div .tab-pane.fade.show.active id="equipmenttype" role="tabpanel" aria-labelledby="equipmenttype-tab">
-    ^{equipmentTypesTableWidget eets}
+    ^{equipmentTypesTableWidget allEquipmentTypes}
   <div .tab-pane.fade id="edit" role="tabpanel" aria-labelledby="edit-tab">
     ^{equipmentTypesFormWidget Nothing postR discardR}

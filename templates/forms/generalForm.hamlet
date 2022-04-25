@@ -1,0 +1,9 @@
+<form class="form mt-3 mb-3" method=POST action=@{postR} enctype=#{formEncType}>
+  ^{formWidget}
+  <div class="form mt-3 mb-3">
+    <div role="group">
+      $maybe _ <- me
+        <button class="btn btn-danger" type="submit" name="action" value="delete">Delete
+      $nothing
+      <a .btn.btn-warning role="button" href=@{discardR}>Discard Changes
+      <button class="btn btn-primary" type="submit" name="action" value="save">Save Changes
