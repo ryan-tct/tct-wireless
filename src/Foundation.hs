@@ -126,18 +126,13 @@ instance Yesod App where
                     , menuItemAccessCallback = True
                     }
                 , NavbarLeft $ MenuItem
-                    { menuItemLabel = "Tower Types"
-                    , menuItemRoute = TowerTypesR
-                    , menuItemAccessCallback = True
-                    }
-                , NavbarLeft $ MenuItem
                     { menuItemLabel = "Access Points"
                     , menuItemRoute = AccessPointsR
                     , menuItemAccessCallback = True
                     }
                 , NavbarLeft $ MenuItem
-                    { menuItemLabel = "Access Point Types"
-                    , menuItemRoute = AccessPointTypesR
+                    { menuItemLabel = "Equipment"
+                    , menuItemRoute = EquipmentsR
                     , menuItemAccessCallback = True
                     }
                 , NavbarLeft $ MenuItem

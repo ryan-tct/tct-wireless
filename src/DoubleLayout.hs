@@ -33,47 +33,43 @@ doubleLayout widget = do
 
   -- Define the menu items of the header.
   let menuItems =
-        [ NavbarLeft $ MenuItem
-          { menuItemLabel = "Home"
-          , menuItemRoute = HomeR
-          , menuItemAccessCallback = True
-          }
-        , NavbarLeft $ MenuItem
-          { menuItemLabel = "Towers"
-          , menuItemRoute = TowersR
-          , menuItemAccessCallback = True
-          }
-        , NavbarLeft $ MenuItem
-          { menuItemLabel = "Tower Types"
-          , menuItemRoute = TowerTypesR
-          , menuItemAccessCallback = True
-          }
-        , NavbarLeft $ MenuItem
-          { menuItemLabel = "Access Points"
-          , menuItemRoute = AccessPointsR
-          , menuItemAccessCallback = True
-          }
-        , NavbarLeft $ MenuItem
-          { menuItemLabel = "Access Point Types"
-          , menuItemRoute = AccessPointTypesR
-          , menuItemAccessCallback = True
-          }
-        , NavbarLeft $ MenuItem
-          { menuItemLabel = "Profile"
-          , menuItemRoute = ProfileR
-          , menuItemAccessCallback = isJust muser
-          }
-        , NavbarRight $ MenuItem
-          { menuItemLabel = "Login"
-          , menuItemRoute = AuthR LoginR
-          , menuItemAccessCallback = isNothing muser
-          }
-        , NavbarRight $ MenuItem
-          { menuItemLabel = "Logout"
-          , menuItemRoute = AuthR LogoutR
-          , menuItemAccessCallback = isJust muser
-          }
-        ]
+                [ NavbarLeft $ MenuItem
+                    { menuItemLabel = "Home"
+                    , menuItemRoute = HomeR
+                    , menuItemAccessCallback = True
+                    }
+                , NavbarLeft $ MenuItem
+                    { menuItemLabel = "Towers"
+                    , menuItemRoute = TowersR
+                    , menuItemAccessCallback = True
+                    }
+                , NavbarLeft $ MenuItem
+                    { menuItemLabel = "Access Points"
+                    , menuItemRoute = AccessPointsR
+                    , menuItemAccessCallback = True
+                    }
+                , NavbarLeft $ MenuItem
+                    { menuItemLabel = "Equipment"
+                    , menuItemRoute = EquipmentsR
+                    , menuItemAccessCallback = True
+                    }
+                , NavbarLeft $ MenuItem
+                    { menuItemLabel = "Profile"
+                    , menuItemRoute = ProfileR
+                    , menuItemAccessCallback = isJust muser
+                    }
+                , NavbarRight $ MenuItem
+                    { menuItemLabel = "Login"
+                    , menuItemRoute = AuthR LoginR
+                    , menuItemAccessCallback = isNothing muser
+                    }
+                , NavbarRight $ MenuItem
+                    { menuItemLabel = "Logout"
+                    , menuItemRoute = AuthR LogoutR
+                    , menuItemAccessCallback = isJust muser
+                    }
+                ]
+  
 
   let navbarLeftMenuItems = [x | NavbarLeft x <- menuItems]
   let navbarRightMenuItems = [x | NavbarRight x <- menuItems]

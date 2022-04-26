@@ -39,6 +39,7 @@
 /equipment EquipmentsR GET POST
 /equipment/#EquipmentId EquipmentR GET POST
 /equipment/#EquipmentId/backups EquipmentBackupsR POST
+/equipemnt/#EquipmentId/comments EqCommentsR GET POST
 
 /equipment-types EquipmentTypesR GET POST
 /equipment-types/#EquipmentTypeId EquipmentTypeR GET POST

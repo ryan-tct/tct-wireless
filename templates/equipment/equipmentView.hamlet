@@ -14,13 +14,14 @@
   <div .tab-pane.fade.show.active id="equipment" role="tabpanel" aria-labelledby="equipment-tab">
     ^{equipmentTableWidget eId e etId et tId t}
   <div .tab-pane.fade id="backups" role="tabpanel" aria-labelledby="backups-tab">
-    <h2>Backup Table
     ^{fileStoreWidget filestores}
     ^{backupFormModalWidget backupPostR backupDiscardR}
   <div .tab-pane.fade id="doc" role="tabpanel" aria-labelledby="doc-tab">
     ^{eqTypeDocTableWidget etDocs}
+    ^{eqTypeDocModalWidget etId}
   <div .tab-pane.fade id="comments" role="tabpanel" aria-labelledby="comments-tab">
     <h2>Comments List
+    ^{commentsList eId}
   <div .tab-pane.fade id="edit" role="tabpanel" aria-labelledby="edit-tab">
     <h2>Edit Widget
     ^{equipmentFormWidget me postR discardR}

@@ -23,6 +23,7 @@ import Helper.Model hiding ((==.))
 import Helper.Html
 import DoubleLayout
 import Handler.Equipment.EquipmentTypes
+import Handler.Equipment.Comments
 import Handler.Backups
 import Data.Conduit.Binary
 

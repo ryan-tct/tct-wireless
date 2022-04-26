@@ -54,7 +54,7 @@ postAPCommentsR apId = do
   case result of
     FormSuccess apc -> do
       cId <- runDB $ insert $ apc
-      _ <- runDB $ rawExecute "INSERT INTO ap_comment (apid, commentid) values (?,?)"
+      _ <- runDB $ rawExecute "INSERT INTO ap_comment (apid, commentid) VALUES (?,?)"
                               [PersistText (keyToText apId), PersistText (keyToText cId)]
       setMessage "Comment added."
       redirect $ AccessPointR apId

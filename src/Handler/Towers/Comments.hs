@@ -26,7 +26,8 @@ import Text.Read (read)
 import Handler.Comment (commentsListWidget, commentModalWidget, commentForm)
 
 getAllTowerComments :: TowerId -> DB [Entity TowerComment]
-getAllTowerComments tId = selectList [TowerCommentTowerId ==. tId] [Desc TowerCommentUpdatedAt]
+getAllTowerComments tId = selectList [TowerCommentTowerId ==. tId]
+                                     [Desc TowerCommentUpdatedAt]
 
 commentsList :: TowerId -> Widget
 commentsList tId = do

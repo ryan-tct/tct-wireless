@@ -31,6 +31,7 @@ library
       Handler.Common
       Handler.Documentation
       Handler.Equipment
+      Handler.Equipment.Comments
       Handler.Equipment.EquipmentTypes
       Handler.Home
       Handler.NavigationTree

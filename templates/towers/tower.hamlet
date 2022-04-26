@@ -3,6 +3,8 @@
   <li class="nav-item" role="presentation">
     <button class="nav-link active" id="tower-tab" data-bs-toggle="tab" data-bs-target="#tower" type="button" role="tab" aria-controls="tower" aria-selected="true">Tower
   <li class="nav-item" role="presentation">
+    <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#edit" type="button" role="tab" aria-controls="comments" aria-selected="false">Edit
+  <li class="nav-item" role="presentation">
     <button class="nav-link" id="access-points-tab" data-bs-toggle="tab" data-bs-target="#access-points" type="button" role="tab" aria-controls="access-points" aria-selected="false">Access Points
   <li class="nav-item" role="presentation">
     <button class="nav-link" id="equipment-tab" data-bs-toggle="tab" data-bs-target="#equipment" type="button" role="tab" aria-controls="equipment" aria-selected="false">Equipment
@@ -10,15 +12,12 @@
     <button class="nav-link" id="subscriber-modules-tab" data-bs-toggle="tab" data-bs-target="#subscriber-modules" type="button" role="tab" aria-controls="subscriber-modules" aria-selected="false">Subscriber Modules
   <li class="nav-item" role="presentation">
     <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab" aria-controls="comments" aria-selected="false">Comments
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#edit" type="button" role="tab" aria-controls="comments" aria-selected="false">Edit
 <div class="tab-content" id="towerTabContent">
   <div class="tab-pane fade show active" id="tower" role="tabpanel" aria-labelledby="tower-tab">
     ^{towerWidget t}
   <div class="tab-pane fade" id="access-points" role="tabpanel" aria-labelledby="access-points-tab">
     ^{apWidget}
   <div class="tab-pane fade" id="equipment" role="tabpanel" aria-labelledby="equipment-tab">
-    <h2>Equipment
     ^{equipmentsListWidget eqOnT}
     ^{equipementTowerFormModalWidget mtId me postR discardR}
   <div class="tab-pane fade" id="subscriber-modules" role="tabpanel" aria-labelledby="subscriber-modules-tab">

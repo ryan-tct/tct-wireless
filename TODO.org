@@ -30,12 +30,12 @@
 * DONE Add Comments fields
 ** DONE Towers
 ** DONE Access Points
-* DONE Add documentation link fields on AP Types/SM Types
+* TODO Add documentation link fields on AP Types/SM Types
   This should be done similar to backups, by uploading files.
   For the equipment, make this in the equipment vs equipment type.
-* TODO Add Equipment
+* DONE Add Equipment
 ** DONE Add EquipmentTypes/Docs
-** TODO Add Equipment
+** DONE Add Equipment
    Test out creating a EquipmentPage datatype with all info.
 * TODO Indentation on Files
 * TODO Instead of Backups/Docs separated, do filestore
