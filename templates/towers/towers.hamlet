@@ -3,9 +3,9 @@
   <li class="nav-item" role="presentation">
     <button class="nav-link active" id="towers-tab" data-bs-toggle="tab" data-bs-target="#towers" type="button" role="tab" aria-controls="towers" aria-selected="true">Towers
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="tower-types-tab" data-bs-toggle="tab" data-bs-target="#tower-types" type="button" role="tab" aria-controls="tower-types" aria-selected="false">Tower Types
-  <li class="nav-item" role="presentation">
     <button class="nav-link" id="new-tab" data-bs-toggle="tab" data-bs-target="#new" type="button" role="tab" aria-controls="new" aria-selected="false">New Tower
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="tower-types-tab" data-bs-toggle="tab" data-bs-target="#tower-types" type="button" role="tab" aria-controls="tower-types" aria-selected="false">Tower Types
 <div class="tab-content" id="towersTabContent">
   <div class="tab-pane fade show active" id="towers" role="tabpanel" aria-labelledby="towers-tab">
     ^{towersTableWidget}

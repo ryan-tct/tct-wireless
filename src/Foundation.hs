@@ -271,6 +271,7 @@ instance YesodBreadcrumbs App where
     breadcrumb (CommentsR) = return ("Comments", Just HomeR)
     breadcrumb (CommentR cId) = return (keyToText cId, Just CommentsR)
     breadcrumb EquipmentsR = return ("Equipment", Just HomeR)
+    breadcrumb (EquipmentR eId) = return (keyToText eId, Just EquipmentsR)
     breadcrumb EquipmentTypesR = return ("Equipment Types", Just HomeR)
     breadcrumb (EquipmentTypeR etId) = return (keyToText etId, Just EquipmentTypesR)
     breadcrumb  _ = return ("Home", Nothing)

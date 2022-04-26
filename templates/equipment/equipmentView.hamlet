@@ -16,6 +16,7 @@
   <div .tab-pane.fade id="backups" role="tabpanel" aria-labelledby="backups-tab">
     <h2>Backup Table
     ^{fileStoreWidget filestores}
+    ^{backupFormModalWidget backupPostR backupDiscardR}
   <div .tab-pane.fade id="doc" role="tabpanel" aria-labelledby="doc-tab">
     ^{eqTypeDocTableWidget etDocs}
   <div .tab-pane.fade id="comments" role="tabpanel" aria-labelledby="comments-tab">

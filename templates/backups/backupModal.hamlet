@@ -1,0 +1,10 @@
+<div class="mt-3 mb-3">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newBackupModal">Upload Backup
+<div class="modal fade" id="newBackupModal" tabindex="-1" aria-labelledby="nameBackupModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="backupModalLabel">Upload Backup</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="modal-body">
+        ^{backupFormWidget postR discardR}

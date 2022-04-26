@@ -58,7 +58,14 @@ backupForm = renderBootstrap5 bootstrapH $ BackupForm
   <$> fileAFormReq "Choose a file"
   <*> (getCurrentTime |> liftIO |> lift)
 
-backupFormWidget :: Widget
-backupFormWidget = $(widgetFile "backups/backupForm")
+backupFormWidget :: Route App -> Route App -> Widget
+backupFormWidget postR discardR = do
+  let
+    me = Nothing -- only for new backups, so no entity (no delete button)
+  (formWidget, formEncType) <- handlerToWidget $ generateFormPost backupForm
+  $(widgetFile "forms/generalForm")
+
+backupFormModalWidget :: Route App -> Route App -> Widget
+backupFormModalWidget postR discardR = $(widgetFile "backups/backupModal")
 
 backupsTableWidget allBackups = $(widgetFile "backups/backupsTable")

@@ -53,7 +53,7 @@ FileStore sql=file_stores
     updatedAt UTCTime sql=updated_at
     deriving Eq Show Typeable
 
-AccessPointTypeDoc sql=apt_doc
+AccessPointTypeDoc sql=apt_doc_view
     aptypeId AccessPointTypeId sql=aptypeid
     filestoreId FileStoreId sql=filestoreid
     filename Text sql=filename

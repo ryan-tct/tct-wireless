@@ -19,6 +19,8 @@
     ^{apWidget}
   <div class="tab-pane fade" id="equipment" role="tabpanel" aria-labelledby="equipment-tab">
     <h2>Equipment
+    ^{equipmentsListWidget eqOnT}
+    ^{equipementTowerFormModalWidget mtId me postR discardR}
   <div class="tab-pane fade" id="subscriber-modules" role="tabpanel" aria-labelledby="subscriber-modules-tab">
     <h2>Subscriber Modules
   <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">

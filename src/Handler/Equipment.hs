@@ -23,12 +23,15 @@ import Helper.Model hiding ((==.))
 import Helper.Html
 import DoubleLayout
 import Handler.Equipment.EquipmentTypes
+import Handler.Backups
+import Data.Conduit.Binary
 
 getAllEquipment :: DB [Entity Equipment]
 getAllEquipment = selectList [] [Desc EquipmentName]
 
 getEquipmentOn :: TowerId -> DB [Entity Equipment]
-getEquipmentOn tId = selectList [EquipmentTowerId ==. tId] [Desc EquipmentUpdatedAt]
+getEquipmentOn tId = selectList [EquipmentTowerId Import.==. tId]
+                                [Desc EquipmentUpdatedAt]
 
 getAllEqBackupsFor :: EquipmentId -> DB [Entity EquipmentBackup]
 getAllEqBackupsFor eId = selectList [EquipmentBackupEquipmentId ==. eId]
@@ -51,6 +54,23 @@ getEquipmentsR = do
   doubleLayout $ do
     setTitle "Equipment"
     $(widgetFile "equipment/equipmentsView")
+
+postEquipmentBackupsR :: EquipmentId -> Handler Html
+postEquipmentBackupsR eId = do
+  ((result, _), _) <- runFormPost backupForm
+  case result of
+    FormSuccess b -> do
+      --TODO: Clean this up
+      bytes <- connect (b |> fileInfo |> fileSource) sinkLbs
+      let
+        myFN = fileName $ fileInfo b
+        myUpdatedAt = createdAt b
+        myContentType = fileContentType $ fileInfo b
+      bId <- runDB $ insert $ FileStore myFN myContentType (bytes |> toStrict) myUpdatedAt
+      _ <- runDB $ rawExecute "INSERT INTO equipment_backup (equipmentid, backupid) VALUES (?,?)" [PersistText (keyToText eId), PersistText (keyToText bId)]
+      setMessage "Backup saved."
+      redirect $ EquipmentR eId
+    _ -> doubleLayout [whamlet|Someting went wrong!|]
 
 postEquipmentsR :: Handler Html
 postEquipmentsR = do
@@ -78,6 +98,9 @@ getEquipmentR eId = do
   t <- runDB $ get404 tId
   etDocs <- runDB $ getEqTypeDocsFor etId
   eBackups <- runDB $ getAllEqBackupsFor eId
+  let
+    backupPostR = EquipmentBackupsR eId
+    backupDiscardR = EquipmentR eId
   let filestores = map toFileStore eBackups
   doubleLayout $ do
     setTitle "Equipment"
@@ -135,6 +158,13 @@ equipmentFormWidget :: Maybe Equipment
                     -> Route App
                     -> Widget
 equipmentFormWidget me postR discR = equipmentTowerFormWidget Nothing me postR discR
+
+equipementTowerFormModalWidget :: Maybe TowerId
+                               -> Maybe Equipment
+                               -> Route App
+                               -> Route App
+                               -> Widget
+equipementTowerFormModalWidget mtId me postR discardR = $(widgetFile "equipment/towerEqModal")
 
 equipmentTowerFormWidget :: Maybe TowerId
                          -> Maybe Equipment

@@ -25,6 +25,7 @@ import DoubleLayout
 --import Text.Read (read)
 import Handler.Towers.TowerTypes
 import Handler.Towers.Comments
+import Handler.Equipment
 
 getAllTowers :: DB [Entity Tower]
 getAllTowers = selectList [] [Asc TowerName]
@@ -56,6 +57,12 @@ getTowerAPsR tId = do
 getTowerR :: TowerId -> Handler Html
 getTowerR tId = do
   t <- runDB $ get404 tId
+  eqOnT <- runDB $ getEquipmentOn tId
+  let
+    mtId = Just tId
+    me = Nothing
+    postR = EquipmentsR
+    discardR = TowerR tId
   doubleLayout $ do
     setTitle "Tower"
     $(widgetFile "towers/tower")

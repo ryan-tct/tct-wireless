@@ -70,7 +70,7 @@
 * TODO Single edit widget
 * TODO Standardize nameing of functions/widgets
 
-* Refactor Backups -> FileStores
+* TODO Refactor Backups -> FileStores
   1. Rename backups -> file_stores in DBeaver
   2. Rename Backup -> FileStore in models.persistentmodels
   3. Rename BackupId -> FileStoreId in routes.yesodroutes

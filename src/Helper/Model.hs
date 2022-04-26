@@ -17,7 +17,6 @@ module Helper.Model
   , getAPNamesFor
   , getAccessPointTypeNames
   , unValueSwap
---  , keyToText
   ) where
 
 import Import hiding (Value)
