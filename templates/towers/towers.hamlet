@@ -1,15 +1,16 @@
-<h2 class="text-center">Towers
-<ul class="nav nav-tabs" id="towersTab" role="tablist">
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="towers-tab" data-bs-toggle="tab" data-bs-target="#towers" type="button" role="tab" aria-controls="towers" aria-selected="true">Towers
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="new-tab" data-bs-toggle="tab" data-bs-target="#new" type="button" role="tab" aria-controls="new" aria-selected="false">New Tower
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="tower-types-tab" data-bs-toggle="tab" data-bs-target="#tower-types" type="button" role="tab" aria-controls="tower-types" aria-selected="false">Tower Types
-<div class="tab-content" id="towersTabContent">
-  <div class="tab-pane fade show active" id="towers" role="tabpanel" aria-labelledby="towers-tab">
+<h2 .text-center>Towers
+<ul .nav.nav-tabs id="towersTab" role="tablist">
+  <li .nav-item role="presentation">
+    <button .nav-link.active id="towers-tab" data-bs-toggle="tab" data-bs-target="#towers" type="button" role="tab" aria-controls="towers" aria-selected="true">Towers
+  <li .nav-item role="presentation">
+    <button .nav-link id="new-tab" data-bs-toggle="tab" data-bs-target="#new" type="button" role="tab" aria-controls="new" aria-selected="false">New Tower
+  <li .nav-item role="presentation">
+    <button .nav-link id="tower-types-tab" data-bs-toggle="tab" data-bs-target="#tower-types" type="button" role="tab" aria-controls="tower-types" aria-selected="false">Tower Types
+<div .tab-content id="towersTabContent">
+  <div .tab-pane.fade.show.active id="towers" role="tabpanel" aria-labelledby="towers-tab">
     ^{towersTableWidget}
-  <div class="tab-pane fade" id="tower-types" role="tabpanel" aria-labelledby="tower-types-tab">
+  <div .tab-pane.fade id="tower-types" role="tabpanel" aria-labelledby="tower-types-tab">
     ^{towerTypesTableWidget}
-  <div class="tab-pane fade" id="new" role="tabpanel" aria-labelledby="new-tab">
+    ^{editTowerTypeModalWidget Nothing}
+  <div .tab-pane.fade id="new" role="tabpanel" aria-labelledby="new-tab">
     ^{editTowerWidget Nothing}

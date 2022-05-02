@@ -1,15 +1,15 @@
-<h2 class="text-center">Access Points
-<ul class="nav nav-tabs" id="apsTab" role="tablist">
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="aps-tab" data-bs-toggle="tab" data-bs-target="#aps" type="button" role="tab" aria-controls="aps" aria-selected="true">Access Points
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="new-tab" data-bs-toggle="tab" data-bs-target="#new" type="button" role="tab" aria-controls="new" aria-selected="false">New Access Point
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="ap-types-tab" data-bs-toggle="tab" data-bs-target="#ap-types" type="button" role="tab" aria-controls="tower-types" aria-selected="false">Access Point Types
-<div class="tab-content" id="towersTabContent">
-  <div class="tab-pane fade show active" id="aps" role="tabpanel" aria-labelledby="aps-tab">
+<h2 .text-center>Access Points
+<ul .nav.nav-tabs id="apsTab" role="tablist">
+  <li .nav-item role="presentation">
+    <button .nav-link.active id="aps-tab" data-bs-toggle="tab" data-bs-target="#aps" type="button" role="tab" aria-controls="aps" aria-selected="true">Access Points
+  <li .nav-item role="presentation">
+    <button .nav-link id="new-tab" data-bs-toggle="tab" data-bs-target="#new" type="button" role="tab" aria-controls="new" aria-selected="false">New Access Point
+  <li .nav-item role="presentation">
+    <button .nav-link id="ap-types-tab" data-bs-toggle="tab" data-bs-target="#ap-types" type="button" role="tab" aria-controls="tower-types" aria-selected="false">Access Point Types
+<div .tab-content id="towersTabContent">
+  <div .tab-pane.fade.show.active id="aps" role="tabpanel" aria-labelledby="aps-tab">
     ^{apsTableWidget}
-  <div class="tab-pane fade" id="ap-types" role="tabpanel" aria-labelledby="ap-types-tab">
+  <div .tab-pane.fade id="ap-types" role="tabpanel" aria-labelledby="ap-types-tab">
     ^{apTypesTableWidget}
-  <div class="tab-pane fade" id="new" role="tabpanel" aria-labelledby="new-tab">
+  <div .tab-pane.fade id="new" role="tabpanel" aria-labelledby="new-tab">
     ^{editAPWidget Nothing}

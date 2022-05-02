@@ -16,7 +16,8 @@
   <div .tab-pane.fade.show.active id="ap" role="tabpanel" aria-labelledby="ap-tab">
     ^{apTableWidget ap}
   <div .tab-pane.fade id="backups" role="tabpanel" aria-labelledby="backups-tab">
-    ^{apBackupsWidget}
+    ^{fileStoreWidget filestores}
+    ^{backupFormModalWidget backupPostR backupDiscardR}
   <div .tab-pane.fade id="doc" role="tabpanel" aria-labelledby="doc-tab">
     ^{aptDocWidget $ accessPointApTypeId ap}
   <div .tab-pane.fade id="subscriber-modules" role="tabpanel" aria-labelledby="subscriber-modules-tab">

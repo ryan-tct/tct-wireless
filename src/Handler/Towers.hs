@@ -19,13 +19,14 @@ import Yesod.Form.Bootstrap5 (BootstrapFormLayout (..)
                              , renderBootstrap5
                              , BootstrapGridOptions(..)
                              )
-import Helper.Model hiding ((==.))
+import Helper.Model ( getAPNamesFor, Value(Value) )
 import Helper.Html
 import DoubleLayout
 --import Text.Read (read)
 import Handler.Towers.TowerTypes
 import Handler.Towers.Comments
 import Handler.Equipment
+import Database.Persist.Sql ( rawExecute ) 
 
 getAllTowers :: DB [Entity Tower]
 getAllTowers = selectList [] [Asc TowerName]

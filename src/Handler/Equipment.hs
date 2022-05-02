@@ -19,13 +19,14 @@ import Yesod.Form.Bootstrap5 (BootstrapFormLayout (..)
                              , renderBootstrap5
                              , BootstrapGridOptions(..)
                              )
-import Helper.Model hiding ((==.))
+--import Helper.Model hiding ((==.))
 import Helper.Html
 import DoubleLayout
 import Handler.Equipment.EquipmentTypes
 import Handler.Equipment.Comments
 import Handler.Backups
-import Data.Conduit.Binary
+import Data.Conduit.Binary ( sinkLbs )
+import Database.Persist.Sql ( rawExecute ) 
 
 getAllEquipment :: DB [Entity Equipment]
 getAllEquipment = selectList [] [Desc EquipmentName]
@@ -102,7 +103,7 @@ getEquipmentR eId = do
   let
     backupPostR = EquipmentBackupsR eId
     backupDiscardR = EquipmentR eId
-  let filestores = map toFileStore eBackups
+    filestores = map toFileStore eBackups
   doubleLayout $ do
     setTitle "Equipment"
     $(widgetFile "equipment/equipmentView")
@@ -133,8 +134,6 @@ postEquipmentR eId = do
     _ -> doubleLayout $ do
       setMessage "Error editing equipment."
       redirect $ EquipmentR eId
-
-fileStoreWidget filestores = $(widgetFile "filestores/filestoreTable")
 
 equipmentTableWidget :: EquipmentId
                      -> Equipment

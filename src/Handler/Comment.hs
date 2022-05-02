@@ -59,7 +59,7 @@ getCommentsR = do
   allComments <- runDB $ getAllComments
   doubleLayout $ do
     setTitle "Comments"
-    commentModalWidget Nothing CommentsR CommentsR
+--    commentModalWidget Nothing CommentsR CommentsR
     commentsListWidget allComments
 
 postCommentsR :: Handler Html

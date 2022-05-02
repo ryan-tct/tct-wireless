@@ -133,3 +133,12 @@ EquipmentComment sql=equipment_comment_view
     message Text sql=message
     updatedAt UTCTime sql=updated_at
     deriving Eq Show Typeable
+
+AccessPointBackup sql=accesspoint_backup_view
+    accessPointId AccessPointId sql=accesspointid
+    filestoreId FileStoreId sql=filestoreid
+    filename Text sql=filename
+    contentType Text sql=content_type
+    payload ByteString sql=payload
+    updatedAt UTCTime sql=updated_at
+    deriving Eq Show Typeable

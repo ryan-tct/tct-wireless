@@ -1,4 +1,4 @@
-<table class="table table-responsive table-bordered table-striped mt-3 mb-3">
+<table .table.table-responsive.table-bordered.table-striped.mt-3.mb-3>
   <tbody>
     <tr>
       <th scope="row">Name
@@ -72,13 +72,3 @@
     <tr>
       <th scope="row">Update At
       <td>#{show (towerUpdatedAt t)}
-<div .mt-3.mb-3>
-  <button type="button" .btn.btn-primary data-bs-toggle="modal" data-bs-target="#editTowerModal">Edit #{towerName t}
-<div class="modal fade" id="editTowerModal" tabindex="-1" aria-labelledby="editTowerTitle" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editTowerTitle">Edit #{towerName t}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      <div class="modal-body">
-        ^{editTowerWidget (Just (tId, t))}

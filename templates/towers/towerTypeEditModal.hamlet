@@ -1,10 +1,10 @@
 <div .mt-3.mb-3>
-  <button .btn.btn-primary type="button" data-bs-toggle="modal" data-bs-target="#editModal">New Equipment Type
+  <button .btn.btn-primary type="button" data-bs-toggle="modal" data-bs-target="#editModal">New Tower Type
 <div .modal.fade id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
   <div .modal-dialog>
     <div .modal-content>
       <div .modal-header>
-        <h5 .modal-title id="editModalLabel">New Equipment Type</h5>
+        <h5 .modal-title id="editModalLabel">New Tower Type</h5>
         <button .btn-close type="button" data-bs-dismiss="modal" aria-label="Close"></button>
       <div .modal-body>
-        ^{equipmentTypesFormWidget met postR discardR}
+        ^{editTowerTypeWidget mp}

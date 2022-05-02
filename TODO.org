@@ -1,42 +1,12 @@
 #+TITLE: Todos
 #+AUTHOR: Ryan Jensen
 
-* DONE Add POST methods for Access Points
-* DONE Add dropdowns for APTypes and Towers to new/edit Access Points form
-** DONE Auto select tower/apt when appropriate
-* DONE Add formatting to new/edit AP form
-* DONE Refactor Navigation Tree
-  Put in a helper module
-* DONE Refactor/Add Database Helper Module
 * TODO Add Access Point from Tower
   Not really done, but a link to where to do it.
-* DONE Add Tower Types
-** DONE Setup Database
-** DONE Add List Page
-** DONE Add new Modal
-** DONE Add View Page
-** DONE Add Edit Modal
-** DONE Add TO UI Navbar
-** DONE Add Breadcrumbs
-** DONE Change DB to use list
-** DONE Change Tower to use lists
-* TODO Remove Models where it makes sense
-** TODO Move edit next to view
 * TODO We can probably get away with a single form.
   Similar to equipmentTypesForm.hamlet, with me (maybe entity).
 * TODO Adjustable NavigationTree Pane
 * TODO Fix errors on insert/update/delete
-* DONE Add Backup fields
-* DONE Add Comments fields
-** DONE Towers
-** DONE Access Points
-* TODO Add documentation link fields on AP Types/SM Types
-  This should be done similar to backups, by uploading files.
-  For the equipment, make this in the equipment vs equipment type.
-* DONE Add Equipment
-** DONE Add EquipmentTypes/Docs
-** DONE Add Equipment
-   Test out creating a EquipmentPage datatype with all info.
 * TODO Indentation on Files
 * TODO Instead of Backups/Docs separated, do filestore
 * TODO Add SM
@@ -55,21 +25,16 @@
 ** TODO Add Breadcrumbs
 * TODO Edit Permissions
 * TODO Look into dropdowns for navbar
-** TODO Also consider links from tower to tower type for example
-* DONE Move Access Point Types to widget files
+** DONE Also consider links from tower to tower type for example
 * TODO Set Homepage
 * TODO Put in license and copyright
 * TODO Tables to csv etc.
 * TODO Add more info on APs in Tower view?
 * TODO APTypes and TowerTypes to new format
-* DONE Move tower_types to towers in pill navigation?
 * TODO Change classes to use .syntax
-* TODO Remove deleting of towertypes and ap types.
-  This will cause major problems if we remove one which is still in use.
 * TODO Try to factor out Esqueleto
 * TODO Single edit widget
 * TODO Standardize nameing of functions/widgets
-
 * TODO Refactor Backups -> FileStores
   1. Rename backups -> file_stores in DBeaver
   2. Rename Backup -> FileStore in models.persistentmodels

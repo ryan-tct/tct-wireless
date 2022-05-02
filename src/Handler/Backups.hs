@@ -69,3 +69,5 @@ backupFormModalWidget :: Route App -> Route App -> Widget
 backupFormModalWidget postR discardR = $(widgetFile "backups/backupModal")
 
 backupsTableWidget allBackups = $(widgetFile "backups/backupsTable")
+
+fileStoreWidget filestores = $(widgetFile "filestores/filestoreTable")

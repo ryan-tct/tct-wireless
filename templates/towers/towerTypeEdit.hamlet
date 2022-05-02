@@ -1,9 +1,9 @@
-<form class="form mt-3 mb-3" method=POST action=@{actionR} enctype=#{enctype}>
+<form .form.mt-3.mb-3 method=POST action=@{actionR} enctype=#{enctype}>
   ^{widget}
-  <div class="form mt-3 mb-3">
+  <div .form.mt-3.mb-3>
     <div role="group">
       $maybe _ <- mp
-        <button class="btn btn-danger" type="submit" name="action" value="delete">Delete
+        <button .btn.btn-danger type="submit" name="action" value="delete">Delete
       $nothing
       <a .btn.btn-warning role="button"href=@{actionR}>Discard Changes
-      <button class="btn btn-primary" type="submit" name="action" value="save">Save Changes
+      <button .btn.btn-primary type="submit" name="action" value="save">Save Changes

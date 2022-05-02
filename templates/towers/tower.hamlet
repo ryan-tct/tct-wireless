@@ -1,28 +1,28 @@
-<h2 class="text-center">#{towerName t}
-<ul class="nav nav-tabs" id="towerTab" role="tablist">
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="tower-tab" data-bs-toggle="tab" data-bs-target="#tower" type="button" role="tab" aria-controls="tower" aria-selected="true">Tower
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#edit" type="button" role="tab" aria-controls="comments" aria-selected="false">Edit
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="access-points-tab" data-bs-toggle="tab" data-bs-target="#access-points" type="button" role="tab" aria-controls="access-points" aria-selected="false">Access Points
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="equipment-tab" data-bs-toggle="tab" data-bs-target="#equipment" type="button" role="tab" aria-controls="equipment" aria-selected="false">Equipment
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="subscriber-modules-tab" data-bs-toggle="tab" data-bs-target="#subscriber-modules" type="button" role="tab" aria-controls="subscriber-modules" aria-selected="false">Subscriber Modules
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab" aria-controls="comments" aria-selected="false">Comments
-<div class="tab-content" id="towerTabContent">
-  <div class="tab-pane fade show active" id="tower" role="tabpanel" aria-labelledby="tower-tab">
+<h2 .text-center>#{towerName t}
+<ul .nav.nav-tabs id="towerTab" role="tablist">
+  <li .nav-item role="presentation">
+    <button .nav-link.active id="tower-tab" data-bs-toggle="tab" data-bs-target="#tower" type="button" role="tab" aria-controls="tower" aria-selected="true">Tower
+  <li .nav-item role="presentation">
+    <button .nav-link id="comments-tab" data-bs-toggle="tab" data-bs-target="#edit" type="button" role="tab" aria-controls="comments" aria-selected="false">Edit
+  <li .nav-item role="presentation">
+    <button .nav-link id="access-points-tab" data-bs-toggle="tab" data-bs-target="#access-points" type="button" role="tab" aria-controls="access-points" aria-selected="false">Access Points
+  <li .nav-item role="presentation">
+    <button .nav-link id="equipment-tab" data-bs-toggle="tab" data-bs-target="#equipment" type="button" role="tab" aria-controls="equipment" aria-selected="false">Equipment
+  <li .nav-item role="presentation">
+    <button .nav-link id="subscriber-modules-tab" data-bs-toggle="tab" data-bs-target="#subscriber-modules" type="button" role="tab" aria-controls="subscriber-modules" aria-selected="false">Subscriber Modules
+  <li .nav-item role="presentation">
+    <button .nav-link id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab" aria-controls="comments" aria-selected="false">Comments
+<div .tab-content id="towerTabContent">
+  <div .tab-pane.fade.show.active id="tower" role="tabpanel" aria-labelledby="tower-tab">
     ^{towerWidget t}
-  <div class="tab-pane fade" id="access-points" role="tabpanel" aria-labelledby="access-points-tab">
+  <div .tab-pane.fade id="access-points" role="tabpanel" aria-labelledby="access-points-tab">
     ^{apWidget}
-  <div class="tab-pane fade" id="equipment" role="tabpanel" aria-labelledby="equipment-tab">
+  <div .tab-pane.fade id="equipment" role="tabpanel" aria-labelledby="equipment-tab">
     ^{equipmentsListWidget eqOnT}
     ^{equipementTowerFormModalWidget mtId me postR discardR}
-  <div class="tab-pane fade" id="subscriber-modules" role="tabpanel" aria-labelledby="subscriber-modules-tab">
+  <div .tab-pane.fade id="subscriber-modules" role="tabpanel" aria-labelledby="subscriber-modules-tab">
     <h2>Subscriber Modules
-  <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">
+  <div .tab-pane.fade id="comments" role="tabpanel" aria-labelledby="comments-tab">
     ^{commentsList tId}
-  <div class="tab-pane fade" id="edit" role="tabpanel" aria-labelledby="edit-tab">
+  <div .tab-pane.fade id="edit" role="tabpanel" aria-labelledby="edit-tab">
     ^{editTowerWidget (Just (tId, t))}

@@ -1,12 +1,12 @@
-<h2 class="text-center">Tower Types
-<ul class="nav nav-tabs" id="towerTypesTab" role="tablist">
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="tower-types-tab" data-bs-toggle="tab" data-bs-target="#tower-types" type="button" role="tab" aria-controls="tower-types" aria-selected="true">Tower Types
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="new-tab" data-bs-toggle="tab" data-bs-target="#new" type="button" role="tab" aria-controls="new" aria-selected="false">New Tower Type
-<div class="tab-content" id="towerTypesTabContent">
-  <div class="tab-pane fade show active" id="tower-types" role="tabpanel" aria-labelledby="tower-types-tab">
+<h2 .text-center>Tower Types
+<ul .nav.nav-tabs id="towerTypesTab" role="tablist">
+  <li .nav-item role="presentation">
+    <button .nav-link.active id="tower-types-tab" data-bs-toggle="tab" data-bs-target="#tower-types" type="button" role="tab" aria-controls="tower-types" aria-selected="true">Tower Types
+  <li .nav-item role="presentation">
+    <button .nav-link id="new-tab" data-bs-toggle="tab" data-bs-target="#new" type="button" role="tab" aria-controls="new" aria-selected="false">New Tower Type
+<div .tab-content id="towerTypesTabContent">
+  <div .tab-pane.fade.show.active id="tower-types" role="tabpanel" aria-labelledby="tower-types-tab">
     ^{towerTypesTableWidget}
-  <div class="tab-pane fade" id="new" role="tabpanel" aria-labelledby="new-tab">
+  <div .tab-pane.fade id="new" role="tabpanel" aria-labelledby="new-tab">
     <h2>New Tower Type
     ^{editTowerTypeWidget Nothing}

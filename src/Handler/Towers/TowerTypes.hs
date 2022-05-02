@@ -99,4 +99,6 @@ editTowerTypeWidget mp = do
         Just (ttId, tt) -> (TowerTypeR ttId, Just tt)
   (widget, enctype) <- handlerToWidget $ generateFormPost (towerTypeForm mtt)
   $(widgetFile "towers/towerTypeEdit")
-  
+
+editTowerTypeModalWidget :: Maybe (TowerTypeId, TowerType) -> Widget
+editTowerTypeModalWidget mp = $(widgetFile "towers/towerTypeEditModal")

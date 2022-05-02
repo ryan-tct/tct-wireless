@@ -1,4 +1,4 @@
-<h2 class="text-center">#{towerTypeName t}
+<h2 .text-center>#{towerTypeName t}
 <ul .nav.nav-tabs id="aptTab" role="tablist">
   <li .nav-item role="presentation">
     <button .nav-link.active id="towertype-tab" data-bs-toggle="tab" data-bs-target="#towertype" type="button" role="tab" aria-controls="towertype" aria-selected="true">Tower Type
