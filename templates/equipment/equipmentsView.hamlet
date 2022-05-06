@@ -14,4 +14,4 @@
     ^{equipmentFormWidget me postR discardR}
   <div class="tab-pane fade" id="equipment-types" role="tabpanel" aria-labelledby="equipment-types-tab">
     ^{equipmentTypesTableWidget allEquipmentTypes}
-    ^{equipmentTypesModalWidget met postETR discardETR}
+    ^{generalFormModal "New Equipment Type" equipmentTypeFormW}

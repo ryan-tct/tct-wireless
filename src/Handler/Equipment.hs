@@ -26,7 +26,8 @@ import Handler.Equipment.EquipmentTypes
 import Handler.Equipment.Comments
 import Handler.Backups
 import Data.Conduit.Binary ( sinkLbs )
-import Database.Persist.Sql ( rawExecute ) 
+import Database.Persist.Sql ( rawExecute )
+import Helper.Modals
 
 getAllEquipment :: DB [Entity Equipment]
 getAllEquipment = selectList [] [Desc EquipmentName]
@@ -53,6 +54,7 @@ getEquipmentsR = do
     me = Nothing
     postR = EquipmentsR
     discardR = EquipmentsR
+    equipmentTypeFormW = equipmentTypesFormWidget met postETR discardETR
   doubleLayout $ do
     setTitle "Equipment"
     $(widgetFile "equipment/equipmentsView")

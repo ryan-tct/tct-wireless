@@ -40,6 +40,7 @@ library
       Handler.Towers.Comments
       Handler.Towers.TowerTypes
       Helper.Html
+      Helper.Modals
       Helper.Model
       Import
       Import.NoFoundation

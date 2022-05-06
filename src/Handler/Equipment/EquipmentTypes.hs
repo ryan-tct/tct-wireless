@@ -19,6 +19,7 @@ import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
 import Helper.Model hiding((==.))
 import Handler.Documentation
+import Helper.Modals
 
 getEquipmentTypesR :: Handler Html
 getEquipmentTypesR = do
@@ -102,8 +103,8 @@ equipmentTypesFormWidget me postR discardR = do
   (formWidget, formEncType) <- handlerToWidget $ generateFormPost $ equipmentTypeForm me
   $(widgetFile "equipment/equipmentTypesForm")
 
-equipmentTypesModalWidget :: Maybe EquipmentType -> Route App -> Route App -> Widget
-equipmentTypesModalWidget met postR discardR = $(widgetFile "equipment/equipmentTypesModal")
+-- equipmentTypesModalWidget :: Maybe EquipmentType -> Route App -> Route App -> Widget
+-- equipmentTypesModalWidget met postR discardR = $(widgetFile "equipment/equipmentTypesModal")
 
 eqTypeDocTableWidget :: Foldable t => t (Entity EquipmentTypeDoc) -> Widget
 eqTypeDocTableWidget eeqTypeDocs = do
