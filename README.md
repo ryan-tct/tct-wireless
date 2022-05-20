@@ -1,5 +1,5 @@
 # About
-This is a program for managing networking, in particluar wireless networking, equipment. It is build on top of an existing [Zabbix](https://www.zabbix.com/) installation. It adds tables to the zabbix databse and a web interface for interacting with those tables. 
+This is a program for managing networking, in particluar wireless networking, equipment. It is built on top of an existing [Zabbix](https://www.zabbix.com/) installation. It adds tables to the zabbix databse and a web interface for interacting with those tables. 
 
 Currently implemented:
 + Towers.
