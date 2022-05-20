@@ -1,3 +1,17 @@
+# About
+This is a program for managing networking, in particluar wireless networking, equipment. It is build on top of an existing [Zabbix](https://www.zabbix.com/) installation. It adds tables to the zabbix databse and a web interface for interacting with those tables. 
+
+Currently implemented:
++ Towers.
++ Access Points.
++ Misc. Equipment (ie routers, switches, power supply etc.).
++ Documentation for the above.
++ Backup configuration storage for the above.
+
+Planned implementation:
++ Subscriber Modules.
++ SNMP monitoring via Zabbix.
+
 ## Database Setup
 
 After installing Postgres, run:
